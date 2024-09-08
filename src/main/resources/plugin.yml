@@ -1,0 +1,5 @@
+name: Champions
+author: Trae
+main: me.trae.champions.Champions
+version: 1.0.0
+depend: [ Core ]
