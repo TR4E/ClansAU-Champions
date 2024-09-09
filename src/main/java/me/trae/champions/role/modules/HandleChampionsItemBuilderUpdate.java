@@ -20,9 +20,9 @@ public class HandleChampionsItemBuilderUpdate extends SpigotListener<Champions, 
     public void onItemUpdate(final ItemUpdateEvent event) {
         final ItemBuilder builder = event.getBuilder();
 
-        for (final Role role : this.getManager().getModulesByClass(Role.class)) {
-            final Material material = builder.getItemStack().getType();
+        final Material material = builder.getItemStack().getType();
 
+        for (final Role role : this.getManager().getModulesByClass(Role.class)) {
             if (!(role.getArmour().contains(material))) {
                 continue;
             }
