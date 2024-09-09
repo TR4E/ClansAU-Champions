@@ -10,4 +10,11 @@ public class PowerSword extends ChampionsPvPWeapon {
     public PowerSword(final WeaponManager manager) {
         super(manager, new ItemStack(Material.DIAMOND_SWORD));
     }
+
+    @Override
+    public String[] getDescription() {
+        return new String[]{
+                "Increases Melee Damage by 1."
+        };
+    }
 }

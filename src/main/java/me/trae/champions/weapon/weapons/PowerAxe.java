@@ -10,4 +10,11 @@ public class PowerAxe extends ChampionsPvPWeapon {
     public PowerAxe(final WeaponManager manager) {
         super(manager, new ItemStack(Material.DIAMOND_AXE));
     }
+
+    @Override
+    public String[] getDescription() {
+        return new String[]{
+                "Increases Melee Damage by 1."
+        };
+    }
 }

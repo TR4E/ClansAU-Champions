@@ -12,7 +12,9 @@ public class BoosterAxe extends ChampionsPvPWeapon {
     }
 
     @Override
-    public String getDisplayName() {
-        return super.getDisplayName();
+    public String[] getDescription() {
+        return new String[]{
+                "Increases Skill Level by 1."
+        };
     }
 }
