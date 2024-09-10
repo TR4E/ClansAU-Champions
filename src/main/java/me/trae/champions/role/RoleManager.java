@@ -3,19 +3,22 @@ package me.trae.champions.role;
 import me.trae.champions.Champions;
 import me.trae.champions.role.commands.KitCommand;
 import me.trae.champions.role.interfaces.IRoleManager;
+import me.trae.champions.role.modules.DisableShootingArrowsForNonArchers;
 import me.trae.champions.role.modules.HandleChampionsItemBuilderUpdate;
 import me.trae.champions.role.modules.HandleRoleEquip;
 import me.trae.champions.role.types.*;
 import me.trae.champions.role.types.models.Archer;
 import me.trae.core.framework.SpigotManager;
 import me.trae.core.utility.UtilItem;
+import me.trae.core.utility.UtilJava;
 import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class RoleManager extends SpigotManager<Champions> implements IRoleManager {
 
@@ -40,6 +43,7 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
         addModule(new KitCommand(this));
 
         // Modules
+        addModule(new DisableShootingArrowsForNonArchers(this));
         addModule(new HandleChampionsItemBuilderUpdate(this));
         addModule(new HandleRoleEquip(this));
     }
@@ -67,6 +71,18 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
     @Override
     public boolean hasPlayerRole(final Player player) {
         return this.getPlayerRoles().containsKey(player.getUniqueId());
+    }
+
+    @Override
+    public Role searchRole(final CommandSender sender, final String name, final boolean inform) {
+        final List<Predicate<Role>> predicates = Arrays.asList(
+                (role -> role.getName().equalsIgnoreCase(name)),
+                (role -> role.getName().toLowerCase().contains(name.toLowerCase()))
+        );
+
+        final Function<Role, String> function = Role::getName;
+
+        return UtilJava.search(this.getModulesByClass(Role.class), predicates, null, function, "Role Search", sender, name, inform);
     }
 
     @Override
