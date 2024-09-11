@@ -1,12 +1,15 @@
 package me.trae.champions.skill.interfaces;
 
 import me.trae.champions.skill.data.SkillData;
+import me.trae.champions.skill.enums.SkillType;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
 import java.util.UUID;
 
 public interface ISkill<D extends SkillData> {
+
+    SkillType getType();
 
     Class<D> getClassOfData();
 

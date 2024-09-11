@@ -2,6 +2,7 @@ package me.trae.champions.role.types;
 
 import me.trae.champions.role.Role;
 import me.trae.champions.role.RoleManager;
+import me.trae.champions.skill.skills.knight.BullsCharge;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
 
@@ -12,6 +13,12 @@ public class Knight extends Role {
 
     public Knight(final RoleManager manager) {
         super(manager);
+    }
+
+    @Override
+    public void registerSubModules() {
+        // Axe Skill
+        addSubModule(new BullsCharge(this));
     }
 
     @Override
