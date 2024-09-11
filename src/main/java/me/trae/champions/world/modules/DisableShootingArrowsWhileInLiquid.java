@@ -41,6 +41,8 @@ public class DisableShootingArrowsWhileInLiquid extends SpigotListener<Champions
 
         event.setCancelled(true);
 
+        player.updateInventory();
+
         UtilMessage.message(player, "Restrictions", "You cannot shoot arrows while in liquid!");
     }
 }

@@ -41,6 +41,8 @@ public class DisableShootingArrowsForNonArchers extends SpigotListener<Champions
 
         event.setCancelled(true);
 
+        player.updateInventory();
+
         UtilMessage.message(player, "Restrictions", "You must be an Archer Class to shoot arrows!");
     }
 }

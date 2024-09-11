@@ -4,6 +4,7 @@ import me.trae.champions.Champions;
 import me.trae.champions.weapon.WeaponManager;
 import me.trae.core.weapon.data.WeaponData;
 import me.trae.core.weapon.types.CustomItem;
+import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class ChampionsPvPWeapon extends CustomItem<Champions, WeaponManager, WeaponData> {
@@ -19,7 +20,7 @@ public abstract class ChampionsPvPWeapon extends CustomItem<Champions, WeaponMan
 
     @Override
     public String getDisplayName() {
-        return String.format("<gold>%s", this.getName());
+        return ChatColor.GOLD + this.getName();
     }
 
     @Override
