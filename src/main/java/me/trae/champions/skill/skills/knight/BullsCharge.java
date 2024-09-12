@@ -22,8 +22,13 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> {
     }
 
     @Override
-    public void onActivate(final Player player) {
-        UtilMessage.simpleMessage(player, this.getModule().getName(), "You used <green><var></green>.", Collections.singletonList(this.getName()));
+    public String getDisplayName(final int level) {
+        return String.format("%s %s", this.getName(), level);
+    }
+
+    @Override
+    public void onActivate(final Player player, final int level) {
+        UtilMessage.simpleMessage(player, this.getModule().getName(), "You used <green><var></green>.", Collections.singletonList(this.getDisplayName(level)));
     }
 
     @Override

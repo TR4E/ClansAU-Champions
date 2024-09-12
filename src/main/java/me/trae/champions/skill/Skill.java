@@ -6,12 +6,10 @@ import me.trae.champions.role.Role;
 import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.interfaces.ISkill;
-import me.trae.champions.utility.UtilChampions;
 import me.trae.core.framework.SpigotSubModule;
 import me.trae.core.utility.UtilServer;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -70,11 +68,7 @@ public abstract class Skill<R extends Role, D extends SkillData> extends SpigotS
 
     @Override
     public int getLevel(final Player player) {
-        int level = 1;
-
-        if (Arrays.asList(SkillType.SWORD, SkillType.AXE).contains(this.getType()) && UtilChampions.isBoosterWeapon(player.getInventory().getItemInHand())) {
-            level++;
-        }
+        final int level = 1;
 
         final SkillLevelEvent event = new SkillLevelEvent(this, player, level);
         UtilServer.callEvent(event);

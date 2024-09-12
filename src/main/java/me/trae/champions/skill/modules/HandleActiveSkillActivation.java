@@ -50,6 +50,11 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
             return;
         }
 
+        final int level = skill.getLevel(player);
+        if (level == 0) {
+            return;
+        }
+
         final SkillPreActivateEvent preActivateEvent = new SkillPreActivateEvent(skill, player);
         UtilServer.callEvent(preActivateEvent);
         if (preActivateEvent.isCancelled()) {
@@ -66,7 +71,7 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
             return;
         }
 
-        skill.onActivate(player);
+        skill.onActivate(player, level);
     }
 
     private boolean canActivate(final Player player, final ActiveSkill<?, ?> skill) {
