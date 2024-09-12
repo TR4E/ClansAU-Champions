@@ -6,6 +6,7 @@ import me.trae.champions.Champions;
 import me.trae.champions.role.Role;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
+import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.ActiveSkill;
 import me.trae.core.framework.types.frame.SpigotListener;
 import me.trae.core.utility.UtilServer;
@@ -33,8 +34,21 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
             return;
         }
 
-        // To-Do
-        final ActiveSkill<?, ?> skill = role.getSubModuleByClass(ActiveSkill.class);
+        final SkillType skillType = SkillType.getByMaterial(event.getItemStack().getType());
+        if (skillType == null) {
+            return;
+        }
+
+        event.setCancelled(true);
+
+        if (!(skillType.getActionType().isAction(event.getAction()))) {
+            return;
+        }
+
+        final ActiveSkill<?, ?> skill = role.getSkillByType(ActiveSkill.class, skillType);
+        if (skill == null) {
+            return;
+        }
 
         final SkillPreActivateEvent preActivateEvent = new SkillPreActivateEvent(skill, player);
         UtilServer.callEvent(preActivateEvent);

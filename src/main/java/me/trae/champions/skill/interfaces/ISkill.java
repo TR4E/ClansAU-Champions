@@ -27,6 +27,8 @@ public interface ISkill<D extends SkillData> {
 
     boolean isUserByPlayer(final Player player);
 
+    int getLevel(final Player player);
+
     void reset(final Player player);
 
     void onExpire(final Player player, final D data);

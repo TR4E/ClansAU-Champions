@@ -3,6 +3,11 @@ package me.trae.champions.skill.enums;
 import me.trae.champions.skill.enums.interfaces.ISkillType;
 import me.trae.core.utility.UtilString;
 import me.trae.core.utility.enums.ActionType;
+import org.bukkit.Material;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public enum SkillType implements ISkillType {
 
@@ -12,6 +17,10 @@ public enum SkillType implements ISkillType {
 
     SkillType() {
         this.name = UtilString.clean(this.name());
+    }
+
+    public static SkillType getByMaterial(final Material material) {
+        return Arrays.stream(values()).filter(skillType -> skillType.getMaterials().contains(material)).findFirst().orElse(null);
     }
 
     @Override
@@ -29,6 +38,20 @@ public enum SkillType implements ISkillType {
                 return ActionType.LEFT_CLICK;
         }
 
-        return null;
+        return ActionType.NONE;
+    }
+
+    @Override
+    public List<Material> getMaterials() {
+        switch (this) {
+            case SWORD:
+                return Arrays.asList(Material.DIAMOND_SWORD, Material.GOLD_SWORD, Material.IRON_SWORD);
+            case AXE:
+                return Arrays.asList(Material.DIAMOND_AXE, Material.GOLD_AXE, Material.IRON_AXE);
+            case BOW:
+                return Collections.singletonList(Material.BOW);
+        }
+
+        return Collections.emptyList();
     }
 }

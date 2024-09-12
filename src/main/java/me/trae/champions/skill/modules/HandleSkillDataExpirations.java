@@ -20,7 +20,7 @@ public class HandleSkillDataExpirations extends SpigotUpdater<Champions, SkillMa
     @Update
     public void onUpdater() {
         for (final Role role : this.getInstance().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
-            for (final Skill<?, ?> skill : role.getSubModulesByClass(Skill.class)) {
+            for (final Skill<?, ?> skill : role.getSkillsByClass(Skill.class)) {
                 skill.getUsers().values().removeIf(data -> {
                     if (!(data.hasExpired())) {
                         return false;
