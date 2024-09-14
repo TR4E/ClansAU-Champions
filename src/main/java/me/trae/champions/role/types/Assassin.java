@@ -3,6 +3,9 @@ package me.trae.champions.role.types;
 import me.trae.champions.role.Role;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.role.types.models.Archer;
+import me.trae.champions.role.types.submodules.DisableFallDamage;
+import me.trae.champions.role.types.submodules.SpeedEffect;
+import me.trae.champions.role.types.submodules.TakeNoKnockback;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
 
@@ -13,6 +16,14 @@ public class Assassin extends Role implements Archer {
 
     public Assassin(final RoleManager manager) {
         super(manager);
+    }
+
+    @Override
+    public void registerSubModules() {
+        // Modules
+        addSubModule(new DisableFallDamage(this));
+        addSubModule(new SpeedEffect(this));
+        addSubModule(new TakeNoKnockback(this));
     }
 
     @Override

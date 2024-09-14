@@ -2,6 +2,7 @@ package me.trae.champions.weapon.weapons;
 
 import me.trae.champions.weapon.WeaponManager;
 import me.trae.champions.weapon.types.ChampionsPvPWeapon;
+import me.trae.core.utility.UtilString;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,7 +15,14 @@ public class StandardSword extends ChampionsPvPWeapon {
     @Override
     public String[] getDescription() {
         return new String[]{
-                "Just a Standard Sword."
+                "Just a Standard Sword.",
+                "",
+                UtilString.pair("<gray>Damage", String.format("<green>%s", this.getDamage()))
         };
+    }
+
+    @Override
+    public double getDamage() {
+        return 4.0D;
     }
 }

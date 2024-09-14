@@ -15,6 +15,10 @@ public interface IRole {
 
     <E extends Skill<?, ?>> E getSkillByType(final Class<E> clazz, final SkillType skillType);
 
+    List<Player> getUsers();
+
+    boolean isUserByPlayer(final Player player);
+
     String getPrefix();
 
     String[] getDescription();

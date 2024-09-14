@@ -3,9 +3,7 @@ package me.trae.champions.role;
 import me.trae.champions.Champions;
 import me.trae.champions.role.commands.KitCommand;
 import me.trae.champions.role.interfaces.IRoleManager;
-import me.trae.champions.role.modules.DisableShootingArrowsForNonArchers;
-import me.trae.champions.role.modules.HandleChampionsItemBuilderUpdate;
-import me.trae.champions.role.modules.HandleRoleEquip;
+import me.trae.champions.role.modules.*;
 import me.trae.champions.role.types.*;
 import me.trae.champions.role.types.models.Archer;
 import me.trae.core.framework.SpigotManager;
@@ -44,8 +42,10 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
 
         // Modules
         addModule(new DisableShootingArrowsForNonArchers(this));
+        addModule(new HandleChampionsDeathMessageFormat(this));
         addModule(new HandleChampionsItemBuilderUpdate(this));
         addModule(new HandleRoleEquip(this));
+        addModule(new RemovePotionEffectsOnRoleChange(this));
     }
 
     @Override
