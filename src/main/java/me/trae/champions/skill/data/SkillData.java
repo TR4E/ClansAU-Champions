@@ -8,22 +8,29 @@ import java.util.UUID;
 public class SkillData implements ISkillData {
 
     private final UUID uuid;
+    private final int level;
 
     private long systemTime, duration;
 
-    public SkillData(final Player player, final long duration) {
+    public SkillData(final Player player, final int level, final long duration) {
         this.uuid = player.getUniqueId();
+        this.level = level;
         this.systemTime = System.currentTimeMillis();
         this.duration = duration;
     }
 
-    public SkillData(final Player player) {
-        this(player, -1L);
+    public SkillData(final Player player, final int level) {
+        this(player, level, -1L);
     }
 
     @Override
     public UUID getUUID() {
         return this.uuid;
+    }
+
+    @Override
+    public int getLevel() {
+        return this.level;
     }
 
     @Override

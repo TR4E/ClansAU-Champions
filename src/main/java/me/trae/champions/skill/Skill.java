@@ -78,6 +78,7 @@ public abstract class Skill<R extends Role, D extends SkillData> extends SpigotS
 
     @Override
     public void reset(final Player player) {
+        this.removeUser(player);
     }
 
     @Override

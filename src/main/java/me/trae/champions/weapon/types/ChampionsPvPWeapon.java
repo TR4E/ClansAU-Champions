@@ -4,7 +4,6 @@ import me.trae.api.damage.events.CustomDamageEvent;
 import me.trae.champions.Champions;
 import me.trae.champions.weapon.WeaponManager;
 import me.trae.champions.weapon.types.interfaces.IChampionsPvPWeapon;
-import me.trae.core.Core;
 import me.trae.core.weapon.data.WeaponData;
 import me.trae.core.weapon.types.CustomItem;
 import org.bukkit.ChatColor;
