@@ -66,6 +66,11 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
         super.reset(player);
     }
 
+    @Override
+    public void onExpire(final Player player, final SkillData data) {
+        UtilMessage.simpleMessage(player, this.getModule().getName(), "You failed <green><var></green>.", Collections.singletonList(this.getDisplayName(data.getLevel())));
+    }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onCustomDamage(final CustomDamageEvent event) {
         if (event.isCancelled()) {

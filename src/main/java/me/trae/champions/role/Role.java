@@ -26,7 +26,7 @@ public abstract class Role extends SpigotModule<Champions, RoleManager> implemen
 
     @Override
     public <E extends Skill<?, ?>> E getSkillByType(final Class<E> clazz, final SkillType skillType) {
-        for (final E skill : this.getSkillsByClass(clazz)) {
+        for (final E skill : this.getSubModulesByClass(clazz)) {
             if (skill.getType() != skillType) {
                 continue;
             }
@@ -69,6 +69,9 @@ public abstract class Role extends SpigotModule<Champions, RoleManager> implemen
 
     @Override
     public void reset(final Player player) {
+        for (final Skill<?, ?> skill : this.getSkillsByClass(Skill.class)) {
+            skill.reset(player);
+        }
     }
 
     @Override

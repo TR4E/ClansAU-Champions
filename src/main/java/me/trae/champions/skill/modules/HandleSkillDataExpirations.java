@@ -17,7 +17,7 @@ public class HandleSkillDataExpirations extends SpigotUpdater<Champions, SkillMa
         super(manager);
     }
 
-    @Update
+    @Update(delay = 250L)
     public void onUpdater() {
         for (final Role role : this.getInstance().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
             for (final Skill<?, ?> skill : role.getSkillsByClass(Skill.class)) {

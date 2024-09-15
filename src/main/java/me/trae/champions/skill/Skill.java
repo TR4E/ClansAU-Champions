@@ -10,20 +10,19 @@ import me.trae.core.framework.SpigotSubModule;
 import me.trae.core.utility.UtilServer;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class Skill<R extends Role, D extends SkillData> extends SpigotSubModule<Champions, R> implements ISkill<D> {
 
     private final SkillType skillType;
-    private final Map<UUID, D> users;
+    private final ConcurrentHashMap<UUID, D> users;
 
     public Skill(final R module, final SkillType skillType) {
         super(module);
 
         this.skillType = skillType;
-        this.users = new HashMap<>();
+        this.users = new ConcurrentHashMap<>();
     }
 
     @Override
@@ -32,7 +31,7 @@ public abstract class Skill<R extends Role, D extends SkillData> extends SpigotS
     }
 
     @Override
-    public Map<UUID, D> getUsers() {
+    public ConcurrentHashMap<UUID, D> getUsers() {
         return this.users;
     }
 

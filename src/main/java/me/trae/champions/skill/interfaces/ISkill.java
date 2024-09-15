@@ -4,8 +4,8 @@ import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.enums.SkillType;
 import org.bukkit.entity.Player;
 
-import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public interface ISkill<D extends SkillData> {
 
@@ -13,7 +13,7 @@ public interface ISkill<D extends SkillData> {
 
     Class<D> getClassOfData();
 
-    Map<UUID, D> getUsers();
+    ConcurrentHashMap<UUID, D> getUsers();
 
     void addUser(final D data);
 
