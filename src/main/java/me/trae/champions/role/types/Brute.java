@@ -2,8 +2,10 @@ package me.trae.champions.role.types;
 
 import me.trae.champions.role.Role;
 import me.trae.champions.role.RoleManager;
+import me.trae.champions.skill.skills.brute.BattleTaunt;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,8 +17,17 @@ public class Brute extends Role {
     }
 
     @Override
+    public void registerSubModules() {
+        // Sword
+        addSubModule(new BattleTaunt(this));
+    }
+
+    @Override
     public String[] getDescription() {
-        return new String[0];
+        return new String[]{
+                "Brutes control large crowds of enemies,",
+                "with their unique abilities!"
+        };
     }
 
     @Override
@@ -26,6 +37,6 @@ public class Brute extends Role {
 
     @Override
     public SoundCreator getDamageSound() {
-        return null;
+        return new SoundCreator(Sound.BLAZE_HIT, 1.0F, 0.9F);
     }
 }

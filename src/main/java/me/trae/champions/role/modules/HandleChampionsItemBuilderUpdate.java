@@ -10,6 +10,8 @@ import me.trae.core.utility.UtilString;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 
+import java.util.Arrays;
+
 public class HandleChampionsItemBuilderUpdate extends SpigotListener<Champions, RoleManager> {
 
     public HandleChampionsItemBuilderUpdate(final RoleManager manager) {
@@ -28,6 +30,7 @@ public class HandleChampionsItemBuilderUpdate extends SpigotListener<Champions, 
             }
 
             builder.setDisplayName(String.format("<gold>%s %s", role.getName(), UtilString.clean(material.name().split("_")[1])));
+            builder.setLore(Arrays.asList(role.getDescription()));
             break;
         }
     }

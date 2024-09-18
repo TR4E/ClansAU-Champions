@@ -8,6 +8,7 @@ import me.trae.champions.role.types.submodules.SpeedEffect;
 import me.trae.champions.role.types.submodules.TakeNoKnockback;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,7 +21,7 @@ public class Assassin extends Role implements Archer {
 
     @Override
     public void registerSubModules() {
-        // Modules
+        // Sub Modules
         addSubModule(new DisableFallDamage(this));
         addSubModule(new SpeedEffect(this));
         addSubModule(new TakeNoKnockback(this));
@@ -28,7 +29,10 @@ public class Assassin extends Role implements Archer {
 
     @Override
     public String[] getDescription() {
-        return new String[0];
+        return new String[]{
+                "Assassins can quickly drop foes",
+                "with powerful combinations!"
+        };
     }
 
     @Override
@@ -38,6 +42,6 @@ public class Assassin extends Role implements Archer {
 
     @Override
     public SoundCreator getDamageSound() {
-        return null;
+        return new SoundCreator(Sound.SHOOT_ARROW, 1.0F, 2.0F);
     }
 }

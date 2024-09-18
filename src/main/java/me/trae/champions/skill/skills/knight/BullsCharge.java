@@ -5,9 +5,14 @@ import me.trae.champions.role.types.Knight;
 import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.ActiveSkill;
-import me.trae.core.utility.UtilBlock;
 import me.trae.core.utility.UtilEntity;
 import me.trae.core.utility.UtilMessage;
+import me.trae.core.utility.UtilTime;
+import me.trae.core.utility.objects.SoundCreator;
+import org.bukkit.Effect;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,8 +27,8 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
     public BullsCharge(final Knight module) {
         super(module, SkillType.AXE);
 
-        this.addPrimitive("Duration", 4000L);
         this.addPrimitive("Amplifier", 2);
+        this.addPrimitive("Duration", 4000L);
     }
 
     @Override
@@ -32,29 +37,35 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
     }
 
     @Override
-    public String getDisplayName(final int level) {
-        return String.format("%s %s", this.getName(), level);
+    public String[] getDescription(final int level) {
+        final String duration = UtilTime.getTime(this.getPrimitiveCasted(Long.class, "Duration"));
+
+        return new String[]{
+                "Right-Click with an Axe to Activate.",
+                "",
+                "Enter a rage, gaining massive movement speed",
+                String.format("and slowing anything you hit for <green>%s</green>.", duration),
+                "",
+                "While charging, you take no knockback.",
+//                "",
+//                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString())),
+//                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString()))
+        };
     }
 
     @Override
     public void onActivate(final Player player, final int level) {
-        final long duration = this.getPrimitiveCasted(Long.class, "Duration");
+        player.getWorld().playEffect(player.getLocation(), Effect.STEP_SOUND, Material.OBSIDIAN);
 
-        this.addUser(new SkillData(player, level, duration));
+        new SoundCreator(Sound.ENDERMAN_SCREAM, 1.5F, 0.0F).play(player.getLocation());
+
+        final long duration = this.getPrimitiveCasted(Long.class, "Duration");
 
         UtilEntity.givePotionEffect(player, PotionEffectType.SPEED, duration, this.getPrimitiveCasted(Integer.class, "Amplifier"));
 
+        this.addUser(new SkillData(player, level, duration));
+
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You used <green><var></green>.", Collections.singletonList(this.getDisplayName(level)));
-    }
-
-    @Override
-    public boolean canActivate(final Player player) {
-        if (UtilBlock.isInLiquid(player.getLocation())) {
-            UtilMessage.simpleMessage(player, "Skill", "You cannot use <green><var></green> while in liquid.", Collections.singletonList(this.getName()));
-            return false;
-        }
-
-        return true;
     }
 
     @Override
@@ -77,22 +88,37 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
             return;
         }
 
+        if (!(event.getDamagee() instanceof LivingEntity)) {
+            return;
+        }
+
         if (!(event.getDamager() instanceof Player)) {
             return;
         }
 
-        final Player player = event.getDamagerByClass(Player.class);
+        final Player damager = event.getDamagerByClass(Player.class);
 
-        if (!(this.isUserByPlayer(player))) {
+        if (!(this.isUserByPlayer(damager))) {
             return;
         }
 
-        final String displayName = this.getDisplayName(this.getUserByPlayer(player).getLevel());
+        final LivingEntity damagee = event.getDamageeByClass(LivingEntity.class);
 
-        this.reset(player);
+        UtilEntity.givePotionEffect(damagee, PotionEffectType.SLOW, this.getPrimitiveCasted(Long.class, "Duration"), this.getPrimitiveCasted(Integer.class, "Amplifier"));
 
-        UtilMessage.simpleMessage(player, this.getModule().getName(), "You hit <yellow><var></yellow> with <green><var></green>.", Arrays.asList(event.getDamageeName(), displayName));
+        new SoundCreator(Sound.ENDERMAN_SCREAM, 1.5F, 0.0F).play(damager.getLocation());
+        new SoundCreator(Sound.ZOMBIE_METAL, 1.5F, 0.5F).play(damager.getLocation());
 
-        event.setReason(displayName, 10_000L);
+        if (damagee instanceof Player) {
+            UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getName()));
+            UtilMessage.simpleMessage(damagee, this.getModule().getName(), "<var> hit you with <green><var></green>.", Arrays.asList(event.getDamagerName(), this.getName()));
+        } else {
+            UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit a <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getName()));
+        }
+
+        this.reset(damager);
+        this.removeUser(damager);
+
+        event.setReason(this.getName(), this.getPrimitiveCasted(Long.class, "Duration"));
     }
 }

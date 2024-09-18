@@ -76,8 +76,12 @@ public abstract class Skill<R extends Role, D extends SkillData> extends SpigotS
     }
 
     @Override
+    public String getDisplayName(final int level) {
+        return String.format("%s %s", this.getName(), level);
+    }
+
+    @Override
     public void reset(final Player player) {
-        this.removeUser(player);
     }
 
     @Override

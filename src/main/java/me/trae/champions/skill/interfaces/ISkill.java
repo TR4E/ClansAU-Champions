@@ -31,6 +31,8 @@ public interface ISkill<D extends SkillData> {
 
     String getDisplayName(final int level);
 
+    String[] getDescription(final int level);
+
     void reset(final Player player);
 
     void onExpire(final Player player, final D data);

@@ -5,6 +5,7 @@ import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.skills.knight.BullsCharge;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +24,10 @@ public class Knight extends Role {
 
     @Override
     public String[] getDescription() {
-        return new String[0];
+        return new String[]{
+                "Knights are sturdy fighters,",
+                "built to tank damage!"
+        };
     }
 
     @Override
@@ -33,6 +37,6 @@ public class Knight extends Role {
 
     @Override
     public SoundCreator getDamageSound() {
-        return null;
+        return new SoundCreator(Sound.BLAZE_HIT, 1.0F, 0.7F);
     }
 }

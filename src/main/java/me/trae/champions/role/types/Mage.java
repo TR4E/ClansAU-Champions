@@ -4,6 +4,7 @@ import me.trae.champions.role.Role;
 import me.trae.champions.role.RoleManager;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,7 +17,10 @@ public class Mage extends Role {
 
     @Override
     public String[] getDescription() {
-        return new String[0];
+        return new String[]{
+                "Mages are known for powerful",
+                "spells and can fill most roles"
+        };
     }
 
     @Override
@@ -26,6 +30,6 @@ public class Mage extends Role {
 
     @Override
     public SoundCreator getDamageSound() {
-        return null;
+        return new SoundCreator(Sound.ITEM_BREAK, 1.0F, 1.8F);
     }
 }

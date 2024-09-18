@@ -39,8 +39,6 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
             return;
         }
 
-        event.setCancelled(true);
-
         if (!(skillType.getActionType().isAction(event.getAction()))) {
             return;
         }
@@ -49,6 +47,8 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
         if (skill == null) {
             return;
         }
+
+        event.setCancelled(true);
 
         final int level = skill.getLevel(player);
         if (level == 0) {
