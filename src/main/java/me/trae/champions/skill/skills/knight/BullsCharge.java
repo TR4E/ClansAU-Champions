@@ -98,7 +98,8 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
 
         final Player damager = event.getDamagerByClass(Player.class);
 
-        if (!(this.isUserByPlayer(damager))) {
+        final SkillData data = this.getUserByPlayer(damager);
+        if (data == null) {
             return;
         }
 
@@ -110,10 +111,10 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
         new SoundCreator(Sound.ZOMBIE_METAL, 1.5F, 0.5F).play(damager.getLocation());
 
         if (damagee instanceof Player) {
-            UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getName()));
-            UtilMessage.simpleMessage(damagee, this.getModule().getName(), "<var> hit you with <green><var></green>.", Arrays.asList(event.getDamagerName(), this.getName()));
+            UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));
+            UtilMessage.simpleMessage(damagee, this.getModule().getName(), "<var> hit you with <green><var></green>.", Arrays.asList(event.getDamagerName(), this.getDisplayName(data.getLevel())));
         } else {
-            UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit a <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getName()));
+            UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit a <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));
         }
 
         this.reset(damager);
