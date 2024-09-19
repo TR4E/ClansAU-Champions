@@ -25,7 +25,7 @@ public class SpeedEffect extends SpigotSubUpdater<Champions, Role> {
                 continue;
             }
 
-            UtilEntity.givePotionEffect(player, PotionEffectType.SPEED, Integer.MAX_VALUE, amplifier);
+            UtilEntity.givePotionEffect(player, PotionEffectType.SPEED, amplifier, Integer.MAX_VALUE);
         }
     }
 }

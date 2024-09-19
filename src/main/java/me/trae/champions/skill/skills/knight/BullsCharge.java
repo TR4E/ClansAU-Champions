@@ -61,7 +61,7 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
 
         final long duration = this.getPrimitiveCasted(Long.class, "Duration");
 
-        UtilEntity.givePotionEffect(player, PotionEffectType.SPEED, duration, this.getPrimitiveCasted(Integer.class, "Amplifier"));
+        UtilEntity.givePotionEffect(player, PotionEffectType.SPEED, this.getPrimitiveCasted(Integer.class, "Amplifier"), duration);
 
         this.addUser(new SkillData(player, level, duration));
 
@@ -104,7 +104,7 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
 
         final LivingEntity damagee = event.getDamageeByClass(LivingEntity.class);
 
-        UtilEntity.givePotionEffect(damagee, PotionEffectType.SLOW, this.getPrimitiveCasted(Long.class, "Duration"), this.getPrimitiveCasted(Integer.class, "Amplifier"));
+        UtilEntity.givePotionEffect(damagee, PotionEffectType.SLOW, this.getPrimitiveCasted(Integer.class, "Amplifier"), this.getPrimitiveCasted(Long.class, "Duration"));
 
         new SoundCreator(Sound.ENDERMAN_SCREAM, 1.5F, 0.0F).play(damager.getLocation());
         new SoundCreator(Sound.ZOMBIE_METAL, 1.5F, 0.5F).play(damager.getLocation());
