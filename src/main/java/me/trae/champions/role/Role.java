@@ -71,6 +71,10 @@ public abstract class Role extends SpigotModule<Champions, RoleManager> implemen
     public void reset(final Player player) {
         for (final Skill<?, ?> skill : this.getSkillsByClass(Skill.class)) {
             skill.reset(player);
+
+            if (skill.isUserByPlayer(player)) {
+                skill.removeUser(player);
+            }
         }
     }
 
