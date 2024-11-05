@@ -26,7 +26,7 @@ public abstract class ChampionsPvPWeapon extends CustomItem<Champions, WeaponMan
 
     @Override
     public String getDisplayName() {
-        return ChatColor.GOLD + this.getName();
+        return ChatColor.YELLOW + this.getName();
     }
 
     @Override
