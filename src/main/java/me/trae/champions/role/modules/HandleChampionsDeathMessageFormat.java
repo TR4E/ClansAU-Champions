@@ -1,10 +1,10 @@
 package me.trae.champions.role.modules;
 
-import me.trae.api.death.events.CustomDeathMessageEvent;
 import me.trae.champions.Champions;
 import me.trae.champions.role.Role;
 import me.trae.champions.role.RoleManager;
 import me.trae.core.framework.types.frame.SpigotListener;
+import me.trae.core.player.events.PlayerDisplayNameEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -15,19 +15,20 @@ public class HandleChampionsDeathMessageFormat extends SpigotListener<Champions,
         super(manager);
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
-    public void onCustomDeathMessage(final CustomDeathMessageEvent event) {
-        if (event.isCancelled()) {
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlayerDisplayName(final PlayerDisplayNameEvent event) {
+        if (!(event.isExtra())) {
             return;
         }
 
-        if (event.getDeathEvent().getEntity() instanceof Player) {
-            event.setEntityName(this.getPlayerName(event.getDeathEvent().getEntityByClass(Player.class), event.getEntityName()));
+        final Player player = event.getPlayer();
+
+        final Role role = this.getManager().getPlayerRole(player);
+        if (role == null) {
+            return;
         }
 
-        if (event.getDeathEvent().getKiller() instanceof Player) {
-            event.setKillerName(this.getPlayerName(event.getDeathEvent().getKillerByClass(Player.class), event.getKillerName()));
-        }
+        event.setPlayerName(String.format("<green>%s<white>.%s", role.getPrefix(), event.getPlayerName()));
     }
 
     private String getPlayerName(final Player player, final String playerName) {
