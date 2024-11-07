@@ -42,7 +42,7 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
 
         // Modules
         addModule(new DisableShootingArrowsForNonArchers(this));
-        addModule(new HandleChampionsDeathMessageFormat(this));
+        addModule(new HandleChampionsPlayerDisplayNameFormat(this));
         addModule(new HandleChampionsItemBuilderUpdate(this));
         addModule(new HandleRoleCustomDamageSound(this));
         addModule(new HandleRoleEquip(this));
