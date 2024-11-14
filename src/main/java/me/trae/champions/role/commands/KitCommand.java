@@ -8,6 +8,7 @@ import me.trae.core.client.Client;
 import me.trae.core.client.enums.Rank;
 import me.trae.core.command.types.Command;
 import me.trae.core.command.types.models.PlayerCommandType;
+import me.trae.core.gamer.Gamer;
 import me.trae.core.utility.UtilMenu;
 import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilPlayer;
@@ -25,7 +26,7 @@ public class KitCommand extends Command<Champions, RoleManager> implements Playe
     }
 
     @Override
-    public void execute(final Player player, final Client client, final String[] args) {
+    public void execute(final Player player, final Client client, final Gamer gamer, final String[] args) {
         if (args.length == 0) {
             UtilMenu.open(new RoleSelectionMenu(this.getManager(), player) {
                 @Override
@@ -57,7 +58,7 @@ public class KitCommand extends Command<Champions, RoleManager> implements Playe
             }
 
             if (target == player) {
-                this.execute(player, client, new String[]{role.getName()});
+                this.execute(player, client, gamer, new String[]{role.getName()});
                 return;
             }
 
@@ -68,7 +69,7 @@ public class KitCommand extends Command<Champions, RoleManager> implements Playe
     }
 
     @Override
-    public List<String> getTabCompletion(final Player player, final Client client, final String[] args) {
+    public List<String> getTabCompletion(final Player player, final Client client, final Gamer gamer, final String[] args) {
         if (args.length == 1) {
             return this.getManager().getModulesByClass(Role.class).stream().map(Role::getName).filter(name -> name.toLowerCase().startsWith(args[0].toLowerCase())).collect(Collectors.toList());
         }
