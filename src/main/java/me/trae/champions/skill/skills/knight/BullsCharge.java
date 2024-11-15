@@ -7,6 +7,7 @@ import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.ActiveSkill;
 import me.trae.core.utility.UtilEntity;
 import me.trae.core.utility.UtilMessage;
+import me.trae.core.utility.UtilString;
 import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Effect;
@@ -47,9 +48,9 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
                 String.format("and slowing anything you hit for <green>%s</green>.", duration),
                 "",
                 "While charging, you take no knockback.",
-//                "",
-//                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString())),
-//                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString()))
+                "",
+                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
         };
     }
 
@@ -121,5 +122,15 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
         this.removeUser(damager);
 
         event.setReason(this.getName(), this.getPrimitiveCasted(Long.class, "Duration"));
+    }
+
+    @Override
+    public float getEnergy(final int level) {
+        return 30.0F;
+    }
+
+    @Override
+    public long getRecharge(final int level) {
+        return 8000L;
     }
 }

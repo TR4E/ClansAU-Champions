@@ -4,7 +4,10 @@ import me.trae.champions.Champions;
 import me.trae.champions.role.Role;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
+import me.trae.champions.skill.components.EnergyUsingSkillComponent;
 import me.trae.champions.skill.types.ChannelSkill;
+import me.trae.core.Core;
+import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.types.frame.SpigotUpdater;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.utility.UtilJava;
@@ -27,7 +30,7 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
                         return true;
                     }
 
-                    if (!(player.isBlocking()) || !(skill.canActivate(player))) {
+                    if (!(this.canActivate(player, skill))) {
                         skill.reset(player);
                         return true;
                     }
@@ -37,5 +40,29 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
                 });
             }
         }
+    }
+
+    private boolean canActivate(final Player player, final ChannelSkill<?, ?> skill) {
+        if (!(player.isBlocking())) {
+            return false;
+        }
+
+        if (!(skill.canActivate(player))) {
+            return false;
+        }
+
+        final int level = skill.getLevel(player);
+
+        if (skill instanceof EnergyUsingSkillComponent) {
+            final EnergyUsingSkillComponent energyComponent = UtilJava.cast(EnergyUsingSkillComponent.class, skill);
+
+            final EnergyManager energyManager = this.getInstance(Core.class).getManagerByClass(EnergyManager.class);
+
+            if (energyComponent.hasEnergyUsing(level) && !(energyManager.use(player, skill.getName(), energyComponent.getEnergyUsing(level), true))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

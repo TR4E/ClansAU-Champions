@@ -29,7 +29,7 @@ public class HandleChampionsItemBuilderUpdate extends SpigotListener<Champions, 
                 continue;
             }
 
-            builder.setDisplayName(String.format("%s %s", role.getName(), UtilString.clean(material.name().split("_")[1])));
+            builder.setDisplayName(String.format("<yellow>%s %s", role.getName(), UtilString.clean(material.name().split("_")[1])));
             builder.setLore(Arrays.asList(role.getDescription()));
             break;
         }

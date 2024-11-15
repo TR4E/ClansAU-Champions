@@ -35,9 +35,9 @@ public class BattleTaunt extends ChannelSkill<Brute, SkillData> {
                 "",
                 String.format("While channelling, any enemies within <green>%s</green> blocks", distance),
                 "are slowly pulled in towards you.",
-//                "",
-//                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString())),
-//                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString()))
+                "",
+                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
         };
     }
 
@@ -77,5 +77,20 @@ public class BattleTaunt extends ChannelSkill<Brute, SkillData> {
 
             UtilVelocity.velocity(target, UtilVelocity.getTrajectory(target.getLocation().toVector(), player.getLocation().toVector()), this.getPrimitiveCasted(Double.class, "Velocity"), 0.0D, 0.0D, 1.0D, true);
         }
+    }
+
+    @Override
+    public float getEnergy(final int level) {
+        return 0.0F;
+    }
+
+    @Override
+    public long getRecharge(final int level) {
+        return 0L;
+    }
+
+    @Override
+    public float getEnergyUsing(final int level) {
+        return 2.0F;
     }
 }

@@ -1,0 +1,16 @@
+package me.trae.champions.skill.components;
+
+import me.trae.core.utility.UtilMath;
+
+public interface EnergyUsingSkillComponent {
+
+    float getEnergyUsing(final int level);
+
+    default String getEnergyUsingString(final int level) {
+        return UtilMath.format(this.getEnergyUsing(level), "##.#");
+    }
+
+    default boolean hasEnergyUsing(final int level) {
+        return this.getEnergyUsing(level) > 0.0F;
+    }
+}
