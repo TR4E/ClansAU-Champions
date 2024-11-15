@@ -8,12 +8,16 @@ import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.ActiveSkill;
+import me.trae.champions.weapon.types.ChampionsPvPWeapon;
+import me.trae.core.Core;
 import me.trae.core.framework.types.frame.SpigotListener;
 import me.trae.core.utility.UtilServer;
+import me.trae.core.weapon.WeaponManager;
 import me.trae.core.world.events.PlayerItemInteractEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.inventory.ItemStack;
 
 public class HandleActiveSkillActivation extends SpigotListener<Champions, SkillManager> {
 
@@ -27,6 +31,12 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
             return;
         }
 
+        final ItemStack itemStack = event.getItemStack();
+
+        if (!(this.getInstance(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof ChampionsPvPWeapon)) {
+            return;
+        }
+
         final Player player = event.getPlayer();
 
         final Role role = this.getInstance().getManagerByClass(RoleManager.class).getPlayerRole(player);
@@ -34,7 +44,7 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
             return;
         }
 
-        final SkillType skillType = SkillType.getByMaterial(event.getItemStack().getType());
+        final SkillType skillType = SkillType.getByMaterial(itemStack.getType());
         if (skillType == null) {
             return;
         }
