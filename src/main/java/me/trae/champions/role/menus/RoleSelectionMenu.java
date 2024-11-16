@@ -32,6 +32,11 @@ public abstract class RoleSelectionMenu extends Menu<Champions, RoleManager> imp
                     }
 
                     @Override
+                    public String[] getLore() {
+                        return role.getDescription();
+                    }
+
+                    @Override
                     public void onClick(final Player player, final ClickType clickType) {
                         this.getMenu().onClick(player, role);
                     }
