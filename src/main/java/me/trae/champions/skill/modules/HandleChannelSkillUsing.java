@@ -4,7 +4,8 @@ import me.trae.champions.Champions;
 import me.trae.champions.role.Role;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
-import me.trae.champions.skill.components.EnergyUsingSkillComponent;
+import me.trae.champions.skill.components.EnergyNeededChannelSkillComponent;
+import me.trae.champions.skill.components.EnergyUsingChannelSkillComponent;
 import me.trae.champions.skill.types.ChannelSkill;
 import me.trae.core.Core;
 import me.trae.core.energy.EnergyManager;
@@ -35,6 +36,8 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
                         return true;
                     }
 
+                    data.setUsing(true);
+
                     skill.onUsing(player, UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
                     return false;
                 });
@@ -53,12 +56,22 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
 
         final int level = skill.getLevel(player);
 
-        if (skill instanceof EnergyUsingSkillComponent) {
-            final EnergyUsingSkillComponent energyComponent = UtilJava.cast(EnergyUsingSkillComponent.class, skill);
+        final EnergyManager energyManager = this.getInstance(Core.class).getManagerByClass(EnergyManager.class);
 
-            final EnergyManager energyManager = this.getInstance(Core.class).getManagerByClass(EnergyManager.class);
+        if (!(skill.isUsing(player))) {
+            final EnergyNeededChannelSkillComponent energyNeededComponent = UtilJava.cast(EnergyNeededChannelSkillComponent.class, skill);
 
-            if (energyComponent.hasEnergyUsing(level) && !(energyManager.use(player, skill.getName(), energyComponent.getEnergyUsing(level), true))) {
+            if (energyNeededComponent.hasEnergyNeeded(level)) {
+                if (energyManager.isExhausted(player, skill.getName(), energyNeededComponent.getEnergyNeeded(level), true)) {
+                    return false;
+                }
+            }
+        }
+
+        final EnergyUsingChannelSkillComponent energyUsingComponent = UtilJava.cast(EnergyUsingChannelSkillComponent.class, skill);
+
+        if (energyUsingComponent.hasEnergyUsing(level)) {
+            if (!(energyManager.use(player, skill.getName(), energyUsingComponent.getEnergyUsing(level), true))) {
                 return false;
             }
         }

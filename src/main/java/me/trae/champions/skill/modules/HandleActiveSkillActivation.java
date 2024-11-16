@@ -98,28 +98,26 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
 
         final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
 
-        if (skill instanceof RechargeSkillComponent) {
-            final RechargeSkillComponent rechargeComponent = UtilJava.cast(RechargeSkillComponent.class, skill);
+        final RechargeSkillComponent rechargeComponent = UtilJava.cast(RechargeSkillComponent.class, skill);
 
-            if (rechargeComponent.hasRecharge(level) && rechargeManager.isCooling(player, skill.getName(), true)) {
+        if (rechargeComponent.hasRecharge(level)) {
+            if (rechargeManager.isCooling(player, skill.getName(), true)) {
                 return false;
             }
         }
 
-        if (skill instanceof EnergySkillComponent) {
-            final EnergySkillComponent energyComponent = UtilJava.cast(EnergySkillComponent.class, skill);
+        final EnergySkillComponent energyComponent = UtilJava.cast(EnergySkillComponent.class, skill);
 
+        if (energyComponent.hasEnergy(level)) {
             final EnergyManager energyManager = this.getInstance(Core.class).getManagerByClass(EnergyManager.class);
 
-            if (energyComponent.hasEnergy(level) && !(energyManager.use(player, skill.getName(), energyComponent.getEnergy(level), true))) {
+            if (!(energyManager.use(player, skill.getName(), energyComponent.getEnergy(level), true))) {
                 return false;
             }
         }
 
-        if (skill instanceof RechargeSkillComponent) {
-            final RechargeSkillComponent rechargeComponent = UtilJava.cast(RechargeSkillComponent.class, skill);
-
-            if (rechargeComponent.hasRecharge(level) && !(rechargeManager.add(player, skill.getName(), rechargeComponent.getRecharge(level), true))) {
+        if (rechargeComponent.hasRecharge(level)) {
+            if (!(rechargeManager.add(player, skill.getName(), rechargeComponent.getRecharge(level), true))) {
                 return false;
             }
         }

@@ -2,7 +2,7 @@ package me.trae.champions.skill.skills.brute;
 
 import me.trae.api.champions.skill.SkillFriendlyFireEvent;
 import me.trae.champions.role.types.Brute;
-import me.trae.champions.skill.data.SkillData;
+import me.trae.champions.skill.data.types.ChannelSkillData;
 import me.trae.champions.skill.types.ChannelSkill;
 import me.trae.core.utility.*;
 import org.bukkit.Effect;
@@ -11,7 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
-public class BattleTaunt extends ChannelSkill<Brute, SkillData> {
+public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
 
     public BattleTaunt(final Brute module) {
         super(module);
@@ -22,8 +22,8 @@ public class BattleTaunt extends ChannelSkill<Brute, SkillData> {
     }
 
     @Override
-    public Class<SkillData> getClassOfData() {
-        return SkillData.class;
+    public Class<ChannelSkillData> getClassOfData() {
+        return ChannelSkillData.class;
     }
 
     @Override
@@ -43,11 +43,11 @@ public class BattleTaunt extends ChannelSkill<Brute, SkillData> {
 
     @Override
     public void onActivate(final Player player, final int level) {
-        this.addUser(new SkillData(player, level));
+        this.addUser(new ChannelSkillData(player, level));
     }
 
     @Override
-    public void onUsing(final Player player, final SkillData data) {
+    public void onUsing(final Player player, final ChannelSkillData data) {
         player.getWorld().playEffect(player.getLocation(), Effect.STEP_SOUND, Material.valueOf(this.getPrimitiveCasted(String.class, "Material")));
 
         for (double i = 0.0D; i < this.getPrimitiveCasted(Double.class, "Distance") + data.getLevel(); i++) {
@@ -87,6 +87,11 @@ public class BattleTaunt extends ChannelSkill<Brute, SkillData> {
     @Override
     public long getRecharge(final int level) {
         return 0L;
+    }
+
+    @Override
+    public float getEnergyNeeded(final int level) {
+        return 20.0F;
     }
 
     @Override
