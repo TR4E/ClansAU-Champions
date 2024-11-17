@@ -26,10 +26,10 @@ import java.util.Collections;
 
 public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Listener {
 
-    @ConfigInject(type = Integer.class, name = "Amplifier", defaultValue = "2")
+    @ConfigInject(type = Integer.class, path = "Amplifier", defaultValue = "2")
     private int amplifier;
 
-    @ConfigInject(type = Long.class, name = "Duration", defaultValue = "4000")
+    @ConfigInject(type = Long.class, path = "Duration", defaultValue = "4000")
     private long duration;
 
     public BullsCharge(final Knight module) {

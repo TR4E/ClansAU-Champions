@@ -14,13 +14,13 @@ import org.bukkit.entity.Player;
 
 public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
 
-    @ConfigInject(type = Double.class, name = "Distance", defaultValue = "4.0")
+    @ConfigInject(type = Double.class, path = "Distance", defaultValue = "4.0")
     private double distance;
 
-    @ConfigInject(type = Double.class, name = "Velocity", defaultValue = "0.3")
+    @ConfigInject(type = Double.class, path = "Velocity", defaultValue = "0.3")
     private double velocity;
 
-    @ConfigInject(type = String.class, name = "Material", defaultValue = "DIAMOND_BLOCK")
+    @ConfigInject(type = String.class, path = "Material", defaultValue = "DIAMOND_BLOCK")
     private String material;
 
     public BattleTaunt(final Brute module) {

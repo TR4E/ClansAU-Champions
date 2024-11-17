@@ -23,10 +23,10 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
 
     private final Map<UUID, Role> PLAYER_ROLES = new HashMap<>();
 
-    @ConfigInject(type = Boolean.class, name = "Starter-Kits", defaultValue = "false")
+    @ConfigInject(type = Boolean.class, path = "Starter-Kits", defaultValue = "false")
     private boolean starterKits;
 
-    @ConfigInject(type = Boolean.class, name = "Overpowered-Kits", defaultValue = "false")
+    @ConfigInject(type = Boolean.class, path = "Overpowered-Kits", defaultValue = "false")
     private boolean overpoweredKits;
 
     public RoleManager(final Champions instance) {

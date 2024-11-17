@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 
 public class SpeedEffect extends SpigotSubUpdater<Champions, Role> {
 
-    @ConfigInject(type = Integer.class, name = "Amplifier", defaultValue = "2")
+    @ConfigInject(type = Integer.class, path = "Amplifier", defaultValue = "2")
     private int amplifier;
 
     public SpeedEffect(final Role manager) {
