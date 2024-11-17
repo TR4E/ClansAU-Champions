@@ -5,6 +5,7 @@ import me.trae.champions.role.types.Knight;
 import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.ActiveSkill;
+import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.utility.UtilEntity;
 import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilString;
@@ -25,11 +26,14 @@ import java.util.Collections;
 
 public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Listener {
 
+    @ConfigInject(type = Integer.class, name = "Amplifier", defaultValue = "2")
+    private int amplifier;
+
+    @ConfigInject(type = Long.class, name = "Duration", defaultValue = "4000")
+    private long duration;
+
     public BullsCharge(final Knight module) {
         super(module, SkillType.AXE);
-
-        this.addPrimitive("Amplifier", 2);
-        this.addPrimitive("Duration", 4000L);
     }
 
     @Override
@@ -39,7 +43,7 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
 
     @Override
     public String[] getDescription(final int level) {
-        final String duration = UtilTime.getTime(this.getPrimitiveCasted(Long.class, "Duration"));
+        final String duration = UtilTime.getTime(this.duration);
 
         return new String[]{
                 "Right-Click with an Axe to Activate.",
@@ -60,11 +64,9 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
 
         new SoundCreator(Sound.ENDERMAN_SCREAM, 1.5F, 0.0F).play(player.getLocation());
 
-        final long duration = this.getPrimitiveCasted(Long.class, "Duration");
+        UtilEntity.givePotionEffect(player, PotionEffectType.SPEED, this.amplifier, this.duration);
 
-        UtilEntity.givePotionEffect(player, PotionEffectType.SPEED, this.getPrimitiveCasted(Integer.class, "Amplifier"), duration);
-
-        this.addUser(new SkillData(player, level, duration));
+        this.addUser(new SkillData(player, level, this.duration));
 
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You used <green><var></green>.", Collections.singletonList(this.getDisplayName(level)));
     }
@@ -106,7 +108,7 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
 
         final LivingEntity damagee = event.getDamageeByClass(LivingEntity.class);
 
-        UtilEntity.givePotionEffect(damagee, PotionEffectType.SLOW, this.getPrimitiveCasted(Integer.class, "Amplifier"), this.getPrimitiveCasted(Long.class, "Duration"));
+        UtilEntity.givePotionEffect(damagee, PotionEffectType.SLOW, this.amplifier, this.duration);
 
         new SoundCreator(Sound.ENDERMAN_SCREAM, 1.5F, 0.0F).play(damager.getLocation());
         new SoundCreator(Sound.ZOMBIE_METAL, 1.5F, 0.5F).play(damager.getLocation());
@@ -121,7 +123,7 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
         this.reset(damager);
         this.removeUser(damager);
 
-        event.setReason(this.getName(), this.getPrimitiveCasted(Long.class, "Duration"));
+        event.setReason(this.getName(), this.duration);
     }
 
     @Override

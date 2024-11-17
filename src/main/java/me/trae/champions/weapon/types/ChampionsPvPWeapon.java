@@ -34,6 +34,11 @@ public abstract class ChampionsPvPWeapon extends CustomItem<Champions, WeaponMan
         return true;
     }
 
+    @Override
+    public boolean showInMenu() {
+        return false;
+    }
+
     @EventHandler(priority = EventPriority.LOW)
     public void onCustomDamage(final CustomDamageEvent event) {
         if (event.isCancelled()) {

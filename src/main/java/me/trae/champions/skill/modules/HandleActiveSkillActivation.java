@@ -6,8 +6,6 @@ import me.trae.champions.Champions;
 import me.trae.champions.role.Role;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
-import me.trae.champions.skill.components.EnergySkillComponent;
-import me.trae.champions.skill.components.RechargeSkillComponent;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.ActiveSkill;
 import me.trae.champions.weapon.types.ChampionsPvPWeapon;
@@ -15,7 +13,6 @@ import me.trae.core.Core;
 import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.types.frame.SpigotListener;
 import me.trae.core.recharge.RechargeManager;
-import me.trae.core.utility.UtilJava;
 import me.trae.core.utility.UtilServer;
 import me.trae.core.weapon.WeaponManager;
 import me.trae.core.world.events.PlayerItemInteractEvent;
@@ -98,26 +95,22 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
 
         final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
 
-        final RechargeSkillComponent rechargeComponent = UtilJava.cast(RechargeSkillComponent.class, skill);
-
-        if (rechargeComponent.hasRecharge(level)) {
+        if (skill.hasRecharge(level)) {
             if (rechargeManager.isCooling(player, skill.getName(), true)) {
                 return false;
             }
         }
 
-        final EnergySkillComponent energyComponent = UtilJava.cast(EnergySkillComponent.class, skill);
-
-        if (energyComponent.hasEnergy(level)) {
+        if (skill.hasEnergy(level)) {
             final EnergyManager energyManager = this.getInstance(Core.class).getManagerByClass(EnergyManager.class);
 
-            if (!(energyManager.use(player, skill.getName(), energyComponent.getEnergy(level), true))) {
+            if (!(energyManager.use(player, skill.getName(), skill.getEnergy(level), true))) {
                 return false;
             }
         }
 
-        if (rechargeComponent.hasRecharge(level)) {
-            if (!(rechargeManager.add(player, skill.getName(), rechargeComponent.getRecharge(level), true))) {
+        if (skill.hasRecharge(level)) {
+            if (!(rechargeManager.add(player, skill.getName(), skill.getRecharge(level), true))) {
                 return false;
             }
         }

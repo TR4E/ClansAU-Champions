@@ -6,6 +6,7 @@ import me.trae.champions.role.interfaces.IRoleManager;
 import me.trae.champions.role.modules.*;
 import me.trae.champions.role.types.*;
 import me.trae.champions.role.types.models.Archer;
+import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.framework.SpigotManager;
 import me.trae.core.utility.UtilItem;
 import me.trae.core.utility.UtilJava;
@@ -22,10 +23,14 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
 
     private final Map<UUID, Role> PLAYER_ROLES = new HashMap<>();
 
+    @ConfigInject(type = Boolean.class, name = "Starter-Kits", defaultValue = "false")
+    private boolean starterKits;
+
+    @ConfigInject(type = Boolean.class, name = "Overpowered-Kits", defaultValue = "false")
+    private boolean overpoweredKits;
+
     public RoleManager(final Champions instance) {
         super(instance);
-
-        this.addPrimitive("Starter-Kits", false);
     }
 
     @Override
@@ -46,6 +51,7 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
         addModule(new HandleChampionsItemBuilderUpdate(this));
         addModule(new HandleRoleCustomDamageSound(this));
         addModule(new HandleRoleEquip(this));
+        addModule(new RemovePositivePotionEffectsOnRoleChange(this));
         addModule(new RemovePotionEffectsOnRoleChange(this));
     }
 
@@ -87,7 +93,9 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
     }
 
     @Override
-    public void giveKit(final Player player, final Role role, final boolean overpowered) {
+    public void giveKit(final Player player, final Role role, boolean overpowered) {
+        overpowered = this.overpoweredKits || overpowered;
+
         UtilItem.insert(player, new ItemStack(overpowered ? Material.DIAMOND_SWORD : Material.IRON_SWORD));
         UtilItem.insert(player, new ItemStack(overpowered ? Material.GOLD_AXE : Material.IRON_AXE));
 
@@ -96,7 +104,7 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
             UtilItem.insert(player, new ItemStack(Material.ARROW, overpowered ? 64 : 32));
         }
 
-        if (this.getPrimitiveCasted(Boolean.class, "Starter-Kits")) {
+        if (this.starterKits) {
             UtilItem.insert(player, new ItemStack(overpowered ? Material.DIAMOND_SPADE : Material.IRON_SPADE));
             UtilItem.insert(player, new ItemStack(overpowered ? Material.DIAMOND_PICKAXE : Material.IRON_PICKAXE));
         }
