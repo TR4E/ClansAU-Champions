@@ -26,6 +26,12 @@ import java.util.Collections;
 
 public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Listener {
 
+    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "30.0")
+    private float energy;
+
+    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "12000")
+    private long recharge;
+
     @ConfigInject(type = Integer.class, path = "Amplifier", defaultValue = "2")
     private int amplifier;
 
@@ -128,11 +134,11 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
 
     @Override
     public float getEnergy(final int level) {
-        return 30.0F;
+        return this.energy;
     }
 
     @Override
     public long getRecharge(final int level) {
-        return 8000L;
+        return this.recharge;
     }
 }

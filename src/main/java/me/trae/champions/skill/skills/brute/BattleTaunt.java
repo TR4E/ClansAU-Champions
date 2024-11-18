@@ -14,6 +14,12 @@ import org.bukkit.entity.Player;
 
 public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
 
+    @ConfigInject(type = Float.class, path = "Energy-Needed", defaultValue = "20.0")
+    private float energyNeeded;
+
+    @ConfigInject(type = Float.class, path = "Energy-Using", defaultValue = "2.0")
+    private float energyUsing;
+
     @ConfigInject(type = Double.class, path = "Distance", defaultValue = "4.0")
     private double distance;
 
@@ -91,17 +97,17 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
     }
 
     @Override
-    public long getRecharge(final int level) {
-        return 0L;
-    }
-
-    @Override
     public float getEnergyNeeded(final int level) {
-        return 20.0F;
+        return this.energyNeeded;
     }
 
     @Override
     public float getEnergyUsing(final int level) {
-        return 2.0F;
+        return this.energyUsing;
+    }
+
+    @Override
+    public long getRecharge(final int level) {
+        return 0L;
     }
 }
