@@ -1,5 +1,6 @@
 package me.trae.champions.role;
 
+import me.trae.api.champions.role.KitReceiveEvent;
 import me.trae.champions.Champions;
 import me.trae.champions.role.commands.KitCommand;
 import me.trae.champions.role.interfaces.IRoleManager;
@@ -10,6 +11,7 @@ import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.framework.SpigotManager;
 import me.trae.core.utility.UtilItem;
 import me.trae.core.utility.UtilJava;
+import me.trae.core.utility.UtilServer;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -94,7 +96,10 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
 
     @Override
     public void giveKit(final Player player, final Role role, boolean overpowered) {
-        overpowered = this.overpoweredKits || overpowered;
+        final KitReceiveEvent event = new KitReceiveEvent(player, role);
+        UtilServer.callEvent(event);
+
+        overpowered = this.overpoweredKits || event.isOverpowered() || overpowered;
 
         UtilItem.insert(player, new ItemStack(overpowered ? Material.DIAMOND_SWORD : Material.IRON_SWORD));
         UtilItem.insert(player, new ItemStack(overpowered ? Material.GOLD_AXE : Material.IRON_AXE));
