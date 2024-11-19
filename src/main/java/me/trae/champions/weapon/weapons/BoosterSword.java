@@ -1,8 +1,8 @@
 package me.trae.champions.weapon.weapons;
 
+import me.trae.api.champions.weapon.ChampionsPvPWeapon;
 import me.trae.champions.weapon.WeaponManager;
 import me.trae.champions.weapon.models.BoosterWeapon;
-import me.trae.api.champions.weapon.ChampionsPvPWeapon;
 import me.trae.core.utility.UtilString;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
