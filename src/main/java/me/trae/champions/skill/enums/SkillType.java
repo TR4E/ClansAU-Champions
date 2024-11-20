@@ -1,9 +1,14 @@
 package me.trae.champions.skill.enums;
 
 import me.trae.champions.skill.enums.interfaces.ISkillType;
+import me.trae.champions.weapon.types.ChampionsPvPWeapon;
+import me.trae.core.Core;
+import me.trae.core.utility.UtilPlugin;
 import me.trae.core.utility.UtilString;
 import me.trae.core.utility.enums.ActionType;
+import me.trae.core.weapon.WeaponManager;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -53,5 +58,14 @@ public enum SkillType implements ISkillType {
         }
 
         return Collections.emptyList();
+    }
+
+    @Override
+    public boolean isItemStack(final ItemStack itemStack) {
+        if (!(UtilPlugin.getInstance(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof ChampionsPvPWeapon)) {
+            return false;
+        }
+
+        return this.getMaterials().contains(itemStack.getType());
     }
 }

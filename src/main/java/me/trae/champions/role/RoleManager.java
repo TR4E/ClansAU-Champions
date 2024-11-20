@@ -7,11 +7,14 @@ import me.trae.champions.role.interfaces.IRoleManager;
 import me.trae.champions.role.modules.*;
 import me.trae.champions.role.types.*;
 import me.trae.champions.role.types.models.Archer;
+import me.trae.champions.weapon.models.BoosterWeapon;
+import me.trae.champions.weapon.weapons.BoosterBow;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.framework.SpigotManager;
 import me.trae.core.utility.UtilItem;
 import me.trae.core.utility.UtilJava;
 import me.trae.core.utility.UtilServer;
+import me.trae.core.weapon.registry.WeaponRegistry;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -105,7 +108,7 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
         UtilItem.insert(player, new ItemStack(overpowered ? Material.GOLD_AXE : Material.IRON_AXE));
 
         if (role instanceof Archer) {
-            UtilItem.insert(player, new ItemStack(Material.BOW));
+            UtilItem.insert(player, overpowered ? WeaponRegistry.getWeaponByClass(BoosterBow.class).getFinalBuilder().toItemStack() : new ItemStack(Material.BOW));
             UtilItem.insert(player, new ItemStack(Material.ARROW, overpowered ? 64 : 32));
         }
 

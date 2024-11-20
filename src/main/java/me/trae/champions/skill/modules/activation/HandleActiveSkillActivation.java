@@ -1,8 +1,8 @@
-package me.trae.champions.skill.modules;
+package me.trae.champions.skill.modules.activation;
 
 import me.trae.api.champions.skill.SkillActivateEvent;
 import me.trae.api.champions.skill.SkillPreActivateEvent;
-import me.trae.api.champions.weapon.ChampionsPvPWeapon;
+import me.trae.champions.weapon.types.ChampionsPvPWeapon;
 import me.trae.champions.Champions;
 import me.trae.champions.role.Role;
 import me.trae.champions.role.RoleManager;

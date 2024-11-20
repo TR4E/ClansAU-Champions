@@ -1,4 +1,4 @@
-package me.trae.champions.skill.modules;
+package me.trae.champions.skill.modules.activation;
 
 import me.trae.champions.Champions;
 import me.trae.champions.role.Role;

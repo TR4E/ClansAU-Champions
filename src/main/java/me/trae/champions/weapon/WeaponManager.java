@@ -13,12 +13,14 @@ public class WeaponManager extends AbstractWeaponManager<Champions> {
     @Override
     public void registerModules() {
         addModule(new BoosterAxe(this));
+        addModule(new BoosterBow(this));
         addModule(new BoosterSword(this));
 
         addModule(new PowerAxe(this));
         addModule(new PowerSword(this));
 
         addModule(new StandardAxe(this));
+        addModule(new StandardBow(this));
         addModule(new StandardSword(this));
     }
 }
