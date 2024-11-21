@@ -35,6 +35,9 @@ public class HandleSkillRechargeProgressBar extends SpigotListener<Champions, Sk
         }
 
         final Player player = event.getPlayer();
+        if (player == null) {
+            return;
+        }
 
         final ItemStack itemStack = player.getEquipment().getItemInHand();
         if (itemStack == null) {
