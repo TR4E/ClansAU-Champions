@@ -11,6 +11,7 @@ import me.trae.core.utility.UtilString;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 
@@ -25,17 +26,19 @@ public class HandleChampionsItemBuilderUpdate extends SpigotListener<Champions, 
 
     @EventHandler
     public void onItemUpdate(final ItemUpdateEvent event) {
-        final ItemBuilder builder = event.getBuilder();
-
-        final Material material = builder.getItemStack().getType();
+        final Material material = event.getBuilder().getItemStack().getType();
 
         for (final Role role : this.getManager().getModulesByClass(Role.class)) {
             if (!(role.getArmour().contains(material))) {
                 continue;
             }
 
-            builder.setDisplayName(ChatColor.valueOf(this.displayNameChatColor) + String.format("%s %s", role.getName(), UtilString.clean(material.name().split("_")[1])));
-            builder.setLore(Arrays.asList(role.getDescription()));
+            final ItemBuilder itemBuilder = new ItemBuilder(new ItemStack(material));
+
+            itemBuilder.setDisplayName(ChatColor.valueOf(this.displayNameChatColor) + String.format("%s %s", role.getName(), UtilString.clean(material.name().split("_")[1])));
+            itemBuilder.setLore(Arrays.asList(role.getDescription()));
+
+            event.setBuilder(itemBuilder);
             break;
         }
     }

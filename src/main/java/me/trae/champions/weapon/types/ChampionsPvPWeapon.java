@@ -1,6 +1,6 @@
 package me.trae.champions.weapon.types;
 
-import me.trae.api.damage.events.CustomDamageEvent;
+import me.trae.api.damage.events.WeaponReductionEvent;
 import me.trae.champions.Champions;
 import me.trae.champions.weapon.WeaponManager;
 import me.trae.champions.weapon.types.interfaces.IChampionsPvPWeapon;
@@ -44,24 +44,20 @@ public abstract class ChampionsPvPWeapon extends Weapon<Champions, WeaponManager
         return 0.0D;
     }
 
-    @EventHandler(priority = EventPriority.LOW)
-    public void onCustomDamage(final CustomDamageEvent event) {
-        if (this.getDamage() <= 0.0D) {
-            return;
-        }
-
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onWeaponReduction(final WeaponReductionEvent event) {
         if (event.isCancelled()) {
             return;
         }
 
-        if (!(event.getDamager() instanceof Player)) {
+        if (!(event.getEntity() instanceof Player)) {
             return;
         }
 
-        if (!(this.isWeaponByItemStack(event.getDamagerByClass(Player.class).getInventory().getItemInHand()))) {
+        if (!(this.isWeaponByItemStack(event.getItemStack()))) {
             return;
         }
 
-        event.setDamage(this.getDamage());
+        event.setReduction(this.getDamage());
     }
 }
