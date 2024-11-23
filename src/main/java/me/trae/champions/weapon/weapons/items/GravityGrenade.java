@@ -11,6 +11,7 @@ import me.trae.core.throwable.events.ThrowableGroundedEvent;
 import me.trae.core.utility.*;
 import me.trae.core.utility.enums.ActionType;
 import me.trae.core.weapon.data.WeaponData;
+import me.trae.core.weapon.events.WeaponFriendlyFireEvent;
 import me.trae.core.weapon.events.WeaponLocationEvent;
 import me.trae.core.weapon.types.ActiveCustomItem;
 import org.bukkit.Effect;
@@ -55,6 +56,9 @@ public class GravityGrenade extends ActiveCustomItem<Champions, WeaponManager, W
 
     @ConfigInject(type = Double.class, path = "Gravity-Radius", defaultValue = "5.0")
     private double gravityRadius;
+
+    @ConfigInject(type = Boolean.class, path = "Friendly-Fire", defaultValue = "false")
+    private boolean friendlyFire;
 
     public GravityGrenade(final WeaponManager manager) {
         super(manager, new ItemStack(Material.STAINED_CLAY, 1, (byte) 15), ActionType.LEFT_CLICK);
@@ -106,9 +110,14 @@ public class GravityGrenade extends ActiveCustomItem<Champions, WeaponManager, W
             return;
         }
 
-        event.setRemoveItem(true);
-
         final Location location = event.getLocation().clone();
+
+        if (UtilServer.getEvent(new WeaponLocationEvent(this, location)).isCancelled()) {
+            event.setCancelled(true);
+            return;
+        }
+
+        event.setRemoveItem(true);
 
         final double increment = 2 * Math.PI / particleCount;
 
@@ -139,8 +148,27 @@ public class GravityGrenade extends ActiveCustomItem<Champions, WeaponManager, W
         final LivingEntity target = event.getTarget();
 
         if (UtilServer.getEvent(new WeaponLocationEvent(this, target.getLocation())).isCancelled()) {
-            event.setCancelled(true);
             return;
+        }
+
+        final Player throwerPlayer = event.getThrowable().getThrowerPlayer();
+
+        if (target instanceof Player) {
+            final WeaponFriendlyFireEvent weaponFriendlyFireEvent = new WeaponFriendlyFireEvent(this, throwerPlayer, event.getTargetByClass(Player.class));
+            UtilServer.callEvent(weaponFriendlyFireEvent);
+            if (weaponFriendlyFireEvent.isCancelled()) {
+                return;
+            }
+
+            if (!(this.friendlyFire)) {
+                if (target == throwerPlayer) {
+                    return;
+                }
+
+                if (!(weaponFriendlyFireEvent.isVulnerable())) {
+                    return;
+                }
+            }
         }
 
         UtilEntity.givePotionEffect(target, PotionEffectType.BLINDNESS, this.blindnessAmplifier, this.blindnessDuration);

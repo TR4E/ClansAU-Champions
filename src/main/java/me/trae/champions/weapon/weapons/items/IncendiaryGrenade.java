@@ -8,13 +8,12 @@ import me.trae.core.throwable.Throwable;
 import me.trae.core.throwable.ThrowableManager;
 import me.trae.core.throwable.events.ThrowableCollideEntityEvent;
 import me.trae.core.throwable.events.ThrowableGroundedEvent;
-import me.trae.core.utility.UtilMessage;
-import me.trae.core.utility.UtilParticle;
-import me.trae.core.utility.UtilString;
-import me.trae.core.utility.UtilTime;
+import me.trae.core.utility.*;
 import me.trae.core.utility.enums.ActionType;
 import me.trae.core.utility.objects.SoundCreator;
 import me.trae.core.weapon.data.WeaponData;
+import me.trae.core.weapon.events.WeaponFriendlyFireEvent;
+import me.trae.core.weapon.events.WeaponLocationEvent;
 import me.trae.core.weapon.types.ActiveCustomItem;
 import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Location;
@@ -49,6 +48,9 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
 
     @ConfigInject(type = Double.class, path = "Radius", defaultValue = "3.0")
     private double radius;
+
+    @ConfigInject(type = Boolean.class, path = "Friendly-Fire", defaultValue = "false")
+    private boolean friendlyFire;
 
     public IncendiaryGrenade(final WeaponManager manager) {
         super(manager, new ItemStack(Material.MAGMA_CREAM), ActionType.LEFT_CLICK);
@@ -100,9 +102,14 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
             return;
         }
 
-        event.setRemoveItem(true);
-
         final Location location = event.getLocation();
+
+        if (UtilServer.getEvent(new WeaponLocationEvent(this, location)).isCancelled()) {
+            event.setCancelled(true);
+            return;
+        }
+
+        event.setRemoveItem(true);
 
         final Random random = new Random();
 
@@ -131,7 +138,27 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
             return;
         }
 
+        final Player throwerPlayer = event.getThrowable().getThrowerPlayer();
+
         final LivingEntity target = event.getTarget();
+
+        if (target instanceof Player) {
+            final WeaponFriendlyFireEvent weaponFriendlyFireEvent = new WeaponFriendlyFireEvent(this, throwerPlayer, event.getTargetByClass(Player.class));
+            UtilServer.callEvent(weaponFriendlyFireEvent);
+            if (weaponFriendlyFireEvent.isCancelled()) {
+                return;
+            }
+
+            if (!(this.friendlyFire)) {
+                if (target == throwerPlayer) {
+                    return;
+                }
+
+                if (!(weaponFriendlyFireEvent.isVulnerable())) {
+                    return;
+                }
+            }
+        }
 
         target.setFireTicks((int) (this.fireDuration / 50));
     }

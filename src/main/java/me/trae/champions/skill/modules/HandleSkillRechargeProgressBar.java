@@ -70,15 +70,11 @@ public class HandleSkillRechargeProgressBar extends SpigotListener<Champions, Sk
     }
 
     private void sendActionBar(final Player player, final Recharge recharge) {
-        String text = String.format("<green><bold>%s Recharged", recharge.getName());
-
-        if (!(recharge.hasExpired())) {
-            text = String.format("<bold>%s</bold> %s <green>%s", recharge.getName(), recharge.getProgressBar(), recharge.getRemainingString());
-        } else {
+        if (recharge.hasExpired()) {
             UtilServer.runTaskLater(Champions.class, false, 20L, () -> UtilTitle.sendActionBarByLock(player, " ", this.ACTION_BAR_KEY));
         }
 
-        UtilTitle.sendActionBarByKey(player, text, this.ACTION_BAR_KEY);
+        UtilTitle.sendActionBarByKey(player, recharge.getFullProgressBar(), this.ACTION_BAR_KEY);
     }
 
     private void reset(final Player player) {

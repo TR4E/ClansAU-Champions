@@ -12,6 +12,7 @@ import me.trae.core.utility.*;
 import me.trae.core.utility.enums.ActionType;
 import me.trae.core.utility.objects.SoundCreator;
 import me.trae.core.weapon.data.WeaponData;
+import me.trae.core.weapon.events.WeaponFriendlyFireEvent;
 import me.trae.core.weapon.events.WeaponLocationEvent;
 import me.trae.core.weapon.types.ActiveCustomItem;
 import org.bukkit.Effect;
@@ -19,7 +20,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -47,6 +47,9 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
     @ConfigInject(type = Double.class, path = "Item-Velocity", defaultValue = "1.8")
     private double itemVelocity;
 
+    @ConfigInject(type = Boolean.class, path = "Friendly-Fire", defaultValue = "true")
+    private boolean friendlyFire;
+
     public ExtinguishingPotion(final WeaponManager manager) {
         super(manager, new ItemStack(Material.POTION, 1, (short) 0), ActionType.ALL);
     }
@@ -70,7 +73,7 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
                 "",
                 UtilString.pair("<gray>Right-Click", "<yellow>Drink"),
                 "   Douses Self",
-                String.format("   Fire Resistance <green>%s</green> for <green>%s</green>", this.amplifier, UtilTime.getTime(this.duration)),
+                String.format("   Fire Resistance <green>%s</green> for <green>%s</green>", this.amplifier, UtilTime.getTime(this.duration))
         };
     }
 
@@ -134,7 +137,11 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
 
         final Location location = event.getLocation();
 
-        for (final Block block : UtilBlock.getInRadius(location, 3)) {
+        if (UtilServer.getEvent(new WeaponLocationEvent(this, location)).isCancelled()) {
+            return;
+        }
+
+        for (final Block block : UtilBlock.getInRadius(location, 2)) {
             if (block.getType() == Material.AIR || UtilBlock.isInLiquid(block.getLocation())) {
                 continue;
             }
@@ -148,7 +155,7 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
                 block.getWorld().playEffect(block.getLocation(), Effect.EXTINGUISH, 1);
             }
 
-            UtilBlock.splash(location.getBlock().getRelative(BlockFace.DOWN).getLocation());
+            UtilBlock.splash(block.getLocation());
         }
     }
 
@@ -170,6 +177,26 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
 
         if (event.getThrowable().isCollided(target)) {
             return;
+        }
+
+        final Player throwerPlayer = event.getThrowable().getThrowerPlayer();
+
+        if (target instanceof Player) {
+            final WeaponFriendlyFireEvent weaponFriendlyFireEvent = new WeaponFriendlyFireEvent(this, throwerPlayer, event.getTargetByClass(Player.class));
+            UtilServer.callEvent(weaponFriendlyFireEvent);
+            if (weaponFriendlyFireEvent.isCancelled()) {
+                return;
+            }
+
+            if (!(this.friendlyFire)) {
+                if (target == throwerPlayer) {
+                    return;
+                }
+
+                if (!(weaponFriendlyFireEvent.isVulnerable())) {
+                    return;
+                }
+            }
         }
 
         target.setFireTicks(0);

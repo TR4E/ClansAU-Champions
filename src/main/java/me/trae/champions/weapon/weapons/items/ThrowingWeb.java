@@ -10,16 +10,15 @@ import me.trae.core.throwable.Throwable;
 import me.trae.core.throwable.ThrowableManager;
 import me.trae.core.throwable.events.ThrowableGroundedEvent;
 import me.trae.core.throwable.events.ThrowableUpdaterEvent;
-import me.trae.core.utility.UtilBlock;
-import me.trae.core.utility.UtilMessage;
-import me.trae.core.utility.UtilString;
-import me.trae.core.utility.UtilTime;
+import me.trae.core.utility.*;
 import me.trae.core.utility.enums.ActionType;
 import me.trae.core.weapon.data.WeaponData;
+import me.trae.core.weapon.events.WeaponLocationEvent;
 import me.trae.core.weapon.types.ActiveCustomItem;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -44,8 +43,11 @@ public class ThrowingWeb extends ActiveCustomItem<Champions, WeaponManager, Weap
     @ConfigInject(type = Double.class, path = "Item-Velocity", defaultValue = "1.8")
     private double itemVelocity;
 
-    @ConfigInject(type = Integer.class, path = "Particle-Count", defaultValue = "50")
+    @ConfigInject(type = Integer.class, path = "Particle-Count", defaultValue = "8")
     private int particleCount;
+
+    @ConfigInject(type = Boolean.class, path = "Trap-Corners", defaultValue = "false")
+    private boolean trapCorners;
 
     public ThrowingWeb(final WeaponManager manager) {
         super(manager, new ItemStack(Material.WEB), ActionType.LEFT_CLICK);
@@ -92,6 +94,10 @@ public class ThrowingWeb extends ActiveCustomItem<Champions, WeaponManager, Weap
 
         final Random random = new Random();
 
+        if (UtilServer.getEvent(new WeaponLocationEvent(this, item.getLocation())).isCancelled()) {
+            return;
+        }
+
         for (int i = 0; i < this.particleCount; i++) {
             item.getWorld().playEffect(item.getLocation().add(0.0D, random.nextGaussian(), 0.0D), Effect.TILE_BREAK, this.getItemStack().getType().getId());
         }
@@ -109,9 +115,19 @@ public class ThrowingWeb extends ActiveCustomItem<Champions, WeaponManager, Weap
 
         event.setCancelled(true);
 
+        final Location location = event.getLocation();
+
+        if (UtilServer.getEvent(new WeaponLocationEvent(this, location)).isCancelled()) {
+            return;
+        }
+
         final BlockRestoreManager blockRestoreManager = this.getInstance(Core.class).getManagerByClass(BlockRestoreManager.class);
 
-        for (final Block block : this.getBlocks(event.getLocation())) {
+        for (final Block block : this.getBlocks(location)) {
+            if (UtilServer.getEvent(new WeaponLocationEvent(this, block.getLocation())).isCancelled()) {
+                continue;
+            }
+
             final BlockRestore blockRestore = new BlockRestore(this.getAbilityName(), block, this.getItemStack().getType(), (byte) 0, this.duration) {
                 @Override
                 public boolean isSaveToRepository() {
@@ -123,36 +139,43 @@ public class ThrowingWeb extends ActiveCustomItem<Champions, WeaponManager, Weap
         }
     }
 
-    public List<Block> getBlocks(final Location locationm) {
+    public List<Block> getBlocks(final Location location) {
         final List<Block> list = new ArrayList<>();
 
-        final int startX = locationm.getBlockX() - 1;
-        final int startZ = locationm.getBlockZ() - 1;
-        final int centerY = locationm.getBlockY();
+        final int centerX = location.getBlockX();
+        final int centerY = location.getBlockY();
+        final int centerZ = location.getBlockZ();
 
-        for (int x = startX; x <= startX + 2; x++) {
-            for (int z = startZ; z <= startZ + 2; z++) {
-                list.add(new Location(locationm.getWorld(), x, centerY, z).getBlock());
-            }
+        final World world = location.getWorld();
+
+        // Center
+        list.add(world.getBlockAt(centerX, centerY, centerZ));
+        // Left
+        list.add(world.getBlockAt(centerX - 1, centerY, centerZ));
+        // Right
+        list.add(world.getBlockAt(centerX + 1, centerY, centerZ));
+        // Back
+        list.add(world.getBlockAt(centerX, centerY, centerZ - 1));
+        // Front
+        list.add(world.getBlockAt(centerX, centerY, centerZ + 1));
+        // Top Center
+        list.add(world.getBlockAt(centerX, centerY + 1, centerZ));
+
+        if (this.trapCorners) {
+            // Back-left corner
+            list.add(world.getBlockAt(centerX - 1, centerY, centerZ - 1));
+            // Front-left corner
+            list.add(world.getBlockAt(centerX - 1, centerY, centerZ + 1));
+            // Back-right corner
+            list.add(world.getBlockAt(centerX + 1, centerY, centerZ - 1));
+            // Front-right corner
+            list.add(world.getBlockAt(centerX + 1, centerY, centerZ + 1));
         }
 
-        list.add(new Location(locationm.getWorld(), locationm.getBlockX(), centerY + 1, locationm.getBlockZ()).getBlock());
-
-        list.removeIf(block -> {
-            if (block == null) {
-                return true;
-            }
-
-            if (!(UtilBlock.airFoliage(block.getType()))) {
-                return true;
-            }
-
-            return false;
-        });
+        list.removeIf(block -> block == null || !UtilBlock.airFoliage(block.getType()));
 
         return list;
     }
-
 
     @Override
     public float getEnergy(final ActionType actionType) {
