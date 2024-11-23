@@ -1,4 +1,4 @@
-package me.trae.champions.weapon.weapons;
+package me.trae.champions.weapon.weapons.pvp;
 
 import me.trae.champions.weapon.WeaponManager;
 import me.trae.champions.weapon.models.BoosterWeapon;

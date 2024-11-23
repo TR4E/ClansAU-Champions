@@ -1,22 +1,21 @@
-package me.trae.champions.weapon.weapons;
+package me.trae.champions.weapon.weapons.pvp;
 
 import me.trae.champions.weapon.WeaponManager;
-import me.trae.champions.weapon.models.BoosterWeapon;
 import me.trae.champions.weapon.types.ChampionsPvPWeapon;
 import me.trae.core.utility.UtilString;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class BoosterSword extends ChampionsPvPWeapon implements BoosterWeapon {
+public class StandardSword extends ChampionsPvPWeapon {
 
-    public BoosterSword(final WeaponManager manager) {
-        super(manager, new ItemStack(Material.GOLD_SWORD));
+    public StandardSword(final WeaponManager manager) {
+        super(manager, new ItemStack(Material.IRON_SWORD));
     }
 
     @Override
     public String[] getDescription() {
         return new String[]{
-                "Increases Sword Skill Level by 1.",
+                "Just a Standard Sword.",
                 "",
                 UtilString.pair("<gray>Damage", String.format("<green>%s", this.getDamage()))
         };
@@ -24,6 +23,6 @@ public class BoosterSword extends ChampionsPvPWeapon implements BoosterWeapon {
 
     @Override
     public double getDamage() {
-        return 5.0D;
+        return 4.0D;
     }
 }

@@ -1,21 +1,22 @@
-package me.trae.champions.weapon.weapons;
+package me.trae.champions.weapon.weapons.pvp;
 
 import me.trae.champions.weapon.WeaponManager;
+import me.trae.champions.weapon.models.BoosterWeapon;
 import me.trae.champions.weapon.types.ChampionsPvPWeapon;
 import me.trae.core.utility.UtilString;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class PowerAxe extends ChampionsPvPWeapon {
+public class BoosterAxe extends ChampionsPvPWeapon implements BoosterWeapon {
 
-    public PowerAxe(final WeaponManager manager) {
-        super(manager, new ItemStack(Material.DIAMOND_AXE));
+    public BoosterAxe(final WeaponManager manager) {
+        super(manager, new ItemStack(Material.GOLD_AXE));
     }
 
     @Override
     public String[] getDescription() {
         return new String[]{
-                "Increases Melee Damage by 1.",
+                "Increases Axe Skill Level by 1.",
                 "",
                 UtilString.pair("<gray>Damage", String.format("<green>%s", this.getDamage()))
         };
@@ -23,6 +24,6 @@ public class PowerAxe extends ChampionsPvPWeapon {
 
     @Override
     public double getDamage() {
-        return 5.0D;
+        return 4.0D;
     }
 }

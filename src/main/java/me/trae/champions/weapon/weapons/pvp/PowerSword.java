@@ -1,4 +1,4 @@
-package me.trae.champions.weapon.weapons;
+package me.trae.champions.weapon.weapons.pvp;
 
 import me.trae.champions.weapon.WeaponManager;
 import me.trae.champions.weapon.types.ChampionsPvPWeapon;
@@ -6,16 +6,16 @@ import me.trae.core.utility.UtilString;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class StandardAxe extends ChampionsPvPWeapon {
+public class PowerSword extends ChampionsPvPWeapon {
 
-    public StandardAxe(final WeaponManager manager) {
-        super(manager, new ItemStack(Material.IRON_AXE));
+    public PowerSword(final WeaponManager manager) {
+        super(manager, new ItemStack(Material.DIAMOND_SWORD));
     }
 
     @Override
     public String[] getDescription() {
         return new String[]{
-                "Just a Standard Axe.",
+                "Increases Melee Damage by 1.",
                 "",
                 UtilString.pair("<gray>Damage", String.format("<green>%s", this.getDamage()))
         };
@@ -23,6 +23,6 @@ public class StandardAxe extends ChampionsPvPWeapon {
 
     @Override
     public double getDamage() {
-        return 3.0D;
+        return 6.0D;
     }
 }

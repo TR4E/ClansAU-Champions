@@ -7,7 +7,7 @@ import me.trae.champions.role.interfaces.IRoleManager;
 import me.trae.champions.role.modules.*;
 import me.trae.champions.role.types.*;
 import me.trae.champions.role.types.models.Archer;
-import me.trae.champions.weapon.weapons.BoosterBow;
+import me.trae.champions.weapon.weapons.pvp.BoosterBow;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.framework.SpigotManager;
 import me.trae.core.utility.UtilItem;

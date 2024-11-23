@@ -1,4 +1,4 @@
-package me.trae.champions.weapon.weapons;
+package me.trae.champions.weapon.weapons.pvp;
 
 import me.trae.champions.weapon.WeaponManager;
 import me.trae.champions.weapon.models.BoosterWeapon;
@@ -7,16 +7,16 @@ import me.trae.core.utility.UtilString;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class BoosterAxe extends ChampionsPvPWeapon implements BoosterWeapon {
+public class BoosterSword extends ChampionsPvPWeapon implements BoosterWeapon {
 
-    public BoosterAxe(final WeaponManager manager) {
-        super(manager, new ItemStack(Material.GOLD_AXE));
+    public BoosterSword(final WeaponManager manager) {
+        super(manager, new ItemStack(Material.GOLD_SWORD));
     }
 
     @Override
     public String[] getDescription() {
         return new String[]{
-                "Increases Axe Skill Level by 1.",
+                "Increases Sword Skill Level by 1.",
                 "",
                 UtilString.pair("<gray>Damage", String.format("<green>%s", this.getDamage()))
         };
@@ -24,6 +24,6 @@ public class BoosterAxe extends ChampionsPvPWeapon implements BoosterWeapon {
 
     @Override
     public double getDamage() {
-        return 4.0D;
+        return 5.0D;
     }
 }
