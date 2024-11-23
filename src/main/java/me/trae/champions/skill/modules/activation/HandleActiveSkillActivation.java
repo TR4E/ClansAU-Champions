@@ -1,9 +1,9 @@
 package me.trae.champions.skill.modules.activation;
 
-import me.trae.api.champions.skill.SkillActivateEvent;
-import me.trae.api.champions.skill.SkillPreActivateEvent;
+import me.trae.api.champions.skill.events.SkillActivateEvent;
+import me.trae.api.champions.skill.events.SkillPreActivateEvent;
 import me.trae.champions.Champions;
-import me.trae.champions.role.Role;
+import me.trae.api.champions.role.Role;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
 import me.trae.champions.skill.enums.SkillType;

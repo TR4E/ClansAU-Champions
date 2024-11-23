@@ -1,6 +1,6 @@
 package me.trae.champions.skill.types;
 
-import me.trae.champions.role.Role;
+import me.trae.api.champions.role.Role;
 import me.trae.champions.skill.data.types.ChannelSkillData;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.interfaces.IChannelSkill;

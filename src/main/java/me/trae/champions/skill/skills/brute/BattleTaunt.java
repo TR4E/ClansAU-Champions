@@ -1,6 +1,6 @@
 package me.trae.champions.skill.skills.brute;
 
-import me.trae.api.champions.skill.SkillFriendlyFireEvent;
+import me.trae.api.champions.skill.events.SkillFriendlyFireEvent;
 import me.trae.champions.role.types.Brute;
 import me.trae.champions.skill.data.types.ChannelSkillData;
 import me.trae.champions.skill.types.ChannelSkill;

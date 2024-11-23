@@ -1,7 +1,7 @@
 package me.trae.champions.role.types.submodules;
 
 import me.trae.champions.Champions;
-import me.trae.champions.role.Role;
+import me.trae.api.champions.role.Role;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.framework.types.frame.SpigotSubUpdater;
 import me.trae.core.updater.annotations.Update;

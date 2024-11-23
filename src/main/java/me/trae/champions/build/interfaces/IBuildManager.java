@@ -1,7 +1,7 @@
 package me.trae.champions.build.interfaces;
 
 import me.trae.champions.build.data.RoleBuild;
-import me.trae.champions.role.Role;
+import me.trae.api.champions.role.Role;
 import org.bukkit.entity.Player;
 
 import java.util.Map;

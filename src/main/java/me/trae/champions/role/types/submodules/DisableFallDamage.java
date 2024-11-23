@@ -2,7 +2,7 @@ package me.trae.champions.role.types.submodules;
 
 import me.trae.api.damage.events.CustomDamageEvent;
 import me.trae.champions.Champions;
-import me.trae.champions.role.Role;
+import me.trae.api.champions.role.Role;
 import me.trae.core.framework.types.frame.SpigotSubListener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

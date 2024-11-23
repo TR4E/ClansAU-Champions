@@ -1,8 +1,8 @@
 package me.trae.champions.role.modules;
 
-import me.trae.api.champions.role.RoleChangeEvent;
+import me.trae.api.champions.role.events.RoleChangeEvent;
 import me.trae.champions.Champions;
-import me.trae.champions.role.Role;
+import me.trae.api.champions.role.Role;
 import me.trae.champions.role.RoleManager;
 import me.trae.core.framework.types.frame.SpigotUpdater;
 import me.trae.core.updater.annotations.Update;

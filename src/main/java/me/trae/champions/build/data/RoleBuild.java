@@ -2,7 +2,7 @@ package me.trae.champions.build.data;
 
 import me.trae.champions.build.data.interfaces.IRoleBuild;
 import me.trae.champions.build.enums.BuildProperty;
-import me.trae.champions.role.Role;
+import me.trae.api.champions.role.Role;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.core.database.containers.DataContainer;
 import me.trae.core.database.query.constants.DefaultProperty;

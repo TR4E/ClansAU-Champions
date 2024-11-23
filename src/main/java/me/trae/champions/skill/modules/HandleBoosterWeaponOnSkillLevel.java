@@ -1,6 +1,6 @@
 package me.trae.champions.skill.modules;
 
-import me.trae.api.champions.skill.SkillLevelEvent;
+import me.trae.api.champions.skill.events.SkillLevelEvent;
 import me.trae.champions.Champions;
 import me.trae.champions.skill.SkillManager;
 import me.trae.champions.skill.enums.SkillType;

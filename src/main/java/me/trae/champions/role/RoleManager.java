@@ -1,6 +1,7 @@
 package me.trae.champions.role;
 
-import me.trae.api.champions.role.KitReceiveEvent;
+import me.trae.api.champions.role.events.KitReceiveEvent;
+import me.trae.api.champions.role.Role;
 import me.trae.champions.Champions;
 import me.trae.champions.role.commands.KitCommand;
 import me.trae.champions.role.interfaces.IRoleManager;
@@ -52,6 +53,7 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
         // Modules
         addModule(new DisableShootingArrowsForNonArchers(this));
         addModule(new HandleChampionsPlayerDisplayNameFormat(this));
+        addModule(new HandlePlayerRoleCheck(this));
         addModule(new HandleChampionsItemBuilderUpdate(this));
         addModule(new HandleRoleCustomDamageSound(this));
         addModule(new HandleRoleEquip(this));

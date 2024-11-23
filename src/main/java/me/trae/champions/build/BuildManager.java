@@ -5,7 +5,7 @@ import me.trae.champions.build.commands.BuildCommand;
 import me.trae.champions.build.data.RoleBuild;
 import me.trae.champions.build.interfaces.IBuildManager;
 import me.trae.champions.build.modules.LoadBuildDataOnPlayerJoin;
-import me.trae.champions.role.Role;
+import me.trae.api.champions.role.Role;
 import me.trae.core.database.repository.containers.RepositoryContainer;
 import me.trae.core.framework.SpigotManager;
 import org.bukkit.entity.Player;

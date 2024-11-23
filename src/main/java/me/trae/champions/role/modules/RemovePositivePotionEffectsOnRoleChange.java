@@ -1,6 +1,6 @@
 package me.trae.champions.role.modules;
 
-import me.trae.api.champions.role.RoleChangeEvent;
+import me.trae.api.champions.role.events.RoleChangeEvent;
 import me.trae.champions.Champions;
 import me.trae.champions.role.RoleManager;
 import me.trae.core.effect.constants.PotionEffectConstants;

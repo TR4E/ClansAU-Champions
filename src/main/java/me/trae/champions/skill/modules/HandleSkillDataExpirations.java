@@ -1,9 +1,9 @@
 package me.trae.champions.skill.modules;
 
 import me.trae.champions.Champions;
-import me.trae.champions.role.Role;
+import me.trae.api.champions.role.Role;
 import me.trae.champions.role.RoleManager;
-import me.trae.champions.skill.Skill;
+import me.trae.api.champions.skill.Skill;
 import me.trae.champions.skill.SkillManager;
 import me.trae.core.framework.types.frame.SpigotUpdater;
 import me.trae.core.updater.annotations.Update;

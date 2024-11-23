@@ -1,6 +1,6 @@
 package me.trae.champions.role.interfaces;
 
-import me.trae.champions.role.Role;
+import me.trae.api.champions.role.Role;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

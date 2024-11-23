@@ -1,7 +1,7 @@
 package me.trae.champions.skill.types;
 
-import me.trae.champions.role.Role;
-import me.trae.champions.skill.Skill;
+import me.trae.api.champions.role.Role;
+import me.trae.api.champions.skill.Skill;
 import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.interfaces.IActiveSkill;

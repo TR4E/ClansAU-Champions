@@ -1,7 +1,7 @@
 package me.trae.champions.build.data;
 
 import me.trae.champions.build.data.interfaces.IRoleSkill;
-import me.trae.champions.skill.Skill;
+import me.trae.api.champions.skill.Skill;
 import me.trae.champions.skill.enums.SkillType;
 
 import java.util.Arrays;
