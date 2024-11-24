@@ -1,8 +1,8 @@
 package me.trae.champions.build.data;
 
+import me.trae.api.champions.role.Role;
 import me.trae.champions.build.data.interfaces.IRoleBuild;
 import me.trae.champions.build.enums.BuildProperty;
-import me.trae.api.champions.role.Role;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.core.database.containers.DataContainer;
 import me.trae.core.database.query.constants.DefaultProperty;
@@ -88,6 +88,15 @@ public class RoleBuild implements IRoleBuild, DataContainer<BuildProperty> {
     @Override
     public void setActive(final boolean active) {
         this.active = active;
+    }
+
+    @Override
+    public String getDisplayName() {
+        if (this.getID() == 0) {
+            return "Default Build";
+        }
+
+        return String.format("Build #%s", this.getID());
     }
 
     @Override

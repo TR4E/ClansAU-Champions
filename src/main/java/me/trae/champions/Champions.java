@@ -2,6 +2,9 @@ package me.trae.champions;
 
 import me.trae.champions.build.BuildManager;
 import me.trae.champions.config.ConfigManager;
+import me.trae.champions.donation.DonationManager;
+import me.trae.champions.effect.EffectManager;
+import me.trae.champions.perk.PerkManager;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
 import me.trae.champions.weapon.WeaponManager;
@@ -19,7 +22,10 @@ public class Champions extends MiniPlugin {
         // Champions Managers
         addManager(new BuildManager(this));
         addManager(new ConfigManager(this));
+        addManager(new DonationManager(this));
+        addManager(new EffectManager(this));
 //        addManager(new GamerManager(this));
+        addManager(new PerkManager(this));
         addManager(new RoleManager(this));
         addManager(new SkillManager(this));
         addManager(new WeaponManager(this));

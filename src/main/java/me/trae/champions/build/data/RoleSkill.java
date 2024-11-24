@@ -1,8 +1,9 @@
 package me.trae.champions.build.data;
 
-import me.trae.champions.build.data.interfaces.IRoleSkill;
 import me.trae.api.champions.skill.Skill;
+import me.trae.champions.build.data.interfaces.IRoleSkill;
 import me.trae.champions.skill.enums.SkillType;
+import me.trae.core.utility.UtilString;
 
 import java.util.Arrays;
 
@@ -24,7 +25,7 @@ public class RoleSkill implements IRoleSkill {
     }
 
     public RoleSkill(final String[] tokens) {
-        this(SkillType.valueOf(tokens[0]), tokens[1], Integer.parseInt(tokens[2]));
+        this(SkillType.valueOf(tokens[0]), UtilString.unSlice(tokens[1]), Integer.parseInt(tokens[2]));
     }
 
     @Override
@@ -54,6 +55,6 @@ public class RoleSkill implements IRoleSkill {
 
     @Override
     public String toString() {
-        return String.join(":", Arrays.asList(this.getType().name(), this.getName(), String.valueOf(this.getLevel())));
+        return String.join(":", Arrays.asList(this.getType().name(), UtilString.slice(this.getName()), String.valueOf(this.getLevel())));
     }
 }

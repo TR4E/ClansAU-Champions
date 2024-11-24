@@ -17,5 +17,6 @@ public class BuildCommand extends Command<Champions, BuildManager> implements Pl
 
     @Override
     public void execute(final Player player, final Client client, final Gamer gamer, final String[] args) {
+        this.getManager().openMenu(player);
     }
 }

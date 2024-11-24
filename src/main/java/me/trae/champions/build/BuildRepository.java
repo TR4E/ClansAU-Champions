@@ -4,6 +4,7 @@ import me.trae.champions.Champions;
 import me.trae.champions.build.data.RoleBuild;
 import me.trae.champions.build.enums.BuildProperty;
 import me.trae.champions.config.Config;
+import me.trae.core.database.query.Query;
 import me.trae.core.database.query.types.DeleteQuery;
 import me.trae.core.database.query.types.SaveQuery;
 import me.trae.core.database.query.types.SingleCallbackQuery;
@@ -122,5 +123,10 @@ public class BuildRepository extends Repository<Champions, BuildManager, Config>
         };
 
         this.addQuery(query);
+    }
+
+    @Override
+    public boolean isInform(final Query query) {
+        return !(query instanceof UpdateQuery<?>);
     }
 }

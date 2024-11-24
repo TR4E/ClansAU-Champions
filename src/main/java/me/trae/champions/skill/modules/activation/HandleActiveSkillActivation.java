@@ -1,9 +1,11 @@
 package me.trae.champions.skill.modules.activation;
 
+import me.trae.api.champions.role.Role;
 import me.trae.api.champions.skill.events.SkillActivateEvent;
 import me.trae.api.champions.skill.events.SkillPreActivateEvent;
 import me.trae.champions.Champions;
-import me.trae.api.champions.role.Role;
+import me.trae.champions.build.data.RoleBuild;
+import me.trae.champions.build.data.RoleSkill;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
 import me.trae.champions.skill.enums.SkillType;
@@ -13,6 +15,7 @@ import me.trae.core.Core;
 import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.types.frame.SpigotListener;
 import me.trae.core.recharge.RechargeManager;
+import me.trae.core.utility.UtilJava;
 import me.trae.core.utility.UtilServer;
 import me.trae.core.weapon.WeaponManager;
 import me.trae.core.world.events.PlayerItemInteractEvent;
@@ -46,6 +49,11 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
             return;
         }
 
+        final RoleBuild roleBuild = role.getRoleBuildByPlayer(player);
+        if (roleBuild == null) {
+            return;
+        }
+
         final SkillType skillType = SkillType.getByMaterial(itemStack.getType());
         if (skillType == null) {
             return;
@@ -55,7 +63,12 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
             return;
         }
 
-        final ActiveSkill<?, ?> skill = role.getSkillByType(ActiveSkill.class, skillType);
+        final RoleSkill roleSkill = roleBuild.getRoleSkillByType(skillType);
+        if (roleSkill == null) {
+            return;
+        }
+
+        final ActiveSkill<?, ?> skill = UtilJava.cast(ActiveSkill.class, role.getSubModuleByName(roleSkill.getName()));
         if (skill == null) {
             return;
         }

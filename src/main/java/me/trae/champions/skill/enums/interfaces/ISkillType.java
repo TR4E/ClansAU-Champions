@@ -15,4 +15,6 @@ public interface ISkillType {
     List<Material> getMaterials();
 
     boolean isItemStack(final ItemStack itemStack);
+
+    ItemStack getDisplayItemStack();
 }

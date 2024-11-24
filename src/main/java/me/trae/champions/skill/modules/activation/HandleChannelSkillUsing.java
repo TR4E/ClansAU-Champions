@@ -1,7 +1,7 @@
 package me.trae.champions.skill.modules.activation;
 
-import me.trae.champions.Champions;
 import me.trae.api.champions.role.Role;
+import me.trae.champions.Champions;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
 import me.trae.champions.skill.types.ChannelSkill;
@@ -20,7 +20,7 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
     }
 
     @Update
-    public void onUpdate() {
+    public void onUpdater() {
         for (final Role role : this.getInstance().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
             for (final ChannelSkill<?, ?> skill : role.getSkillsByClass(ChannelSkill.class)) {
                 skill.getUsers().values().removeIf(data -> {

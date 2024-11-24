@@ -1,8 +1,9 @@
 package me.trae.champions.role.modules;
 
+import me.trae.api.champions.role.Role;
 import me.trae.api.champions.role.events.RoleChangeEvent;
 import me.trae.champions.Champions;
-import me.trae.api.champions.role.Role;
+import me.trae.champions.build.data.RoleBuild;
 import me.trae.champions.role.RoleManager;
 import me.trae.core.framework.types.frame.SpigotUpdater;
 import me.trae.core.updater.annotations.Update;
@@ -13,6 +14,8 @@ import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+
+import java.util.Collections;
 
 public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
 
@@ -62,9 +65,11 @@ public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
 
             UtilMessage.simpleMessage(player, "Class", UtilString.pair("Armor Class", String.format("<green>%s", role.getName())));
 
-            UtilMessage.message(player, "Skills", "Listing Skills:");
+            final RoleBuild roleBuild = role.getRoleBuildByPlayer(player);
 
-            UtilMessage.simpleMessage(player, role.getEquipMessage());
+            UtilMessage.simpleMessage(player, "Skills", "Listing <white><var></white> Skills:", Collections.singletonList(roleBuild.getDisplayName()));
+
+            UtilMessage.simpleMessage(player, roleBuild.getEquipMessage());
         }
 
         UtilServer.callEvent(new RoleChangeEvent(role, player));

@@ -19,7 +19,7 @@ public class DisableShootingArrowsWhileInLiquid extends SpigotListener<Champions
         super(manager);
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW)
     public void onEntityShootBow(final EntityShootBowEvent event) {
         if (event.isCancelled()) {
             return;

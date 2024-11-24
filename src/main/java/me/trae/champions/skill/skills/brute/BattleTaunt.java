@@ -54,6 +54,11 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
     }
 
     @Override
+    public int getDefaultLevel() {
+        return 2;
+    }
+
+    @Override
     public void onActivate(final Player player, final int level) {
         this.addUser(new ChannelSkillData(player, level));
     }

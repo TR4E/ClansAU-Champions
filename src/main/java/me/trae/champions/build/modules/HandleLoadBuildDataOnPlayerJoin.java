@@ -6,9 +6,9 @@ import me.trae.core.framework.types.frame.SpigotListener;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class LoadBuildDataOnPlayerJoin extends SpigotListener<Champions, BuildManager> {
+public class HandleLoadBuildDataOnPlayerJoin extends SpigotListener<Champions, BuildManager> {
 
-    public LoadBuildDataOnPlayerJoin(final BuildManager manager) {
+    public HandleLoadBuildDataOnPlayerJoin(final BuildManager manager) {
         super(manager);
     }
 

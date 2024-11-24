@@ -29,5 +29,7 @@ public interface IRoleBuild {
 
     void setActive(final boolean active);
 
+    String getDisplayName();
+
     List<String> getEquipMessage();
 }

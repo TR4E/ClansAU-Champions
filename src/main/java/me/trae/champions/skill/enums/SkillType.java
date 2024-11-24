@@ -50,9 +50,9 @@ public enum SkillType implements ISkillType {
     public List<Material> getMaterials() {
         switch (this) {
             case SWORD:
-                return Arrays.asList(Material.DIAMOND_SWORD, Material.GOLD_SWORD, Material.IRON_SWORD);
+                return Arrays.asList(Material.IRON_SWORD, Material.GOLD_SWORD, Material.DIAMOND_SWORD);
             case AXE:
-                return Arrays.asList(Material.DIAMOND_AXE, Material.GOLD_AXE, Material.IRON_AXE);
+                return Arrays.asList(Material.IRON_AXE, Material.GOLD_AXE, Material.DIAMOND_AXE);
             case BOW:
                 return Collections.singletonList(Material.BOW);
         }
@@ -67,5 +67,30 @@ public enum SkillType implements ISkillType {
         }
 
         return this.getMaterials().contains(itemStack.getType());
+    }
+
+    @Override
+    public ItemStack getDisplayItemStack() {
+        Material material = Material.INK_SACK;
+        short durability = 0;
+
+        switch (this) {
+            case SWORD:
+            case AXE:
+            case BOW:
+                material = this.getMaterials().get(0);
+                break;
+            case PASSIVE_A:
+                durability = 1;
+                break;
+            case PASSIVE_B:
+                durability = 14;
+                break;
+            case GLOBAL:
+                durability = 11;
+                break;
+        }
+
+        return new ItemStack(material, 1, durability);
     }
 }

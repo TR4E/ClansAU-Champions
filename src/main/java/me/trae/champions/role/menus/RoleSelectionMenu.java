@@ -1,7 +1,7 @@
 package me.trae.champions.role.menus;
 
-import me.trae.champions.Champions;
 import me.trae.api.champions.role.Role;
+import me.trae.champions.Champions;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.role.menus.interfaces.IRoleSelectionMenu;
 import me.trae.core.menu.Button;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 public abstract class RoleSelectionMenu extends Menu<Champions, RoleManager> implements IRoleSelectionMenu {
 
     public RoleSelectionMenu(final RoleManager manager, final Player player) {
-        super(manager, player, 36, UtilColor.bold(ChatColor.DARK_GREEN) + "Select a Class");
+        super(manager, player, 36, "Select a Class");
     }
 
     @Override

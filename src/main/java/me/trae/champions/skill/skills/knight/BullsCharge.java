@@ -65,6 +65,11 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
     }
 
     @Override
+    public int getDefaultLevel() {
+        return 2;
+    }
+
+    @Override
     public void onActivate(final Player player, final int level) {
         player.getWorld().playEffect(player.getLocation(), Effect.STEP_SOUND, Material.OBSIDIAN);
 

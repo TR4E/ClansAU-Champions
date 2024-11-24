@@ -19,7 +19,7 @@ public class DisableShootingArrowsForNonArchers extends SpigotListener<Champions
         super(manager);
     }
 
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityShootBow(final EntityShootBowEvent event) {
         if (event.isCancelled()) {
             return;

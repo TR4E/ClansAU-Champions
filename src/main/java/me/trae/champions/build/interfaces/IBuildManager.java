@@ -1,7 +1,7 @@
 package me.trae.champions.build.interfaces;
 
-import me.trae.champions.build.data.RoleBuild;
 import me.trae.api.champions.role.Role;
+import me.trae.champions.build.data.RoleBuild;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -15,7 +15,17 @@ public interface IBuildManager {
 
     void removeBuild(final RoleBuild roleBuild);
 
-    RoleBuild getBuildByRole(final Player player, final Role role, final int id);
+    void removeBuilds(final Player player);
 
-    boolean isBuildByRole(final Player player, final Role role, final int id);
+    RoleBuild getBuildByID(final Player player, final Role role, final int id);
+
+    Map<Integer, RoleBuild> getBuildsByRole(final Player player, final Role role);
+
+    boolean isBuildByID(final Player player, final Role role, final int id);
+
+    void setActiveRoleBuild(final Player player, final Role role, final RoleBuild roleBuild);
+
+    int getSkillPoints(final Role role, final RoleBuild roleBuild);
+
+    void openMenu(final Player player);
 }
