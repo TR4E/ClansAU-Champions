@@ -1,7 +1,7 @@
 package me.trae.champions.role.commands;
 
-import me.trae.champions.Champions;
 import me.trae.api.champions.role.Role;
+import me.trae.champions.Champions;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.role.menus.RoleSelectionMenu;
 import me.trae.core.client.Client;

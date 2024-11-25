@@ -2,6 +2,8 @@ package me.trae.champions.role.types;
 
 import me.trae.api.champions.role.Role;
 import me.trae.champions.role.RoleManager;
+import me.trae.champions.skill.skills.mage.axe.DefensiveAura;
+import me.trae.champions.skill.skills.mage.passive_b.HolyLight;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -13,6 +15,15 @@ public class Mage extends Role {
 
     public Mage(final RoleManager manager) {
         super(manager);
+    }
+
+    @Override
+    public void registerSubModules() {
+        // Axe Skills
+        addSubModule(new DefensiveAura(this));
+
+        // Passive B Skills
+        addSubModule(new HolyLight(this));
     }
 
     @Override

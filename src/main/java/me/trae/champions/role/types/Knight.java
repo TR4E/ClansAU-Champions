@@ -2,7 +2,8 @@ package me.trae.champions.role.types;
 
 import me.trae.api.champions.role.Role;
 import me.trae.champions.role.RoleManager;
-import me.trae.champions.skill.skills.knight.BullsCharge;
+import me.trae.champions.skill.skills.knight.axe.BullsCharge;
+import me.trae.champions.skill.skills.knight.passive_b.Swordsmanship;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -18,8 +19,11 @@ public class Knight extends Role {
 
     @Override
     public void registerSubModules() {
-        // Axe Skill
+        // Axe Skills
         addSubModule(new BullsCharge(this));
+
+        // Passive B Skills
+        addSubModule(new Swordsmanship(this));
     }
 
     @Override

@@ -1,11 +1,11 @@
-package me.trae.champions.skill.skills.knight;
+package me.trae.champions.skill.skills.knight.axe;
 
 import me.trae.api.damage.events.damage.CustomDamageEvent;
 import me.trae.api.damage.events.damage.CustomPostDamageEvent;
 import me.trae.champions.role.types.Knight;
 import me.trae.champions.skill.data.SkillData;
-import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.ActiveSkill;
+import me.trae.champions.skill.types.enums.ActiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.utility.UtilEntity;
 import me.trae.core.utility.UtilMessage;
@@ -31,22 +31,23 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
     @ConfigInject(type = Float.class, path = "Energy", defaultValue = "30.0")
     private float energy;
 
-    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "12000")
+    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "12_000")
     private long recharge;
 
-    @ConfigInject(type = Integer.class, path = "Amplifier", defaultValue = "2")
-    private int amplifier;
-
-    @ConfigInject(type = Long.class, path = "Duration", defaultValue = "4000")
+    @ConfigInject(type = Long.class, path = "Duration", defaultValue = "4_000")
     private long duration;
 
     public BullsCharge(final Knight module) {
-        super(module, SkillType.AXE);
+        super(module, ActiveSkillType.AXE);
     }
 
     @Override
     public Class<SkillData> getClassOfData() {
         return SkillData.class;
+    }
+
+    private int getAmplifier(final int level) {
+        return level;
     }
 
     @Override
@@ -72,12 +73,17 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
     }
 
     @Override
+    public int getMaxLevel() {
+        return 3;
+    }
+
+    @Override
     public void onActivate(final Player player, final int level) {
         player.getWorld().playEffect(player.getLocation(), Effect.STEP_SOUND, Material.OBSIDIAN);
 
         new SoundCreator(Sound.ENDERMAN_SCREAM, 1.5F, 0.0F).play(player.getLocation());
 
-        UtilEntity.givePotionEffect(player, PotionEffectType.SPEED, this.amplifier, this.duration);
+        UtilEntity.givePotionEffect(player, PotionEffectType.SPEED, this.getAmplifier(level), this.duration);
 
         this.addUser(new SkillData(player, level, this.duration));
 
@@ -152,10 +158,10 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
 
         final LivingEntity damagee = event.getDamageeByClass(LivingEntity.class);
 
-        UtilEntity.givePotionEffect(damagee, PotionEffectType.SLOW, this.amplifier, this.duration);
+        UtilEntity.givePotionEffect(damagee, PotionEffectType.SLOW, this.getAmplifier(data.getLevel()), this.duration);
 
         new SoundCreator(Sound.ENDERMAN_SCREAM, 1.5F, 0.0F).play(damager.getLocation());
-        new SoundCreator(Sound.ZOMBIE_METAL, 1.5F, 0.5F).play(damager.getLocation());
+        new SoundCreator(Sound.ZOMBIE_METAL, 1.5F, 0.5F).play(damagee.getLocation());
 
         if (damagee instanceof Player) {
             UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));

@@ -1,4 +1,4 @@
-package me.trae.champions.skill.components;
+package me.trae.champions.skill.components.recharge;
 
 import me.trae.core.utility.UtilTime;
 

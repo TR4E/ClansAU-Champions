@@ -53,6 +53,9 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
         }
 
         final int level = skill.getLevel(player);
+        if (level == 0) {
+            return false;
+        }
 
         final EnergyManager energyManager = this.getInstance(Core.class).getManagerByClass(EnergyManager.class);
 

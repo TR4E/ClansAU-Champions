@@ -3,6 +3,7 @@ package me.trae.champions.role.types;
 import me.trae.api.champions.role.Role;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.role.types.models.Archer;
+import me.trae.champions.skill.skills.ranger.passive_a.Longshot;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -14,6 +15,12 @@ public class Ranger extends Role implements Archer {
 
     public Ranger(final RoleManager manager) {
         super(manager);
+    }
+
+    @Override
+    public void registerSubModules() {
+        // Passive A Skills
+        addSubModule(new Longshot(this));
     }
 
     @Override

@@ -1,7 +1,7 @@
 package me.trae.champions.skill.modules;
 
-import me.trae.champions.Champions;
 import me.trae.api.champions.role.Role;
+import me.trae.champions.Champions;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
 import me.trae.champions.skill.types.ActiveSkill;
@@ -56,7 +56,12 @@ public class HandleSkillRechargeProgressBar extends SpigotListener<Champions, Sk
                 continue;
             }
 
-            if (!(skill.hasRecharge(skill.getLevel(player)))) {
+            final int level = skill.getLevel(player);
+            if (level == 0) {
+                continue;
+            }
+
+            if (!(skill.hasRecharge(level))) {
                 continue;
             }
 

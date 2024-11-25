@@ -2,7 +2,8 @@ package me.trae.champions.role.types;
 
 import me.trae.api.champions.role.Role;
 import me.trae.champions.role.RoleManager;
-import me.trae.champions.skill.skills.brute.BattleTaunt;
+import me.trae.champions.skill.skills.brute.passive_b.Stampede;
+import me.trae.champions.skill.skills.brute.sword.BattleTaunt;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -18,8 +19,11 @@ public class Brute extends Role {
 
     @Override
     public void registerSubModules() {
-        // Sword
+        // Sword Skills
         addSubModule(new BattleTaunt(this));
+
+        // Passive B Skills
+        addSubModule(new Stampede(this));
     }
 
     @Override

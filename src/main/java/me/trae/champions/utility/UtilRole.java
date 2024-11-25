@@ -12,19 +12,11 @@ import java.util.Collections;
 
 public class UtilRole {
 
-    public static void equipRoleEffect(final Role role, final Player player, final boolean equipped, final boolean updatedFromBuildMenu) {
+    public static void equipRoleEffect(final Role role, final Player player, final boolean updatedFromBuildMenu) {
         if (role == null) {
-            if (equipped) {
-                new SoundCreator(Sound.HORSE_ARMOR, 5.0F, 5.09F).play(player.getLocation());
-
-                UtilMessage.simpleMessage(player, "Class", UtilString.pair("Armor Class", "<red>None"));
-            }
+            playEffect(player, "None", false);
         } else {
-            new SoundCreator(Sound.HORSE_ARMOR, 2.0F, 1.09F).play(player.getLocation());
-
-            if (equipped) {
-                UtilMessage.simpleMessage(player, "Class", UtilString.pair("Armor Class", String.format("<green>%s", role.getName())));
-            }
+            playEffect(player, role.getName(), true);
 
             final RoleBuild roleBuild = role.getRoleBuildByPlayer(player);
 
@@ -36,6 +28,18 @@ public class UtilRole {
             }
 
             UtilMessage.simpleMessage(player, roleBuild.getEquipMessage());
+        }
+    }
+
+    public static void playEffect(final Player player, final String name, final boolean equip) {
+        if (equip) {
+            new SoundCreator(Sound.HORSE_ARMOR, 5.0F, 5.09F).play(player.getLocation());
+
+            UtilMessage.simpleMessage(player, "Class", UtilString.pair("Armor Class", String.format("<green>%s", name)));
+        } else {
+            new SoundCreator(Sound.HORSE_ARMOR, 2.0F, 1.09F).play(player.getLocation());
+
+            UtilMessage.simpleMessage(player, "Class", UtilString.pair("Armor Class", String.format("<red>%s", name)));
         }
     }
 }

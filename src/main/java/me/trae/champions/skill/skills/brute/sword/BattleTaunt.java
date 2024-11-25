@@ -1,4 +1,4 @@
-package me.trae.champions.skill.skills.brute;
+package me.trae.champions.skill.skills.brute.sword;
 
 import me.trae.api.champions.skill.events.SkillFriendlyFireEvent;
 import me.trae.champions.role.types.Brute;
@@ -20,9 +20,6 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
     @ConfigInject(type = Float.class, path = "Energy-Using", defaultValue = "2.0")
     private float energyUsing;
 
-    @ConfigInject(type = Double.class, path = "Distance", defaultValue = "4.0")
-    private double distance;
-
     @ConfigInject(type = Double.class, path = "Velocity", defaultValue = "0.3")
     private double velocity;
 
@@ -38,14 +35,16 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
         return ChannelSkillData.class;
     }
 
+    private int getDistance(final int level) {
+        return level * 2;
+    }
+
     @Override
     public String[] getDescription(final int level) {
-        final double distance = this.distance + level;
-
         return new String[]{
                 "Hold Block with a Sword to Channel.",
                 "",
-                String.format("While channelling, any enemies within <green>%s</green> blocks", distance),
+                String.format("While channelling, any enemies within <green>%s</green> blocks", this.getDistance(level)),
                 "are slowly pulled in towards you.",
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
@@ -67,7 +66,7 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
     public void onUsing(final Player player, final ChannelSkillData data) {
         player.getWorld().playEffect(player.getLocation(), Effect.STEP_SOUND, Material.valueOf(this.material));
 
-        for (double i = 0.0D; i < this.distance + data.getLevel(); i++) {
+        for (double i = 0.0D; i < this.getDistance(data.getLevel()) + data.getLevel(); i++) {
             final Location location = player.getEyeLocation().add(player.getLocation().getDirection().multiply(i));
 
             this.pull(player, location, i);
@@ -75,24 +74,24 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
     }
 
     private void pull(final Player player, final Location location, final double distance) {
-        for (final LivingEntity target : UtilEntity.getNearbyEntities(LivingEntity.class, location, distance)) {
-            if (target == player) {
+        for (final LivingEntity targetPlayer : UtilEntity.getNearbyEntities(LivingEntity.class, location, distance)) {
+            if (targetPlayer == player) {
                 continue;
             }
 
-            if (UtilMath.offset(player.getLocation().toVector(), target.getLocation().toVector()) < 2.0D) {
+            if (UtilMath.offset(player.getLocation().toVector(), targetPlayer.getLocation().toVector()) < 2.0D) {
                 continue;
             }
 
-            if (target instanceof Player) {
-                final SkillFriendlyFireEvent friendlyFireEvent = new SkillFriendlyFireEvent(this, player, UtilJava.cast(Player.class, target));
+            if (targetPlayer instanceof Player) {
+                final SkillFriendlyFireEvent friendlyFireEvent = new SkillFriendlyFireEvent(this, player, UtilJava.cast(Player.class, targetPlayer));
                 UtilServer.callEvent(friendlyFireEvent);
                 if (friendlyFireEvent.isCancelled() || !(friendlyFireEvent.isVulnerable())) {
                     continue;
                 }
             }
 
-            UtilVelocity.velocity(target, UtilVelocity.getTrajectory(target.getLocation().toVector(), player.getLocation().toVector()), this.velocity, 0.0D, 0.0D, 1.0D, true);
+            UtilVelocity.velocity(targetPlayer, UtilVelocity.getTrajectory(targetPlayer.getLocation().toVector(), player.getLocation().toVector()), this.velocity, 0.0D, 0.0D, 1.0D, true);
         }
     }
 

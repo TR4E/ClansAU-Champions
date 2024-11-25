@@ -62,6 +62,10 @@ public enum SkillType implements ISkillType {
 
     @Override
     public boolean isItemStack(final ItemStack itemStack) {
+        if (itemStack == null) {
+            return false;
+        }
+
         if (!(UtilPlugin.getInstance(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof ChampionsPvPWeapon)) {
             return false;
         }

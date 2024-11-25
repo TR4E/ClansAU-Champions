@@ -1,7 +1,7 @@
 package me.trae.champions.role.modules.displayname;
 
-import me.trae.champions.Champions;
 import me.trae.api.champions.role.Role;
+import me.trae.champions.Champions;
 import me.trae.champions.role.RoleManager;
 import me.trae.core.framework.types.frame.SpigotListener;
 import me.trae.core.player.events.PlayerDisplayNameEvent;

@@ -8,8 +8,10 @@ import me.trae.champions.utility.UtilRole;
 import me.trae.core.framework.types.frame.SpigotUpdater;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.utility.UtilServer;
+import me.trae.core.utility.enums.ArmourSlotType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
 
@@ -38,6 +40,12 @@ public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
     }
 
     private void equip(final Player player, final Role role) {
+        final ItemStack helmetItemStack = player.getEquipment().getHelmet();
+        if (helmetItemStack != null && !(ArmourSlotType.HELMET.isValid(helmetItemStack.getType()))) {
+            this.getManager().removePlayerRole(player);
+            return;
+        }
+
         final Role oldRole = this.getManager().getPlayerRole(player);
 
         if (this.getManager().hasPlayerRole(player) && oldRole == role) {
@@ -50,7 +58,7 @@ public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
 
         this.getManager().setPlayerRole(player, role);
 
-        UtilRole.equipRoleEffect(role, player, true, false);
+        UtilRole.equipRoleEffect(role, player, false);
 
         UtilServer.callEvent(new RoleChangeEvent(role, player));
     }

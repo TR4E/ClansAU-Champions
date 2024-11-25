@@ -1,6 +1,6 @@
 package me.trae.champions.skill.data.interfaces;
 
-import me.trae.core.utility.components.*;
+import me.trae.core.utility.components.time.*;
 
 import java.util.UUID;
 

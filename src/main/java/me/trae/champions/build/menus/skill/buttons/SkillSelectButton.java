@@ -78,7 +78,7 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
                 this.onLeftClickButton(player, role, roleBuild, skill, roleSkill);
                 break;
             case RIGHT:
-                this.onRightClickButton(player, roleBuild, roleSkill);
+                this.onRightClickButton(player, role, roleBuild, roleSkill);
                 break;
         }
     }
@@ -116,7 +116,7 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
         this.getMenu().construct();
     }
 
-    private void onRightClickButton(final Player player, final RoleBuild roleBuild, final RoleSkill roleSkill) {
+    private void onRightClickButton(final Player player, final Role role, final RoleBuild roleBuild, final RoleSkill roleSkill) {
         if (roleSkill == null) {
             new SoundCreator(Sound.ITEM_BREAK).play(player);
             return;
@@ -134,6 +134,8 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
         } else {
             this.getMenu().getManager().getRepository().updateData(roleBuild, BuildProperty.SKILLS);
         }
+
+        this.getMenu().setUpdatedRole(role);
 
         new SoundCreator(Sound.ORB_PICKUP, 2.0F, 2.0F).play(player);
 

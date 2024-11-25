@@ -1,21 +1,14 @@
 package me.trae.champions.skill.modules.activation;
 
-import me.trae.api.champions.role.Role;
 import me.trae.api.champions.skill.events.SkillActivateEvent;
 import me.trae.api.champions.skill.events.SkillPreActivateEvent;
 import me.trae.champions.Champions;
-import me.trae.champions.build.data.RoleBuild;
-import me.trae.champions.build.data.RoleSkill;
-import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.ActiveSkill;
 import me.trae.champions.weapon.types.ChampionsPvPWeapon;
 import me.trae.core.Core;
-import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.types.frame.SpigotListener;
-import me.trae.core.recharge.RechargeManager;
-import me.trae.core.utility.UtilJava;
 import me.trae.core.utility.UtilServer;
 import me.trae.core.weapon.WeaponManager;
 import me.trae.core.world.events.PlayerItemInteractEvent;
@@ -44,32 +37,12 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
 
         final Player player = event.getPlayer();
 
-        final Role role = this.getInstance().getManagerByClass(RoleManager.class).getPlayerRole(player);
-        if (role == null) {
-            return;
-        }
-
-        final RoleBuild roleBuild = role.getRoleBuildByPlayer(player);
-        if (roleBuild == null) {
-            return;
-        }
-
-        final SkillType skillType = SkillType.getByMaterial(itemStack.getType());
-        if (skillType == null) {
-            return;
-        }
-
-        if (!(skillType.getActionType().isAction(event.getAction()))) {
-            return;
-        }
-
-        final RoleSkill roleSkill = roleBuild.getRoleSkillByType(skillType);
-        if (roleSkill == null) {
-            return;
-        }
-
-        final ActiveSkill<?, ?> skill = UtilJava.cast(ActiveSkill.class, role.getSubModuleByName(roleSkill.getName()));
+        final ActiveSkill<?, ?> skill = this.getManager().getSkillByType(ActiveSkill.class, player, SkillType.getByMaterial(itemStack.getType()));
         if (skill == null) {
+            return;
+        }
+
+        if (!(skill.getType().getActionType().isAction(event.getAction()))) {
             return;
         }
 
@@ -86,7 +59,7 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
             return;
         }
 
-        if (!(this.canActivate(player, skill))) {
+        if (!(this.getManager().canActivateActiveSkill(player, skill))) {
             return;
         }
 
@@ -97,37 +70,5 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
         }
 
         skill.onActivate(player, level);
-    }
-
-    private boolean canActivate(final Player player, final ActiveSkill<?, ?> skill) {
-        if (!(skill.canActivate(player))) {
-            return false;
-        }
-
-        final int level = skill.getLevel(player);
-
-        final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
-
-        if (skill.hasRecharge(level)) {
-            if (rechargeManager.isCooling(player, skill.getName(), true)) {
-                return false;
-            }
-        }
-
-        if (skill.hasEnergy(level)) {
-            final EnergyManager energyManager = this.getInstance(Core.class).getManagerByClass(EnergyManager.class);
-
-            if (!(energyManager.use(player, skill.getName(), skill.getEnergy(level), true))) {
-                return false;
-            }
-        }
-
-        if (skill.hasRecharge(level)) {
-            if (!(rechargeManager.add(player, skill.getName(), skill.getRecharge(level), true))) {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

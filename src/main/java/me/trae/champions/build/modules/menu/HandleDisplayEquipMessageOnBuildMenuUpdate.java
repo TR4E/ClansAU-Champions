@@ -44,6 +44,6 @@ public class HandleDisplayEquipMessageOnBuildMenuUpdate extends SpigotListener<C
             return;
         }
 
-        UtilRole.equipRoleEffect(updatedRole, player, false, true);
+        UtilRole.equipRoleEffect(updatedRole, player, true);
     }
 }

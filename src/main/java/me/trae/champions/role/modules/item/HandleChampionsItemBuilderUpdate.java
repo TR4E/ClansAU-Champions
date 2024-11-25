@@ -13,6 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class HandleChampionsItemBuilderUpdate extends SpigotListener<Champions, RoleManager> {
@@ -36,7 +37,7 @@ public class HandleChampionsItemBuilderUpdate extends SpigotListener<Champions, 
             final ItemBuilder itemBuilder = new ItemBuilder(new ItemStack(material));
 
             itemBuilder.setDisplayName(ChatColor.valueOf(this.displayNameChatColor) + String.format("%s %s", role.getName(), UtilString.clean(material.name().split("_")[1])));
-            itemBuilder.setLore(Arrays.asList(role.getDescription()));
+            itemBuilder.setLore(new ArrayList<>(Arrays.asList(role.getDescription())));
 
             event.setBuilder(itemBuilder);
             break;
