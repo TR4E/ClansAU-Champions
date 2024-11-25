@@ -1,4 +1,4 @@
-package me.trae.champions.role.modules;
+package me.trae.champions.role.modules.displayname;
 
 import me.trae.champions.Champions;
 import me.trae.api.champions.role.Role;

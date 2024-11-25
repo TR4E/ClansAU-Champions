@@ -1,5 +1,6 @@
 package me.trae.champions.weapon.weapons.items;
 
+import me.trae.api.damage.utility.UtilDamage;
 import me.trae.champions.Champions;
 import me.trae.champions.weapon.WeaponManager;
 import me.trae.core.Core;
@@ -24,6 +25,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
@@ -39,6 +41,9 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
 
     @ConfigInject(type = Double.class, path = "Item-Velocity", defaultValue = "1.3")
     private double itemVelocity;
+
+    @ConfigInject(type = Double.class, path = "Damage", defaultValue = "4.0")
+    private double damage;
 
     @ConfigInject(type = Integer.class, path = "Particle-Count", defaultValue = "16")
     private int particleCount;
@@ -140,9 +145,9 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
 
         final Player throwerPlayer = event.getThrowable().getThrowerPlayer();
 
-        final LivingEntity target = event.getTarget();
+        final LivingEntity targetEntity = event.getTarget();
 
-        if (target instanceof Player) {
+        if (targetEntity instanceof Player) {
             final WeaponFriendlyFireEvent weaponFriendlyFireEvent = new WeaponFriendlyFireEvent(this, throwerPlayer, event.getTargetByClass(Player.class));
             UtilServer.callEvent(weaponFriendlyFireEvent);
             if (weaponFriendlyFireEvent.isCancelled()) {
@@ -150,7 +155,7 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
             }
 
             if (!(this.friendlyFire)) {
-                if (target == throwerPlayer) {
+                if (targetEntity == throwerPlayer) {
                     return;
                 }
 
@@ -160,7 +165,9 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
             }
         }
 
-        target.setFireTicks((int) (this.fireDuration / 50));
+        targetEntity.setFireTicks((int) (this.fireDuration / 50));
+
+        UtilDamage.damage(targetEntity, throwerPlayer, EntityDamageEvent.DamageCause.FIRE, this.damage, this.getDisplayName(), this.fireDuration);
     }
 
     @Override

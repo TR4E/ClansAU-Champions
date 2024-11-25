@@ -1,11 +1,15 @@
 package me.trae.champions.role;
 
-import me.trae.api.champions.role.events.KitReceiveEvent;
 import me.trae.api.champions.role.Role;
+import me.trae.api.champions.role.events.KitReceiveEvent;
 import me.trae.champions.Champions;
 import me.trae.champions.role.commands.KitCommand;
 import me.trae.champions.role.interfaces.IRoleManager;
 import me.trae.champions.role.modules.*;
+import me.trae.champions.role.modules.displayname.HandleChampionsPlayerDisplayNameFormat;
+import me.trae.champions.role.modules.item.HandleChampionsItemBuilderUpdate;
+import me.trae.champions.role.modules.restrictions.DisableShootingArrowsForNonArchers;
+import me.trae.champions.role.modules.damage.HandleRoleCustomDamageSound;
 import me.trae.champions.role.types.*;
 import me.trae.champions.role.types.models.Archer;
 import me.trae.champions.weapon.weapons.pvp.BoosterBow;
@@ -58,7 +62,6 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
         addModule(new HandleRoleCustomDamageSound(this));
         addModule(new HandleRoleEquip(this));
         addModule(new RemovePositivePotionEffectsOnRoleChange(this));
-        addModule(new RemovePotionEffectsOnRoleChange(this));
     }
 
     @Override

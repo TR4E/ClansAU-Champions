@@ -1,4 +1,4 @@
-package me.trae.champions.build.modules;
+package me.trae.champions.build.modules.data;
 
 import me.trae.champions.Champions;
 import me.trae.champions.build.BuildManager;

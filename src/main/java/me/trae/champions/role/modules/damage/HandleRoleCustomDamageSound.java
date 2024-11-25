@@ -1,8 +1,8 @@
-package me.trae.champions.role.modules;
+package me.trae.champions.role.modules.damage;
 
-import me.trae.api.damage.events.CustomDamageEvent;
-import me.trae.champions.Champions;
 import me.trae.api.champions.role.Role;
+import me.trae.api.damage.events.damage.CustomPostDamageEvent;
+import me.trae.champions.Champions;
 import me.trae.champions.role.RoleManager;
 import me.trae.core.framework.types.frame.SpigotListener;
 import org.bukkit.entity.Player;
@@ -16,7 +16,7 @@ public class HandleRoleCustomDamageSound extends SpigotListener<Champions, RoleM
     }
 
     @EventHandler(priority = EventPriority.LOW)
-    public void onCustomDamage(final CustomDamageEvent event) {
+    public void onCustomDamage(final CustomPostDamageEvent event) {
         if (event.isCancelled()) {
             return;
         }

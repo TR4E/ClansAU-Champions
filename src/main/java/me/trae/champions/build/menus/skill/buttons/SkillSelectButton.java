@@ -107,6 +107,8 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
             this.getMenu().getManager().getRepository().updateData(roleBuild, BuildProperty.SKILLS);
         }
 
+        this.getMenu().setUpdatedRole(role);
+
         this.getMenu().getManager().setActiveRoleBuild(player, role, roleBuild);
 
         new SoundCreator(Sound.ORB_PICKUP, 1.0F, 1.0F).play(player);

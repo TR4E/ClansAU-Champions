@@ -1,6 +1,6 @@
 package me.trae.champions.weapon.types;
 
-import me.trae.api.damage.events.WeaponReductionEvent;
+import me.trae.api.damage.events.weapon.WeaponReductionEvent;
 import me.trae.champions.Champions;
 import me.trae.champions.weapon.WeaponManager;
 import me.trae.champions.weapon.types.interfaces.IChampionsPvPWeapon;

@@ -15,8 +15,20 @@ import org.bukkit.entity.Player;
 
 public abstract class SkillEditMenu extends Menu<Champions, BuildManager> implements ISkillMenu {
 
+    private Role updatedRole;
+
     public SkillEditMenu(final BuildManager manager, final Player player, final Role role, final int id) {
         super(manager, player, 54, String.format("%s Skill Page #%s", role.getName(), id));
+    }
+
+    @Override
+    public Role getUpdatedRole() {
+        return this.updatedRole;
+    }
+
+    @Override
+    public void setUpdatedRole(final Role updatedRole) {
+        this.updatedRole = updatedRole;
     }
 
     @Override

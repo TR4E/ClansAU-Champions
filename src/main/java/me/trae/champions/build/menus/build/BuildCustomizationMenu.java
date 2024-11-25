@@ -20,8 +20,20 @@ import java.util.List;
 
 public abstract class BuildCustomizationMenu extends Menu<Champions, BuildManager> implements IBuildMenu {
 
+    private Role updatedRole;
+
     public BuildCustomizationMenu(final BuildManager manager, final Player player, final Role role) {
         super(manager, player, 45, String.format("%s Class Editor", role.getName()));
+    }
+
+    @Override
+    public Role getUpdatedRole() {
+        return this.updatedRole;
+    }
+
+    @Override
+    public void setUpdatedRole(final Role updatedRole) {
+        this.updatedRole = updatedRole;
     }
 
     @Override

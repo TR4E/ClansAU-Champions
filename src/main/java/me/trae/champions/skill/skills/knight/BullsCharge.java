@@ -1,6 +1,7 @@
 package me.trae.champions.skill.skills.knight;
 
-import me.trae.api.damage.events.CustomDamageEvent;
+import me.trae.api.damage.events.damage.CustomDamageEvent;
+import me.trae.api.damage.events.damage.CustomPostDamageEvent;
 import me.trae.champions.role.types.Knight;
 import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.enums.SkillType;
@@ -19,6 +20,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
@@ -96,9 +98,40 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You failed <green><var></green>.", Collections.singletonList(this.getDisplayName(data.getLevel())));
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler
     public void onCustomDamage(final CustomDamageEvent event) {
         if (event.isCancelled()) {
+            return;
+        }
+
+        if (event.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+            return;
+        }
+
+        if (!(event.getDamagee() instanceof Player)) {
+            return;
+        }
+
+        if (!(event.getDamager() instanceof LivingEntity)) {
+            return;
+        }
+
+        final Player damagee = event.getDamageeByClass(Player.class);
+
+        if (!(this.isUserByPlayer(damagee))) {
+            return;
+        }
+
+        event.setKnockback(0.0D);
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onCustomPostDamage(final CustomPostDamageEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
+
+        if (event.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
             return;
         }
 
@@ -131,10 +164,10 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
             UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit a <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));
         }
 
+        event.setReason(this.getDisplayName(data.getLevel()), this.duration);
+
         this.reset(damager);
         this.removeUser(damager);
-
-        event.setReason(this.getName(), this.duration);
     }
 
     @Override

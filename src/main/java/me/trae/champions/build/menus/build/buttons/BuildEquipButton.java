@@ -65,6 +65,8 @@ public abstract class BuildEquipButton extends Button<BuildCustomizationMenu> im
             return;
         }
 
+        this.getMenu().setUpdatedRole(this.getMenu().getRole());
+
         this.getMenu().getManager().setActiveRoleBuild(player, this.getMenu().getRole(), roleBuild);
 
         new SoundCreator(Sound.LEVEL_UP).play(player);

@@ -42,6 +42,10 @@ public abstract class BuildDeleteButton extends Button<BuildCustomizationMenu> i
             return;
         }
 
+        if (roleBuild.isActive()) {
+            this.getMenu().setUpdatedRole(this.getMenu().getRole());
+        }
+
         this.getMenu().getManager().removeBuild(roleBuild);
         this.getMenu().getManager().getRepository().deleteData(roleBuild);
 

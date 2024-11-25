@@ -1,8 +1,8 @@
 package me.trae.champions.role.types.submodules;
 
-import me.trae.api.damage.events.CustomDamageEvent;
-import me.trae.champions.Champions;
 import me.trae.api.champions.role.Role;
+import me.trae.api.damage.events.damage.CustomPreDamageEvent;
+import me.trae.champions.Champions;
 import me.trae.core.framework.types.frame.SpigotSubListener;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,8 +15,8 @@ public class DisableFallDamage extends SpigotSubListener<Champions, Role> {
         super(module);
     }
 
-    @EventHandler(priority = EventPriority.LOW)
-    public void onCustomDamage(final CustomDamageEvent event) {
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onCustomPreDamage(final CustomPreDamageEvent event) {
         if (event.isCancelled()) {
             return;
         }

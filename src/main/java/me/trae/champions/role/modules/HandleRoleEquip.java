@@ -3,19 +3,13 @@ package me.trae.champions.role.modules;
 import me.trae.api.champions.role.Role;
 import me.trae.api.champions.role.events.RoleChangeEvent;
 import me.trae.champions.Champions;
-import me.trae.champions.build.data.RoleBuild;
 import me.trae.champions.role.RoleManager;
+import me.trae.champions.utility.UtilRole;
 import me.trae.core.framework.types.frame.SpigotUpdater;
 import me.trae.core.updater.annotations.Update;
-import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilServer;
-import me.trae.core.utility.UtilString;
-import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-
-import java.util.Collections;
 
 public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
 
@@ -56,21 +50,7 @@ public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
 
         this.getManager().setPlayerRole(player, role);
 
-        if (role == null) {
-            new SoundCreator(Sound.HORSE_ARMOR, 5.0F, 5.09F).play(player.getLocation());
-
-            UtilMessage.simpleMessage(player, "Class", UtilString.pair("Armor Class", "<red>None"));
-        } else {
-            new SoundCreator(Sound.HORSE_ARMOR, 2.0F, 1.09F).play(player.getLocation());
-
-            UtilMessage.simpleMessage(player, "Class", UtilString.pair("Armor Class", String.format("<green>%s", role.getName())));
-
-            final RoleBuild roleBuild = role.getRoleBuildByPlayer(player);
-
-            UtilMessage.simpleMessage(player, "Skills", "Listing <white><var></white> Skills:", Collections.singletonList(roleBuild.getDisplayName()));
-
-            UtilMessage.simpleMessage(player, roleBuild.getEquipMessage());
-        }
+        UtilRole.equipRoleEffect(role, player, true, false);
 
         UtilServer.callEvent(new RoleChangeEvent(role, player));
     }

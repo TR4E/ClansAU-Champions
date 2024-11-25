@@ -10,8 +10,9 @@ import me.trae.champions.build.enums.BuildProperty;
 import me.trae.champions.build.interfaces.IBuildManager;
 import me.trae.champions.build.menus.build.BuildCustomizationMenu;
 import me.trae.champions.build.modules.HandleClassCustomizationTable;
-import me.trae.champions.build.modules.HandleLoadBuildDataOnPlayerJoin;
-import me.trae.champions.build.modules.HandleRemoveBuildDataOnPlayerQuit;
+import me.trae.champions.build.modules.data.HandleLoadBuildDataOnPlayerJoin;
+import me.trae.champions.build.modules.data.HandleRemoveBuildDataOnPlayerQuit;
+import me.trae.champions.build.modules.menu.HandleDisplayEquipMessageOnBuildMenuUpdate;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.role.menus.RoleSelectionMenu;
 import me.trae.core.database.repository.containers.RepositoryContainer;
@@ -36,10 +37,15 @@ public class BuildManager extends SpigotManager<Champions> implements IBuildMana
         // Commands
         addModule(new BuildCommand(this));
 
-        // Modules
-        addModule(new HandleClassCustomizationTable(this));
+        // Data Modules
         addModule(new HandleLoadBuildDataOnPlayerJoin(this));
         addModule(new HandleRemoveBuildDataOnPlayerQuit(this));
+
+        // Menu Modules
+        addModule(new HandleDisplayEquipMessageOnBuildMenuUpdate(this));
+
+        // Modules
+        addModule(new HandleClassCustomizationTable(this));
     }
 
     @Override
