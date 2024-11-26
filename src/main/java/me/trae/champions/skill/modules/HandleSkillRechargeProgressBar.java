@@ -5,6 +5,7 @@ import me.trae.champions.Champions;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
 import me.trae.champions.skill.types.ActiveSkill;
+import me.trae.core.Core;
 import me.trae.core.framework.types.frame.SpigotListener;
 import me.trae.core.recharge.Recharge;
 import me.trae.core.recharge.events.RechargeUpdaterEvent;
@@ -15,8 +16,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
 
 public class HandleSkillRechargeProgressBar extends SpigotListener<Champions, SkillManager> {
-
-    private final String ACTION_BAR_KEY = "Skill Recharge Progress Bar";
 
     public HandleSkillRechargeProgressBar(final SkillManager manager) {
         super(manager);
@@ -41,13 +40,13 @@ public class HandleSkillRechargeProgressBar extends SpigotListener<Champions, Sk
 
         final ItemStack itemStack = player.getEquipment().getItemInHand();
         if (itemStack == null) {
-            this.reset(player);
+            this.reset(player, recharge);
             return;
         }
 
         final Role playerRole = this.getInstance().getManagerByClass(RoleManager.class).getPlayerRole(player);
         if (playerRole == null) {
-            this.reset(player);
+            this.reset(player, recharge);
             return;
         }
 
@@ -66,27 +65,24 @@ public class HandleSkillRechargeProgressBar extends SpigotListener<Champions, Sk
             }
 
             if (!(skill.getType().isItemStack(itemStack))) {
-                this.reset(player);
+                this.reset(player, recharge);
                 continue;
             }
 
             this.sendActionBar(player, recharge);
+            break;
         }
     }
 
     private void sendActionBar(final Player player, final Recharge recharge) {
         if (recharge.hasExpired()) {
-            UtilServer.runTaskLater(Champions.class, false, 20L, () -> UtilTitle.sendActionBarByLock(player, " ", this.ACTION_BAR_KEY));
+            UtilServer.runTaskLater(Core.class, false, 20L, () -> this.reset(player, recharge));
         }
 
-        UtilTitle.sendActionBarByKey(player, recharge.getFullProgressBar(), this.ACTION_BAR_KEY);
+        UtilTitle.sendActionBarByLock(player, recharge.getFullProgressBar(), recharge.getName());
     }
 
-    private void reset(final Player player) {
-        if (!(UtilTitle.isActionBarByKey(player, this.ACTION_BAR_KEY))) {
-            return;
-        }
-
-        UtilTitle.sendActionBarByKey(player, " ", this.ACTION_BAR_KEY);
+    private void reset(final Player player, final Recharge recharge) {
+        UtilTitle.sendActionBarByLock(player, " ", recharge.getName());
     }
 }

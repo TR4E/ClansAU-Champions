@@ -108,7 +108,7 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
 
         this.getInstance(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
 
-        UtilMessage.simpleMessage(player, "Item", "You threw a <var>.", Collections.singletonList(this.getDisplayName()));
+        UtilMessage.simpleMessage(player, this.getName(), "You used <var>.", Collections.singletonList(this.getDisplayAbilityName(ActionType.LEFT_CLICK)));
     }
 
     private void onRightClick(final Player player) {
@@ -120,7 +120,7 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
 
         new SoundCreator(Sound.DRINK).play(player.getLocation());
 
-        UtilMessage.simpleMessage(player, "Item", "You consumed a <var>.", Collections.singletonList(this.getDisplayName()));
+        UtilMessage.simpleMessage(player, this.getName(), "You used <var>.", Collections.singletonList(this.getDisplayAbilityName(ActionType.RIGHT_CLICK)));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

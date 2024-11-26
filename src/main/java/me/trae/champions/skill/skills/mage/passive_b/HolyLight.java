@@ -63,7 +63,7 @@ public class HolyLight extends PassiveSkill<Mage, SkillData> implements Updater 
         super.reset(player);
     }
 
-    @Update
+    @Update(delay = 250L)
     public void onUpdater() {
         for (final Player player : this.getModule().getUsers()) {
             if (!(this.isUserByPlayer(player))) {
