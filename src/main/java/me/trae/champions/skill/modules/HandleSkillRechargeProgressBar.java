@@ -9,8 +9,9 @@ import me.trae.core.Core;
 import me.trae.core.framework.types.frame.SpigotListener;
 import me.trae.core.recharge.Recharge;
 import me.trae.core.recharge.events.RechargeUpdaterEvent;
-import me.trae.core.utility.UtilServer;
-import me.trae.core.utility.UtilTitle;
+import me.trae.core.utility.UtilAbility;
+import me.trae.core.weapon.Weapon;
+import me.trae.core.weapon.WeaponManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.inventory.ItemStack;
@@ -40,13 +41,19 @@ public class HandleSkillRechargeProgressBar extends SpigotListener<Champions, Sk
 
         final ItemStack itemStack = player.getEquipment().getItemInHand();
         if (itemStack == null) {
-            this.reset(player, recharge);
+            UtilAbility.removeActionBar(player, "Skill", recharge);
+            return;
+        }
+
+        final Weapon<?, ?, ?> weapon = this.getInstance(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack);
+        if (weapon != null && !(weapon.isChampionsWeapon())) {
+            UtilAbility.removeActionBar(player, "Skill", recharge);
             return;
         }
 
         final Role playerRole = this.getInstance().getManagerByClass(RoleManager.class).getPlayerRole(player);
         if (playerRole == null) {
-            this.reset(player, recharge);
+            UtilAbility.removeActionBar(player, "Skill", recharge);
             return;
         }
 
@@ -57,32 +64,22 @@ public class HandleSkillRechargeProgressBar extends SpigotListener<Champions, Sk
 
             final int level = skill.getLevel(player);
             if (level == 0) {
+                UtilAbility.removeActionBar(player, "Skill", recharge);
                 continue;
             }
 
             if (!(skill.hasRecharge(level))) {
+                UtilAbility.removeActionBar(player, "Skill", recharge);
                 continue;
             }
 
             if (!(skill.getType().isItemStack(itemStack))) {
-                this.reset(player, recharge);
+                UtilAbility.removeActionBar(player, "Skill", recharge);
                 continue;
             }
 
-            this.sendActionBar(player, recharge);
+            UtilAbility.sendActionBar(player, "Skill", recharge);
             break;
         }
-    }
-
-    private void sendActionBar(final Player player, final Recharge recharge) {
-        if (recharge.hasExpired()) {
-            UtilServer.runTaskLater(Core.class, false, 20L, () -> this.reset(player, recharge));
-        }
-
-        UtilTitle.sendActionBarByLock(player, recharge.getFullProgressBar(), recharge.getName());
-    }
-
-    private void reset(final Player player, final Recharge recharge) {
-        UtilTitle.sendActionBarByLock(player, " ", recharge.getName());
     }
 }

@@ -30,6 +30,11 @@ public abstract class ChampionsPvPWeapon extends Weapon<Champions, WeaponManager
     }
 
     @Override
+    public boolean isChampionsWeapon() {
+        return true;
+    }
+
+    @Override
     public boolean isNaturallyObtained() {
         return true;
     }
