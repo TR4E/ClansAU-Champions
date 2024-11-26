@@ -50,9 +50,13 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
         return level;
     }
 
+    private long getDuration(final int level) {
+        return this.duration + ((level - 1) * 1000L);
+    }
+
     @Override
     public String[] getDescription(final int level) {
-        final String duration = UtilTime.getTime(this.duration);
+        final String duration = UtilTime.getTime(this.getDuration(level));
 
         return new String[]{
                 "Right-Click with an Axe to Activate.",
@@ -83,9 +87,11 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
 
         new SoundCreator(Sound.ENDERMAN_SCREAM, 1.5F, 0.0F).play(player.getLocation());
 
-        UtilEntity.givePotionEffect(player, PotionEffectType.SPEED, this.getAmplifier(level), this.duration);
+        final long duration = this.getDuration(level);
 
-        this.addUser(new SkillData(player, level, this.duration));
+        UtilEntity.givePotionEffect(player, PotionEffectType.SPEED, this.getAmplifier(level), duration);
+
+        this.addUser(new SkillData(player, level, duration));
 
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You used <green><var></green>.", Collections.singletonList(this.getDisplayName(level)));
     }
@@ -158,7 +164,9 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
 
         final LivingEntity damagee = event.getDamageeByClass(LivingEntity.class);
 
-        UtilEntity.givePotionEffect(damagee, PotionEffectType.SLOW, this.getAmplifier(data.getLevel()), this.duration);
+        final long duration = this.getDuration(data.getLevel());
+
+        UtilEntity.givePotionEffect(damagee, PotionEffectType.SLOW, this.getAmplifier(data.getLevel()), duration);
 
         new SoundCreator(Sound.ENDERMAN_SCREAM, 1.5F, 0.0F).play(damager.getLocation());
         new SoundCreator(Sound.ZOMBIE_METAL, 1.5F, 0.5F).play(damagee.getLocation());
@@ -170,7 +178,7 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
             UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit a <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));
         }
 
-        event.setReason(this.getDisplayName(data.getLevel()), this.duration);
+        event.setReason(this.getDisplayName(data.getLevel()), duration);
 
         this.reset(damager);
         this.removeUser(damager);
