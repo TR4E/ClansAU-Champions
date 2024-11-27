@@ -4,6 +4,7 @@ import me.trae.api.champions.role.Role;
 import me.trae.champions.build.data.RoleBuild;
 import org.bukkit.entity.Player;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -21,6 +22,8 @@ public interface IBuildManager {
 
     Map<Integer, RoleBuild> getBuildsByRole(final Player player, final Role role);
 
+    List<RoleBuild> getBuildsByPlayer(final Player player);
+
     boolean isBuildByID(final Player player, final Role role, final int id);
 
     boolean hasBuild(final Player player);
@@ -30,4 +33,8 @@ public interface IBuildManager {
     int getSkillPoints(final Role role, final RoleBuild roleBuild);
 
     void openMenu(final Player player);
+
+    void fixRoleBuild(final Player player);
+
+    boolean isRoleBuildNeedFix(final Player player);
 }
