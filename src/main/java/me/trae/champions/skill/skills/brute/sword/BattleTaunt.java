@@ -17,10 +17,10 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
     @ConfigInject(type = Float.class, path = "Energy-Needed", defaultValue = "20.0")
     private float energyNeeded;
 
-    @ConfigInject(type = Float.class, path = "Energy-Using", defaultValue = "6.0")
+    @ConfigInject(type = Float.class, path = "Energy-Using", defaultValue = "3.0")
     private float energyUsing;
 
-    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "3000")
+    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "5_000")
     private long recharge;
 
     @ConfigInject(type = Double.class, path = "Velocity", defaultValue = "0.3")
