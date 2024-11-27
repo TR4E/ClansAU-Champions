@@ -14,6 +14,7 @@ import me.trae.champions.skill.modules.HandleBoosterWeaponOnSkillLevel;
 import me.trae.champions.skill.modules.HandleSkillDataExpirations;
 import me.trae.champions.skill.modules.HandleSkillRechargeProgressBar;
 import me.trae.champions.skill.modules.activation.*;
+import me.trae.champions.skill.skills.global.modules.SwimAbility;
 import me.trae.champions.skill.types.ActiveSkill;
 import me.trae.champions.skill.types.ChannelSkill;
 import me.trae.core.Core;
@@ -44,6 +45,9 @@ public class SkillManager extends SpigotManager<Champions> implements ISkillMana
         addModule(new HandleBoosterWeaponOnSkillLevel(this));
         addModule(new HandleSkillDataExpirations(this));
         addModule(new HandleSkillRechargeProgressBar(this));
+
+        // Global Skill Abilities
+        addModule(new SwimAbility(this));
     }
 
     @Override

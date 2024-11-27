@@ -24,6 +24,8 @@ public class Knight extends Role {
 
         // Passive B Skills
         addSubModule(new Swordsmanship(this));
+
+        super.registerSubModules();
     }
 
     @Override

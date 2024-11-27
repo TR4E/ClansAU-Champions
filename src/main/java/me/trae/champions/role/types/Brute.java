@@ -24,6 +24,8 @@ public class Brute extends Role {
 
         // Passive B Skills
         addSubModule(new Stampede(this));
+
+        super.registerSubModules();
     }
 
     @Override

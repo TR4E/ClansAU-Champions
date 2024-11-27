@@ -24,6 +24,8 @@ public class Mage extends Role {
 
         // Passive B Skills
         addSubModule(new HolyLight(this));
+
+        super.registerSubModules();
     }
 
     @Override

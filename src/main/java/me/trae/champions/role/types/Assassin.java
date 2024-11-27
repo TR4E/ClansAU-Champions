@@ -33,6 +33,8 @@ public class Assassin extends Role implements Archer {
 
         // Active Bow Skills
         addSubModule(new SilencingArrow(this));
+
+        super.registerSubModules();
     }
 
     @Override

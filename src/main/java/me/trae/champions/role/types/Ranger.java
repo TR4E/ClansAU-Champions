@@ -21,6 +21,8 @@ public class Ranger extends Role implements Archer {
     public void registerSubModules() {
         // Passive A Skills
         addSubModule(new Longshot(this));
+
+        super.registerSubModules();
     }
 
     @Override
