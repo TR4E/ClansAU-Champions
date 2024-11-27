@@ -53,7 +53,9 @@ public class Leap extends ActiveSkill<Assassin, SkillData> implements SelfManage
         final long wallKickRecharge = this.wallKickRecharge;
         final float energy = this.getEnergy(level);
 
-        UtilLeap.activateLeap(player, this.getModule().getName(), this.getDisplayName(level), "Wall Kick", leapRecharge, wallKickRecharge, energy);
+        final String wallKickName = "Wall Kick";
+
+        UtilLeap.activate(player, this.getModule().getName(), this.getDisplayName(level), String.format("%s %s", wallKickName, level), this.getName(), wallKickName, leapRecharge, wallKickRecharge, energy);
     }
 
     @Override
