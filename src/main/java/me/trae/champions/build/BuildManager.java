@@ -202,7 +202,6 @@ public class BuildManager extends SpigotManager<Champions> implements IBuildMana
                     if (skill == null) {
                         roleBuild.removeSkill(roleSkill);
                         this.getRepository().updateData(roleBuild, BuildProperty.SKILLS);
-                        System.out.println("Fixed (Null) RoleSkill: " + roleSkill.getName());
                         this.FIXED_BUILDS.add(player.getUniqueId());
                         continue;
                     }
@@ -210,7 +209,6 @@ public class BuildManager extends SpigotManager<Champions> implements IBuildMana
                     if (roleSkill.getLevel() > skill.getMaxLevel()) {
                         roleSkill.setLevel(skill.getMaxLevel());
                         this.getRepository().updateData(roleBuild, BuildProperty.SKILLS);
-                        System.out.println("Fixed (Max Level) RoleSkill: " + roleSkill.getName());
                         this.FIXED_BUILDS.add(player.getUniqueId());
                     }
                 }

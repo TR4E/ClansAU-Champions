@@ -2,6 +2,7 @@ package me.trae.champions.role.modules;
 
 import me.trae.api.champions.role.Role;
 import me.trae.api.champions.role.events.RoleChangeEvent;
+import me.trae.api.champions.role.events.RoleUpdaterEvent;
 import me.trae.champions.Champions;
 import me.trae.champions.build.BuildManager;
 import me.trae.champions.role.RoleManager;
@@ -39,6 +40,8 @@ public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
                 playerRole = role;
                 break;
             }
+
+            UtilServer.callEvent(new RoleUpdaterEvent(playerRole, player));
 
             this.equip(player, playerRole);
         }
