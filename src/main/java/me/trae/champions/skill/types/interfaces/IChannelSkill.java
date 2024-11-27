@@ -9,5 +9,5 @@ public interface IChannelSkill<D extends SkillData> extends EnergyNeededChannelS
 
     void onUsing(final Player player, final D data);
 
-    boolean isUsing(final Player player);
+    boolean isUsingByPlayer(final Player player);
 }

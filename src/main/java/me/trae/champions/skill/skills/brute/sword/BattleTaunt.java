@@ -17,8 +17,11 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
     @ConfigInject(type = Float.class, path = "Energy-Needed", defaultValue = "20.0")
     private float energyNeeded;
 
-    @ConfigInject(type = Float.class, path = "Energy-Using", defaultValue = "2.0")
+    @ConfigInject(type = Float.class, path = "Energy-Using", defaultValue = "6.0")
     private float energyUsing;
+
+    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "3000")
+    private long recharge;
 
     @ConfigInject(type = Double.class, path = "Velocity", defaultValue = "0.3")
     private double velocity;
@@ -48,7 +51,7 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
                 "are slowly pulled in towards you.",
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyUsing(level)))
         };
     }
 
@@ -112,6 +115,6 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
 
     @Override
     public long getRecharge(final int level) {
-        return 0L;
+        return this.recharge;
     }
 }

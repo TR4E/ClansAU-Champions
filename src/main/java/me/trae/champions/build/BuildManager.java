@@ -117,6 +117,11 @@ public class BuildManager extends SpigotManager<Champions> implements IBuildMana
     }
 
     @Override
+    public boolean hasBuild(final Player player) {
+        return this.getBuilds().containsKey(player.getUniqueId());
+    }
+
+    @Override
     public void setActiveRoleBuild(final Player player, final Role role, final RoleBuild roleBuild) {
         for (final RoleBuild oldRoleBuild : this.getBuildsByRole(player, role).values()) {
             if (!(oldRoleBuild.isActive())) {

@@ -1,5 +1,6 @@
 package me.trae.champions.skill.skills.brute.passive_b;
 
+import me.trae.api.champions.skill.events.SkillLocationEvent;
 import me.trae.api.damage.events.damage.CustomDamageEvent;
 import me.trae.champions.role.types.Brute;
 import me.trae.champions.skill.skills.brute.passive_b.data.StampedeData;
@@ -50,18 +51,20 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
         return StampedeData.class;
     }
 
+    private int getAmplifier(final int level) {
+        return level;
+    }
+
     @Override
     public String[] getDescription(final int level) {
-        final int amplifier = level;
-
         return new String[]{
                 "You slowly build up speed as you",
                 "sprint. You gain a level of Speed",
-                String.format("for every <green>%s</green>, up to max", UtilTime.getTime(this.duration)),
-                String.format("of Speed <green>%s</green>.", amplifier),
+                String.format("for every %s,", UtilTime.getTime(this.duration)),
+                String.format("up to max of Speed <green>%s</green>.", this.getAmplifier(level)),
                 "",
                 "Attacking during stampede deals",
-                String.format("<green>%s</green> bonus damage per speed level", this.damageMultiplier)
+                String.format("%s bonus damage per speed level", this.damageMultiplier)
         };
     }
 
@@ -72,7 +75,7 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
 
     @Override
     public int getMaxLevel() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -151,6 +154,10 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
     @Update(delay = 250L)
     public void onUpdater() {
         for (final Player player : this.getModule().getUsers()) {
+            if (UtilServer.getEvent(new SkillLocationEvent(this, player.getLocation())).isCancelled()) {
+                continue;
+            }
+
             if (!(this.canActivate(player)) && this.isUserByPlayer(player)) {
                 this.reset(player);
                 this.removeUser(player);
@@ -181,7 +188,7 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
 
             final StampedeData data = this.getUserByPlayer(player);
 
-            if (data.getAmplifier() >= level) {
+            if (data.getAmplifier() >= this.getAmplifier(level)) {
                 continue;
             }
 
@@ -191,7 +198,7 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
 
             data.updateLastUpdated();
 
-            data.setAmplifier(UtilMath.getMinAndMax(Integer.class, 0, level, data.getAmplifier() + 1));
+            data.setAmplifier(data.getAmplifier() + 1);
 
             new SoundCreator(Sound.ZOMBIE_IDLE, 2.0F, 0.2F * data.getAmplifier() + 1.0F).play(player.getLocation());
 

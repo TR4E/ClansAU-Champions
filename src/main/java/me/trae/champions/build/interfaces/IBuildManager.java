@@ -23,6 +23,8 @@ public interface IBuildManager {
 
     boolean isBuildByID(final Player player, final Role role, final int id);
 
+    boolean hasBuild(final Player player);
+
     void setActiveRoleBuild(final Player player, final Role role, final RoleBuild roleBuild);
 
     int getSkillPoints(final Role role, final RoleBuild roleBuild);

@@ -8,6 +8,7 @@ import me.trae.champions.skill.types.ChannelSkill;
 import me.trae.core.Core;
 import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.types.frame.SpigotUpdater;
+import me.trae.core.recharge.RechargeManager;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.utility.UtilJava;
 import org.bukkit.Bukkit;
@@ -59,7 +60,7 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
 
         final EnergyManager energyManager = this.getInstance(Core.class).getManagerByClass(EnergyManager.class);
 
-        if (!(skill.isUsing(player))) {
+        if (!(skill.isUsingByPlayer(player))) {
             if (skill.hasEnergyNeeded(level)) {
                 if (energyManager.isExhausted(player, skill.getName(), skill.getEnergyNeeded(level), true)) {
                     return false;
@@ -69,6 +70,14 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
 
         if (skill.hasEnergyUsing(level)) {
             if (!(energyManager.use(player, skill.getName(), skill.getEnergyUsing(level), true))) {
+                if (skill.hasRecharge(level)) {
+                    final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
+
+                    if (!(rechargeManager.add(player, skill.getName(), skill.getRecharge(level), true))) {
+                        return false;
+                    }
+                }
+
                 return false;
             }
         }

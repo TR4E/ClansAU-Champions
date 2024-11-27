@@ -14,6 +14,8 @@ import me.trae.champions.skill.modules.HandleBoosterWeaponOnSkillLevel;
 import me.trae.champions.skill.modules.HandleSkillDataExpirations;
 import me.trae.champions.skill.modules.HandleSkillRechargeProgressBar;
 import me.trae.champions.skill.modules.activation.*;
+import me.trae.champions.skill.types.ActiveSkill;
+import me.trae.champions.skill.types.ChannelSkill;
 import me.trae.core.Core;
 import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.SpigotManager;
@@ -89,7 +91,6 @@ public class SkillManager extends SpigotManager<Champions> implements ISkillMana
         }
 
         if (!(skill instanceof SelfManagedAbilityComponent)) {
-
             final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
 
             if (skill instanceof RechargeSkillComponent) {
@@ -99,6 +100,12 @@ public class SkillManager extends SpigotManager<Champions> implements ISkillMana
                     if (rechargeManager.isCooling(player, skill.getName(), true)) {
                         return false;
                     }
+                }
+            }
+
+            if (skill instanceof ActiveSkill<?, ?>) {
+                if (UtilJava.cast(ActiveSkill.class, skill).isActive(player)) {
+                    return false;
                 }
             }
 
@@ -114,7 +121,7 @@ public class SkillManager extends SpigotManager<Champions> implements ISkillMana
                 }
             }
 
-            if (skill instanceof RechargeSkillComponent) {
+            if (skill instanceof RechargeSkillComponent && !(skill instanceof ChannelSkill<?, ?>)) {
                 final RechargeSkillComponent rechargeSkillComponent = UtilJava.cast(RechargeSkillComponent.class, skill);
 
                 if (rechargeSkillComponent.hasRecharge(level)) {

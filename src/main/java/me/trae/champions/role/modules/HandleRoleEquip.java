@@ -3,6 +3,7 @@ package me.trae.champions.role.modules;
 import me.trae.api.champions.role.Role;
 import me.trae.api.champions.role.events.RoleChangeEvent;
 import me.trae.champions.Champions;
+import me.trae.champions.build.BuildManager;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.utility.UtilRole;
 import me.trae.core.framework.types.frame.SpigotUpdater;
@@ -21,7 +22,13 @@ public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
 
     @Update(delay = 125L)
     public void onUpdater() {
+        final BuildManager buildManager = this.getInstance().getManagerByClass(BuildManager.class);
+
         for (final Player player : UtilServer.getOnlinePlayers()) {
+            if (!(buildManager.hasBuild(player))) {
+                continue;
+            }
+
             Role playerRole = null;
 
             for (final Role role : this.getManager().getModulesByClass(Role.class)) {

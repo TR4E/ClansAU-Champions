@@ -1,5 +1,6 @@
 package me.trae.champions.skill.skills.knight.passive_b;
 
+import me.trae.api.champions.skill.events.SkillLocationEvent;
 import me.trae.api.damage.events.damage.CustomDamageEvent;
 import me.trae.champions.role.types.Knight;
 import me.trae.champions.skill.enums.SkillType;
@@ -12,8 +13,8 @@ import me.trae.core.gamer.Gamer;
 import me.trae.core.gamer.GamerManager;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.updater.interfaces.Updater;
-import me.trae.core.utility.UtilMath;
 import me.trae.core.utility.UtilMessage;
+import me.trae.core.utility.UtilServer;
 import me.trae.core.utility.UtilString;
 import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.objects.SoundCreator;
@@ -36,9 +37,6 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
     @ConfigInject(type = Long.class, path = "Last-Damaged-Duration", defaultValue = "2_000")
     private long lastDamagedDuration;
 
-    @ConfigInject(type = Integer.class, path = "Max-Charges", defaultValue = "2")
-    private int maxCharges;
-
     @ConfigInject(type = Double.class, path = "Damage-Multiplier", defaultValue = "1.0")
     private double damageMultiplier;
 
@@ -53,15 +51,17 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
         return SwordsmanshipData.class;
     }
 
+    private int getMaxCharges(final int level) {
+        return level;
+    }
+
     @Override
     public String[] getDescription(final int level) {
-        final int maxCharges = Math.min(level, this.maxCharges);
-
         return new String[]{
                 "Prepare a powerful sword attack,",
-                "you gain 1 charge every 3 seconds.",
+                String.format("you gain 1 charge every %s.", UtilTime.getTime(this.chargeDuration)),
                 "",
-                String.format("You can store a maximum of <green>%s</green> charges.", maxCharges),
+                String.format("You can store a maximum of <green>%s</green> charges.", this.getMaxCharges(level)),
                 "",
                 "When you attack, your damage is",
                 "increased by the number of your charges",
@@ -143,6 +143,10 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
     @Update(delay = 250L)
     public void onUpdater() {
         for (final Player player : this.getModule().getUsers()) {
+            if (UtilServer.getEvent(new SkillLocationEvent(this, player.getLocation())).isCancelled()) {
+                continue;
+            }
+
             if (!(this.canActivate(player)) && this.isUserByPlayer(player)) {
                 this.removeUser(player);
                 continue;
@@ -168,7 +172,7 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
 
             final SwordsmanshipData data = this.getUserByPlayer(player);
 
-            if (data.getCharges() >= this.maxCharges) {
+            if (data.getCharges() >= this.getMaxCharges(data.getLevel())) {
                 continue;
             }
 
@@ -178,7 +182,7 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
 
             data.updateLastUpdated();
 
-            data.setCharges(UtilMath.getMinAndMax(Integer.class, 0, Math.min(level, this.maxCharges), data.getCharges() + 1));
+            data.setCharges(data.getCharges() + 1);
 
             UtilMessage.simpleMessage(player, this.getModule().getName(), UtilString.pair(String.format("%s Charges", this.getName()), String.format("<yellow>%s", data.getCharges())));
         }
