@@ -80,7 +80,19 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
 
     @Override
     public boolean canActivate(final Player player) {
-        return player.isSprinting();
+        if (!(player.isSprinting())) {
+            return false;
+        }
+
+        if (UtilBlock.isInLiquid(player.getLocation())) {
+            return false;
+        }
+
+        if (UtilServer.getEvent(new SkillLocationEvent(this, player.getLocation())).isCancelled()) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -154,11 +166,7 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
     @Update(delay = 250L)
     public void onUpdater() {
         for (final Player player : this.getModule().getUsers()) {
-            if (UtilServer.getEvent(new SkillLocationEvent(this, player.getLocation())).isCancelled()) {
-                continue;
-            }
-
-            if (!(this.canActivate(player)) && this.isUserByPlayer(player)) {
+            if (!(this.canActivate(player))) {
                 this.reset(player);
                 this.removeUser(player);
                 continue;

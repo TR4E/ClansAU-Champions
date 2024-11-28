@@ -33,8 +33,4 @@ public interface IBuildManager {
     int getSkillPoints(final Role role, final RoleBuild roleBuild);
 
     void openMenu(final Player player);
-
-    void fixRoleBuild(final Player player);
-
-    boolean isRoleBuildNeedFix(final Player player);
 }

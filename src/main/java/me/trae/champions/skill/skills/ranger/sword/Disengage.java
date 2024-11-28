@@ -1,0 +1,150 @@
+package me.trae.champions.skill.skills.ranger.sword;
+
+import me.trae.api.damage.events.damage.CustomDamageEvent;
+import me.trae.champions.role.types.Ranger;
+import me.trae.champions.skill.data.SkillData;
+import me.trae.champions.skill.types.ActiveSkill;
+import me.trae.champions.skill.types.enums.ActiveSkillType;
+import me.trae.core.Core;
+import me.trae.core.config.annotations.ConfigInject;
+import me.trae.core.effect.EffectManager;
+import me.trae.core.effect.data.EffectData;
+import me.trae.core.effect.types.NoFall;
+import me.trae.core.utility.*;
+import me.trae.core.utility.objects.SoundCreator;
+import org.bukkit.Sound;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.Arrays;
+import java.util.Collections;
+
+public class Disengage extends ActiveSkill<Ranger, SkillData> implements Listener {
+
+    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "12.0")
+    private float energy;
+
+    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "12_000")
+    private long recharge;
+
+    @ConfigInject(type = Long.class, path = "Prepare-Duration", defaultValue = "1_000")
+    private long prepareDuration;
+
+    @ConfigInject(type = Long.class, path = "Slowness-Duration", defaultValue = "4_000")
+    private long slownessDuration;
+
+    @ConfigInject(type = Integer.class, path = "Slowness-Amplifier", defaultValue = "4")
+    private int slownessAmplifier;
+
+    public Disengage(final Ranger module) {
+        super(module, ActiveSkillType.SWORD);
+    }
+
+    @Override
+    public Class<SkillData> getClassOfData() {
+        return SkillData.class;
+    }
+
+    @Override
+    public String[] getDescription(final int level) {
+        return new String[]{
+                "Right-Click with a Sword to Activate.",
+                "",
+                String.format("If you are attacked within <green>%s</green>", UtilTime.getTime(this.prepareDuration)),
+                "you successfully disengage.",
+                "",
+                "If successful, you leap backwards",
+                String.format("and your attacker receives Slowness <green>%s</green>", this.slownessAmplifier),
+                String.format("for <green>%s</green>.", UtilTime.getTime(this.slownessDuration)),
+                "",
+                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+        };
+    }
+
+    @Override
+    public int getDefaultLevel() {
+        return 2;
+    }
+
+    @Override
+    public int getMaxLevel() {
+        return 3;
+    }
+
+    @Override
+    public void onActivate(final Player player, final int level) {
+        new SoundCreator(Sound.ZOMBIE_REMEDY, 2.0F, 2.0F).play(player.getLocation());
+
+        this.addUser(new SkillData(player, level, this.prepareDuration));
+
+        UtilMessage.simpleMessage(player, this.getModule().getName(), "You have prepared to <green><var></green>", Collections.singletonList(this.getDisplayName(level)));
+    }
+
+    @Override
+    public void onExpire(final Player player, final SkillData data) {
+        UtilMessage.simpleMessage(player, this.getModule().getName(), "You failed to <green><var></green>", Collections.singletonList(this.getDisplayName(data.getLevel())));
+    }
+
+    @Override
+    public float getEnergy(final int level) {
+        return this.energy;
+    }
+
+    @Override
+    public long getRecharge(final int level) {
+        return this.recharge;
+    }
+
+    @EventHandler
+    public void onCustomDamage(final CustomDamageEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
+
+        if (event.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+            return;
+        }
+
+        if (!(event.getDamagee() instanceof Player)) {
+            return;
+        }
+
+        if (!(event.getDamager() instanceof LivingEntity)) {
+            return;
+        }
+
+        final Player damagee = event.getDamageeByClass(Player.class);
+
+        final SkillData data = this.getUserByPlayer(damagee);
+        if (data == null) {
+            return;
+        }
+
+        final LivingEntity damager = event.getDamagerByClass(LivingEntity.class);
+
+        event.setKnockback(0.0D);
+
+        event.setDamage(0.0D);
+
+        this.removeUser(damagee);
+
+        UtilEntity.givePotionEffect(damager, PotionEffectType.SLOW, this.slownessAmplifier, this.slownessDuration);
+
+        this.getInstance(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(NoFall.class).addUser(new EffectData(damagee, 3000L) {
+            @Override
+            public boolean isRemoveOnAction() {
+                return true;
+            }
+        });
+
+        UtilVelocity.velocity(damagee, damager.getLocation().getDirection(), 3.0D, 0.0D, 0.8D, 1.5D, true);
+
+        UtilMessage.simpleMessage(damagee, this.getModule().getName(), "You successfully used <green><var></green> against <var>.", Arrays.asList(this.getDisplayName(data.getLevel()), event.getDamagerName()));
+        UtilMessage.simpleMessage(damager, this.getModule().getName(), "<var> used <green><var></green> against you.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));
+    }
+}

@@ -54,7 +54,7 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
     @ConfigInject(type = Double.class, path = "Radius", defaultValue = "3.0")
     private double radius;
 
-    @ConfigInject(type = Boolean.class, path = "Friendly-Fire", defaultValue = "false")
+    @ConfigInject(type = Boolean.class, path = "Friendly-Fire", defaultValue = "true")
     private boolean friendlyFire;
 
     public IncendiaryGrenade(final WeaponManager manager) {

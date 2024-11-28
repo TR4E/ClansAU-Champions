@@ -26,7 +26,7 @@ public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
         final BuildManager buildManager = this.getInstance().getManagerByClass(BuildManager.class);
 
         for (final Player player : UtilServer.getOnlinePlayers()) {
-            if (!(buildManager.hasBuild(player)) || buildManager.isRoleBuildNeedFix(player)) {
+            if (!(buildManager.hasBuild(player))) {
                 continue;
             }
 

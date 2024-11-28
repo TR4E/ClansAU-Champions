@@ -27,8 +27,6 @@ public class BuildManager extends SpigotManager<Champions> implements IBuildMana
 
     private final Map<UUID, Map<String, Map<Integer, RoleBuild>>> BUILDS = new HashMap<>();
 
-    private final Set<UUID> FIXED_BUILDS = new HashSet<>();
-
     public BuildManager(final Champions instance) {
         super(instance);
     }
@@ -191,52 +189,5 @@ public class BuildManager extends SpigotManager<Champions> implements IBuildMana
                 });
             }
         });
-    }
-
-    @Override
-    public void fixRoleBuild(final Player player) {
-        for (final Role role : this.getInstance().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
-            for (final RoleBuild roleBuild : this.getBuildsByRole(player, role).values()) {
-                for (final RoleSkill roleSkill : roleBuild.getSkills().values()) {
-                    final Skill<?, ?> skill = UtilJava.cast(Skill.class, role.getSubModuleByName(roleSkill.getName()));
-                    if (skill == null) {
-                        roleBuild.removeSkill(roleSkill);
-                        this.getRepository().updateData(roleBuild, BuildProperty.SKILLS);
-                        this.FIXED_BUILDS.add(player.getUniqueId());
-                        continue;
-                    }
-
-                    if (roleSkill.getLevel() > skill.getMaxLevel()) {
-                        roleSkill.setLevel(skill.getMaxLevel());
-                        this.getRepository().updateData(roleBuild, BuildProperty.SKILLS);
-                        this.FIXED_BUILDS.add(player.getUniqueId());
-                    }
-                }
-            }
-        }
-    }
-
-    @Override
-    public boolean isRoleBuildNeedFix(final Player player) {
-        if (this.FIXED_BUILDS.contains(player.getUniqueId())) {
-            return false;
-        }
-
-        for (final Role role : this.getInstance().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
-            for (final RoleBuild roleBuild : this.getBuildsByRole(player, role).values()) {
-                for (final RoleSkill roleSkill : roleBuild.getSkills().values()) {
-                    final Skill<?, ?> skill = UtilJava.cast(Skill.class, role.getSubModuleByName(roleSkill.getName()));
-                    if (skill == null) {
-                        return true;
-                    }
-
-                    if (roleSkill.getLevel() > skill.getMaxLevel()) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
     }
 }

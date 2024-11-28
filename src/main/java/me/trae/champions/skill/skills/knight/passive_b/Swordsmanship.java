@@ -13,10 +13,7 @@ import me.trae.core.gamer.Gamer;
 import me.trae.core.gamer.GamerManager;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.updater.interfaces.Updater;
-import me.trae.core.utility.UtilMessage;
-import me.trae.core.utility.UtilServer;
-import me.trae.core.utility.UtilString;
-import me.trae.core.utility.UtilTime;
+import me.trae.core.utility.*;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -83,7 +80,19 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
 
     @Override
     public boolean canActivate(final Player player) {
-        return SkillType.SWORD.isItemStack(player.getEquipment().getItemInHand());
+        if (!(SkillType.SWORD.isItemStack(player.getEquipment().getItemInHand()))) {
+            return false;
+        }
+
+        if (UtilBlock.isInLiquid(player.getLocation())) {
+            return false;
+        }
+
+        if (UtilServer.getEvent(new SkillLocationEvent(this, player.getLocation())).isCancelled()) {
+            return false;
+        }
+
+        return true;
     }
 
     @EventHandler
@@ -143,17 +152,14 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
     @Update(delay = 250L)
     public void onUpdater() {
         for (final Player player : this.getModule().getUsers()) {
-            if (UtilServer.getEvent(new SkillLocationEvent(this, player.getLocation())).isCancelled()) {
-                continue;
-            }
-
-            if (!(this.canActivate(player)) && this.isUserByPlayer(player)) {
+            if (!(this.canActivate(player))) {
                 this.removeUser(player);
                 continue;
             }
 
             final int level = getLevel(player);
             if (level == 0) {
+                this.removeUser(player);
                 continue;
             }
 

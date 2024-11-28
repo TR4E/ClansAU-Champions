@@ -57,7 +57,7 @@ public class GravityGrenade extends ActiveCustomItem<Champions, WeaponManager, W
     @ConfigInject(type = Double.class, path = "Gravity-Radius", defaultValue = "5.0")
     private double gravityRadius;
 
-    @ConfigInject(type = Boolean.class, path = "Friendly-Fire", defaultValue = "false")
+    @ConfigInject(type = Boolean.class, path = "Friendly-Fire", defaultValue = "true")
     private boolean friendlyFire;
 
     public GravityGrenade(final WeaponManager manager) {
