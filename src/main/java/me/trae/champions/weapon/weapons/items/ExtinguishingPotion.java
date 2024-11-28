@@ -44,6 +44,9 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
     @ConfigInject(type = Integer.class, path = "Amplifier", defaultValue = "1")
     private int amplifier;
 
+    @ConfigInject(type = Integer.class, path = "Ground-Block-Distance", defaultValue = "1")
+    private int groundBlockDistance;
+
     @ConfigInject(type = Double.class, path = "Item-Velocity", defaultValue = "1.8")
     private double itemVelocity;
 
@@ -141,7 +144,7 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
             return;
         }
 
-        for (final Block block : UtilBlock.getInRadius(location, 2)) {
+        for (final Block block : UtilBlock.getInRadius(location, this.groundBlockDistance)) {
             if (block.getType() == Material.AIR || UtilBlock.isInLiquid(block.getLocation())) {
                 continue;
             }

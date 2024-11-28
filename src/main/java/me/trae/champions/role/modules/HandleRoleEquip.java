@@ -4,12 +4,15 @@ import me.trae.api.champions.role.Role;
 import me.trae.api.champions.role.events.RoleChangeEvent;
 import me.trae.api.champions.role.events.RoleUpdaterEvent;
 import me.trae.champions.Champions;
-import me.trae.champions.build.BuildManager;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.utility.UtilRole;
+import me.trae.core.Core;
+import me.trae.core.client.Client;
+import me.trae.core.client.ClientManager;
 import me.trae.core.framework.types.frame.SpigotUpdater;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.utility.UtilServer;
+import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.enums.ArmourSlotType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -23,10 +26,11 @@ public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
 
     @Update(delay = 125L)
     public void onUpdater() {
-        final BuildManager buildManager = this.getInstance().getManagerByClass(BuildManager.class);
+        final ClientManager clientManager = this.getInstance(Core.class).getManagerByClass(ClientManager.class);
 
         for (final Player player : UtilServer.getOnlinePlayers()) {
-            if (!(buildManager.hasBuild(player))) {
+            final Client client = clientManager.getClientByPlayer(player);
+            if (client != null && !(UtilTime.elapsed(client.getLastJoined(), 250L))) {
                 continue;
             }
 
