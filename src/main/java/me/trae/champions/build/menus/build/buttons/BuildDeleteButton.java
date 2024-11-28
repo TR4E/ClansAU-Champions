@@ -51,6 +51,6 @@ public abstract class BuildDeleteButton extends Button<BuildCustomizationMenu> i
 
         new SoundCreator(Sound.ITEM_BREAK).play(player);
 
-        this.getMenu().construct();
+        this.getMenu().build();
     }
 }

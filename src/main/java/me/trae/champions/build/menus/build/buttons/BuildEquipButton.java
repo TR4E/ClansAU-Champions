@@ -71,7 +71,7 @@ public abstract class BuildEquipButton extends Button<BuildCustomizationMenu> im
 
         new SoundCreator(Sound.LEVEL_UP).play(player);
 
-        this.getMenu().construct();
+        this.getMenu().build();
     }
 
     private short getItemStackDataByID(final int id) {

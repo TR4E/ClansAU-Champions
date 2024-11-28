@@ -113,7 +113,7 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
 
         new SoundCreator(Sound.ORB_PICKUP, 1.0F, 1.0F).play(player);
 
-        this.getMenu().construct();
+        this.getMenu().build();
     }
 
     private void onRightClickButton(final Player player, final Role role, final RoleBuild roleBuild, final RoleSkill roleSkill) {
@@ -139,6 +139,6 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
 
         new SoundCreator(Sound.ORB_PICKUP, 2.0F, 2.0F).play(player);
 
-        this.getMenu().construct();
+        this.getMenu().build();
     }
 }
