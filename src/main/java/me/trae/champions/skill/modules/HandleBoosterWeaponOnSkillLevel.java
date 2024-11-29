@@ -18,7 +18,7 @@ public class HandleBoosterWeaponOnSkillLevel extends SpigotListener<Champions, S
 
     @EventHandler
     public void onSkillLevel(final SkillLevelEvent event) {
-        if (!(Arrays.asList(SkillType.SWORD, SkillType.AXE).contains(event.getSkill().getType()))) {
+        if (!(Arrays.asList(SkillType.SWORD, SkillType.AXE, SkillType.BOW).contains(event.getSkill().getType()))) {
             return;
         }
 

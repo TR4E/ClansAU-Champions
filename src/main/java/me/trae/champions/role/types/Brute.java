@@ -2,6 +2,7 @@ package me.trae.champions.role.types;
 
 import me.trae.api.champions.role.Role;
 import me.trae.champions.role.RoleManager;
+import me.trae.champions.skill.skills.brute.axe.SeismicSlam;
 import me.trae.champions.skill.skills.brute.passive_b.Stampede;
 import me.trae.champions.skill.skills.brute.sword.BattleTaunt;
 import me.trae.core.utility.objects.SoundCreator;
@@ -21,6 +22,9 @@ public class Brute extends Role {
     public void registerSubModules() {
         // Sword Skills
         addSubModule(new BattleTaunt(this));
+
+        // Axe Skills
+        addSubModule(new SeismicSlam(this));
 
         // Passive B Skills
         addSubModule(new Stampede(this));

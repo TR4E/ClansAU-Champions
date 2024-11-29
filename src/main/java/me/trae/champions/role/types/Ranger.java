@@ -4,6 +4,7 @@ import me.trae.api.champions.role.Role;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.role.types.models.Archer;
 import me.trae.champions.skill.skills.ranger.axe.WolfsFury;
+import me.trae.champions.skill.skills.ranger.bow.RopedArrow;
 import me.trae.champions.skill.skills.ranger.passive_a.Longshot;
 import me.trae.champions.skill.skills.ranger.sword.Disengage;
 import me.trae.core.utility.objects.SoundCreator;
@@ -26,6 +27,9 @@ public class Ranger extends Role implements Archer {
 
         // Axe Skills
         addSubModule(new WolfsFury(this));
+
+        // Bow Skills
+        addSubModule(new RopedArrow(this));
 
         // Passive A Skills
         addSubModule(new Longshot(this));

@@ -56,13 +56,11 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
 
     @Override
     public String[] getDescription(final int level) {
-        final String duration = UtilTime.getTime(this.getDuration(level));
-
         return new String[]{
                 "Right-Click with an Axe to Activate.",
                 "",
                 "Enter a rage, gaining massive movement speed",
-                String.format("and slowing anything you hit for <green>%s</green>.", duration),
+                String.format("and slowing anything you hit for <green>%s</green>.", UtilTime.getTime(this.getDuration(level))),
                 "",
                 "While charging, you take no knockback.",
                 "",

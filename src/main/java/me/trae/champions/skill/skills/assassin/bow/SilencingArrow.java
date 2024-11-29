@@ -58,6 +58,11 @@ public class SilencingArrow extends ActiveBowSkill<Assassin, BowSkillData> {
     }
 
     @Override
+    public int getMaxLevel() {
+        return 3;
+    }
+
+    @Override
     public void onActivate(final Player player, final int level) {
         this.addUser(new BowSkillData(player, level));
 
