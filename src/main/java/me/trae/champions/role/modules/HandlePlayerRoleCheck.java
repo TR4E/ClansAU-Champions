@@ -15,6 +15,6 @@ public class HandlePlayerRoleCheck extends SpigotListener<Champions, RoleManager
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onRoleCheck(final RoleCheckEvent event) {
-        event.setCancelled(this.getManager().getPlayerRole(event.getPlayer()) == null);
+        event.setRole(this.getManager().getPlayerRole(event.getPlayer()));
     }
 }
