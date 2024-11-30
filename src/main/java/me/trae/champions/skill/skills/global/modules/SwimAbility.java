@@ -39,11 +39,11 @@ public class SwimAbility extends GlobalAbility<Swim> implements Listener {
     @ConfigInject(type = Double.class, path = "Strength", defaultValue = "0.6")
     private double strength;
 
-    @ConfigInject(type = Double.class, path = "yMax", defaultValue = "0.6")
-    private double yMax;
-
     @ConfigInject(type = Double.class, path = "yAdd", defaultValue = "0.2")
     private double yAdd;
+
+    @ConfigInject(type = Double.class, path = "yMax", defaultValue = "0.6")
+    private double yMax;
 
     @ConfigInject(type = Boolean.class, path = "groundBoost", defaultValue = "false")
     private boolean groundBoost;

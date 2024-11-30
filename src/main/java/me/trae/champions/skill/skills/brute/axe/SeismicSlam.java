@@ -48,14 +48,14 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
     @ConfigInject(type = Double.class, path = "Strength", defaultValue = "0.6")
     private double strength;
 
-    @ConfigInject(type = Double.class, path = "yMax", defaultValue = "0.8")
-    private double yMax;
+    @ConfigInject(type = Double.class, path = "yBase", defaultValue = "0.0")
+    private double yBase;
 
     @ConfigInject(type = Double.class, path = "yAdd", defaultValue = "0.8")
     private double yAdd;
 
-    @ConfigInject(type = Double.class, path = "yBase", defaultValue = "0.0")
-    private double yBase;
+    @ConfigInject(type = Double.class, path = "yMax", defaultValue = "0.8")
+    private double yMax;
 
     @ConfigInject(type = Boolean.class, path = "groundBoost", defaultValue = "true")
     private boolean groundBoost;
@@ -163,7 +163,7 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
                     }
                 }
 
-                UtilDamage.damage(nearbyEntity, player, EntityDamageEvent.DamageCause.CUSTOM, (data.getLevel() + 1) * nearbyEntityDistance + 0.5D, this.getDisplayName(data.getLevel()), 2000L);
+                UtilDamage.damage(nearbyEntity, player, EntityDamageEvent.DamageCause.CUSTOM, (data.getLevel() * 2) * nearbyEntityDistance + 0.5D, this.getDisplayName(data.getLevel()), 2000L);
 
                 UtilVelocity.velocity(nearbyEntity, 0.3 * (data.getHeight() - player.getLocation().getY()) * 0.1D, 0.8D, 1.2D, true);
 

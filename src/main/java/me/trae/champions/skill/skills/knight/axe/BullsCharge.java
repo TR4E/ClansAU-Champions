@@ -105,6 +105,8 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
 
     @Override
     public void onExpire(final Player player, final SkillData data) {
+        new SoundCreator(Sound.NOTE_STICKS).play(player);
+
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You failed <green><var></green>.", Collections.singletonList(this.getDisplayName(data.getLevel())));
     }
 

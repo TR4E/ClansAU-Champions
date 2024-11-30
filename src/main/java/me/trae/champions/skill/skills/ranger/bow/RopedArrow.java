@@ -28,14 +28,14 @@ public class RopedArrow extends ActiveBowSkill<Ranger, BowSkillData> {
     @ConfigInject(type = Double.class, path = "Strength", defaultValue = "2.5")
     private double strength;
 
-    @ConfigInject(type = Double.class, path = "yMax", defaultValue = "1.5")
-    private double yMax;
+    @ConfigInject(type = Double.class, path = "yBase", defaultValue = "0.4")
+    private double yBase;
 
     @ConfigInject(type = Double.class, path = "yAdd", defaultValue = "0.3")
     private double yAdd;
 
-    @ConfigInject(type = Double.class, path = "yBase", defaultValue = "0.4")
-    private double yBase;
+    @ConfigInject(type = Double.class, path = "yMax", defaultValue = "1.5")
+    private double yMax;
 
     @ConfigInject(type = Boolean.class, path = "groundBoost", defaultValue = "true")
     private boolean groundBoost;

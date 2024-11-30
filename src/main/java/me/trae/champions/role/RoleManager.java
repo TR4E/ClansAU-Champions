@@ -11,6 +11,8 @@ import me.trae.champions.role.modules.RemovePositivePotionEffectsOnRoleChange;
 import me.trae.champions.role.modules.damage.HandleRoleCustomDamageSound;
 import me.trae.champions.role.modules.displayname.HandleChampionsPlayerDisplayNameFormat;
 import me.trae.champions.role.modules.item.HandleChampionsItemBuilderUpdate;
+import me.trae.champions.role.modules.reset.ResetPlayerRoleOnPlayerDeath;
+import me.trae.champions.role.modules.reset.ResetPlayerRoleOnPlayerQuit;
 import me.trae.champions.role.modules.restrictions.DisableShootingArrowsForNonArchers;
 import me.trae.champions.role.types.*;
 import me.trae.champions.role.types.models.Archer;
@@ -57,11 +59,18 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
         addModule(new KitCommand(this));
 
         // Modules
-        addModule(new DisableShootingArrowsForNonArchers(this));
-        addModule(new HandleChampionsPlayerDisplayNameFormat(this));
-        addModule(new HandlePlayerRoleCheck(this));
-        addModule(new HandleChampionsItemBuilderUpdate(this));
         addModule(new HandleRoleCustomDamageSound(this));
+
+        addModule(new HandleChampionsPlayerDisplayNameFormat(this));
+
+        addModule(new HandleChampionsItemBuilderUpdate(this));
+
+        addModule(new ResetPlayerRoleOnPlayerDeath(this));
+        addModule(new ResetPlayerRoleOnPlayerQuit(this));
+
+        addModule(new DisableShootingArrowsForNonArchers(this));
+
+        addModule(new HandlePlayerRoleCheck(this));
         addModule(new HandleRoleEquip(this));
         addModule(new RemovePositivePotionEffectsOnRoleChange(this));
     }

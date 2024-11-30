@@ -40,6 +40,22 @@ public class Disengage extends ActiveSkill<Ranger, SkillData> implements Listene
     @ConfigInject(type = Integer.class, path = "Slowness-Amplifier", defaultValue = "4")
     private int slownessAmplifier;
 
+    @ConfigInject(type = Double.class, path = "Strength", defaultValue = "4.0")
+    private double strength;
+
+    @ConfigInject(type = Double.class, path = "yBase", defaultValue = "0.0")
+    private double yBase;
+
+    @ConfigInject(type = Double.class, path = "yAdd", defaultValue = "0.8")
+    private double yAdd;
+
+    @ConfigInject(type = Double.class, path = "yMax", defaultValue = "1.5")
+    private double yMax;
+
+    @ConfigInject(type = Boolean.class, path = "groundBoost", defaultValue = "true")
+    private boolean groundBoost;
+
+
     public Disengage(final Ranger module) {
         super(module, ActiveSkillType.SWORD);
     }
@@ -87,6 +103,8 @@ public class Disengage extends ActiveSkill<Ranger, SkillData> implements Listene
 
     @Override
     public void onExpire(final Player player, final SkillData data) {
+        new SoundCreator(Sound.NOTE_STICKS).play(player);
+
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You failed to <green><var></green>", Collections.singletonList(this.getDisplayName(data.getLevel())));
     }
 
@@ -142,7 +160,7 @@ public class Disengage extends ActiveSkill<Ranger, SkillData> implements Listene
             }
         });
 
-        UtilVelocity.velocity(damagee, damager.getLocation().getDirection(), 3.0D, 0.0D, 0.8D, 1.5D, true);
+        UtilVelocity.velocity(damagee, damager.getLocation().getDirection(), this.strength, this.yBase, this.yAdd, this.yMax, this.groundBoost);
 
         UtilMessage.simpleMessage(damagee, this.getModule().getName(), "You successfully used <green><var></green> against <var>.", Arrays.asList(this.getDisplayName(data.getLevel()), event.getDamagerName()));
         UtilMessage.simpleMessage(damager, this.getModule().getName(), "<var> used <green><var></green> against you.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));
