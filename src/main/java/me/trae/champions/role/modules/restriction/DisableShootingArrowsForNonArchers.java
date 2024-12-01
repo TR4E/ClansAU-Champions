@@ -1,4 +1,4 @@
-package me.trae.champions.role.modules.restrictions;
+package me.trae.champions.role.modules.restriction;
 
 import me.trae.champions.Champions;
 import me.trae.champions.role.RoleManager;

@@ -21,6 +21,10 @@ public class HandleChampionsPlayerDisplayNameFormat extends SpigotListener<Champ
             return;
         }
 
+        if (!(event.isOnline())) {
+            return;
+        }
+
         final Player player = event.getPlayer();
 
         final Role role = this.getManager().getPlayerRole(player);

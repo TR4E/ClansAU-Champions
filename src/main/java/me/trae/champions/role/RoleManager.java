@@ -10,10 +10,12 @@ import me.trae.champions.role.modules.HandleRoleEquip;
 import me.trae.champions.role.modules.RemovePositivePotionEffectsOnRoleChange;
 import me.trae.champions.role.modules.damage.HandleRoleCustomDamageSound;
 import me.trae.champions.role.modules.displayname.HandleChampionsPlayerDisplayNameFormat;
+import me.trae.champions.role.modules.durability.HandleAssassinArmourDurability;
+import me.trae.champions.role.modules.durability.HandleMageArmourDurability;
 import me.trae.champions.role.modules.item.HandleChampionsItemBuilderUpdate;
 import me.trae.champions.role.modules.reset.ResetPlayerRoleOnPlayerDeath;
 import me.trae.champions.role.modules.reset.ResetPlayerRoleOnPlayerQuit;
-import me.trae.champions.role.modules.restrictions.DisableShootingArrowsForNonArchers;
+import me.trae.champions.role.modules.restriction.DisableShootingArrowsForNonArchers;
 import me.trae.champions.role.types.*;
 import me.trae.champions.role.types.models.Archer;
 import me.trae.champions.weapon.weapons.pvp.BoosterBow;
@@ -58,18 +60,27 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
         // Commands
         addModule(new KitCommand(this));
 
-        // Modules
+        // Damage Modules
         addModule(new HandleRoleCustomDamageSound(this));
 
+        // DisplayName Modules
         addModule(new HandleChampionsPlayerDisplayNameFormat(this));
 
+        // Durability Modules
+        addModule(new HandleAssassinArmourDurability(this));
+        addModule(new HandleMageArmourDurability(this));
+
+        // Item Modules
         addModule(new HandleChampionsItemBuilderUpdate(this));
 
+        // Reset Modules
         addModule(new ResetPlayerRoleOnPlayerDeath(this));
         addModule(new ResetPlayerRoleOnPlayerQuit(this));
 
+        // Restriction Modules
         addModule(new DisableShootingArrowsForNonArchers(this));
 
+        // Other Modules
         addModule(new HandlePlayerRoleCheck(this));
         addModule(new HandleRoleEquip(this));
         addModule(new RemovePositivePotionEffectsOnRoleChange(this));
