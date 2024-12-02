@@ -8,10 +8,14 @@ import me.trae.champions.skill.types.data.BowSkillData;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.utility.UtilMath;
+import me.trae.core.utility.UtilParticle;
+import me.trae.core.utility.particle.ParticleEffect;
+import net.minecraft.server.v1_8_R3.EnumParticle;
 import org.bukkit.Effect;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 public class Longshot extends PassiveBowSkill<Ranger, BowSkillData> {
 
@@ -62,7 +66,7 @@ public class Longshot extends PassiveBowSkill<Ranger, BowSkillData> {
 
         double damage = event.getDamage();
 
-        damage += length / 3.0D;
+        damage += length / 3.0D - 4.0D;
 
         damage = UtilMath.getMinAndMax(Double.class, 0.0D, this.getMaxDamage(data.getLevel()), damage);
 
@@ -78,6 +82,6 @@ public class Longshot extends PassiveBowSkill<Ranger, BowSkillData> {
 
     @Override
     public void onUpdater(final Player player, final Arrow arrow) {
-        arrow.getWorld().playEffect(arrow.getLocation(), Effect.HEART, 1);
+        ParticleEffect.FIREWORKS_SPARK.display(new Vector(0.0D, 0.0D, 0.0D), 1, arrow.getLocation().add(0.0D, 0.25D, 0.0D), 500);
     }
 }

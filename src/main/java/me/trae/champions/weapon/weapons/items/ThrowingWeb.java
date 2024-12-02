@@ -91,6 +91,9 @@ public class ThrowingWeb extends ActiveCustomItem<Champions, WeaponManager, Weap
         }
 
         final Item item = event.getThrowable().getItem();
+        if (item == null) {
+            return;
+        }
 
         final Random random = new Random();
 

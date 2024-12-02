@@ -12,11 +12,13 @@ import me.trae.core.utility.UtilJava;
 import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilString;
 import me.trae.core.utility.UtilTime;
+import me.trae.core.utility.particle.ParticleEffect;
 import org.bukkit.Effect;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 
@@ -87,7 +89,7 @@ public class SilencingArrow extends ActiveBowSkill<Assassin, BowSkillData> {
 
     @Override
     public void onUpdater(final Player player, final Arrow arrow) {
-        arrow.getWorld().playEffect(arrow.getLocation(), Effect.HAPPY_VILLAGER, 100);
+        ParticleEffect.VILLAGER_HAPPY.display(new Vector(0.0D, 0.0D, 0.0D), 1, arrow.getLocation().add(0.0D, 0.25D, 0.0D), 500);
     }
 
     @Override
