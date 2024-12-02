@@ -69,7 +69,7 @@ public class Longshot extends PassiveBowSkill<Ranger, BowSkillData> {
 
         event.setDamage(damage);
 
-        event.setReason(new DamageReason(this.getDisplayName(data.getLevel()), 500L) {
+        event.setReason(new DamageReason(this.getDisplayName(data.getLevel()), 2_000L) {
             @Override
             public String getExtraName() {
                 return String.format(" <gray>from <green>%s</green> blocks", (int) length);

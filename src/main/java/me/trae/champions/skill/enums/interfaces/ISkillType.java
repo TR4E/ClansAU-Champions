@@ -17,4 +17,10 @@ public interface ISkillType {
     boolean isItemStack(final ItemStack itemStack);
 
     ItemStack getDisplayItemStack();
+
+    boolean isActive();
+
+    boolean isPassive();
+
+    boolean isGlobal();
 }

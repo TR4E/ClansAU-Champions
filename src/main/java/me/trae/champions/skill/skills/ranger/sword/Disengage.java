@@ -162,7 +162,7 @@ public class Disengage extends ActiveSkill<Ranger, SkillData> implements Listene
 
         UtilVelocity.velocity(damagee, damager.getLocation().getDirection(), this.strength, this.yBase, this.yAdd, this.yMax, this.groundBoost);
 
-        UtilMessage.simpleMessage(damagee, this.getModule().getName(), "You successfully used <green><var></green> against <var>.", Arrays.asList(this.getDisplayName(data.getLevel()), event.getDamagerName()));
+        UtilMessage.simpleMessage(damagee, this.getModule().getName(), "You used <green><var></green> against <var>.", Arrays.asList(this.getDisplayName(data.getLevel()), event.getDamagerName()));
         UtilMessage.simpleMessage(damager, this.getModule().getName(), "<var> used <green><var></green> against you.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));
     }
 }

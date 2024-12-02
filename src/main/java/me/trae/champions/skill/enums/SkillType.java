@@ -97,4 +97,19 @@ public enum SkillType implements ISkillType {
 
         return new ItemStack(material, 1, durability);
     }
+
+    @Override
+    public boolean isActive() {
+        return Arrays.asList(SWORD, AXE, BOW).contains(this);
+    }
+
+    @Override
+    public boolean isPassive() {
+        return Arrays.asList(PASSIVE_A, PASSIVE_B).contains(this);
+    }
+
+    @Override
+    public boolean isGlobal() {
+        return this == GLOBAL;
+    }
 }
