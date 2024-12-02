@@ -6,7 +6,6 @@ import me.trae.champions.weapon.WeaponManager;
 import me.trae.champions.weapon.types.interfaces.IChampionsPvPWeapon;
 import me.trae.core.weapon.Weapon;
 import me.trae.core.weapon.data.WeaponData;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -22,11 +21,6 @@ public abstract class ChampionsPvPWeapon extends Weapon<Champions, WeaponManager
     @Override
     public Class<WeaponData> getClassOfData() {
         return WeaponData.class;
-    }
-
-    @Override
-    public String getDisplayName() {
-        return ChatColor.GOLD + this.getName();
     }
 
     @Override

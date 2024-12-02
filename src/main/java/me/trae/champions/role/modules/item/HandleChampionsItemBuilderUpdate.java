@@ -17,7 +17,7 @@ import java.util.Arrays;
 
 public class HandleChampionsItemBuilderUpdate extends SpigotListener<Champions, RoleManager> {
 
-    @ConfigInject(type = String.class, path = "Display-Name-ChatColor", defaultValue = "GOLD")
+    @ConfigInject(type = String.class, path = "Display-Name-ChatColor", defaultValue = "YELLOW")
     private String displayNameChatColor;
 
     public HandleChampionsItemBuilderUpdate(final RoleManager manager) {
