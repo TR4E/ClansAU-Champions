@@ -1,10 +1,13 @@
 package me.trae.champions.world.modules;
 
+import me.trae.api.damage.events.damage.CustomPreDamageEvent;
 import me.trae.api.damage.events.weapon.WeaponReductionEvent;
 import me.trae.champions.Champions;
 import me.trae.champions.world.WorldManager;
 import me.trae.core.framework.types.frame.SpigotListener;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 public class HandleChampionsWeaponReduction extends SpigotListener<Champions, WorldManager> {
 
@@ -30,5 +33,18 @@ public class HandleChampionsWeaponReduction extends SpigotListener<Champions, Wo
                 event.setReduction(1.0D);
                 break;
         }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onCustomPreDamage(final CustomPreDamageEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
+
+        if (event.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+            return;
+        }
+
+        event.setDamage(1.0D);
     }
 }

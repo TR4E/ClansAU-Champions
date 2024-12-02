@@ -42,7 +42,7 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
     @ConfigInject(type = Double.class, path = "Item-Velocity", defaultValue = "1.3")
     private double itemVelocity;
 
-    @ConfigInject(type = Double.class, path = "Damage", defaultValue = "4.0")
+    @ConfigInject(type = Double.class, path = "Damage", defaultValue = "2.0")
     private double damage;
 
     @ConfigInject(type = Integer.class, path = "Particle-Count", defaultValue = "16")
@@ -167,7 +167,7 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
 
         targetEntity.setFireTicks((int) (this.fireDuration / 50));
 
-        UtilDamage.damage(targetEntity, throwerPlayer, EntityDamageEvent.DamageCause.FIRE, this.damage, this.getDisplayName(), this.fireDuration);
+        UtilDamage.damage(targetEntity, throwerPlayer, EntityDamageEvent.DamageCause.CUSTOM, this.damage, this.getDisplayName(), this.fireDuration);
     }
 
     @Override
