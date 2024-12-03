@@ -8,5 +8,7 @@ public interface IActiveSkill extends EnergySkillComponent, RechargeSkillCompone
 
     void onActivate(final Player player, final int level);
 
-    boolean isActive(final Player player);
+    default boolean isActive(final Player player) {
+        return false;
+    }
 }

@@ -34,9 +34,4 @@ public abstract class ActiveSkill<R extends Role, D extends SkillData> extends S
 
         return true;
     }
-
-    @Override
-    public boolean isActive(final Player player) {
-        return false;
-    }
 }

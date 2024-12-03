@@ -13,7 +13,6 @@ import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilString;
 import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.particle.ParticleEffect;
-import org.bukkit.Effect;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;

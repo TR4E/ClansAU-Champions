@@ -16,8 +16,8 @@ import me.trae.champions.skill.modules.HandleSkillRechargeProgressBar;
 import me.trae.champions.skill.modules.activation.*;
 import me.trae.champions.skill.modules.friendlyfire.DisableSkillFriendlyFireWhileAdministrating;
 import me.trae.champions.skill.skills.global.modules.SwimAbility;
-import me.trae.champions.skill.types.ActiveSkill;
 import me.trae.champions.skill.types.ChannelSkill;
+import me.trae.champions.skill.types.interfaces.IActiveSkill;
 import me.trae.core.Core;
 import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.SpigotManager;
@@ -109,8 +109,8 @@ public class SkillManager extends SpigotManager<Champions> implements ISkillMana
                 }
             }
 
-            if (skill instanceof ActiveSkill<?, ?>) {
-                if (UtilJava.cast(ActiveSkill.class, skill).isActive(player)) {
+            if (skill instanceof IActiveSkill) {
+                if (UtilJava.cast(IActiveSkill.class, skill).isActive(player)) {
                     return false;
                 }
             }

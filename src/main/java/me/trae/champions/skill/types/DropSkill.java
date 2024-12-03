@@ -25,9 +25,4 @@ public abstract class DropSkill<R extends Role, D extends SkillData> extends Pas
 
         return true;
     }
-
-    @Override
-    public boolean isActive(final Player player) {
-        return false;
-    }
 }
