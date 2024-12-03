@@ -1,6 +1,7 @@
 package me.trae.champions.skill.skills.brute.axe;
 
 import me.trae.api.champions.skill.events.SkillFriendlyFireEvent;
+import me.trae.api.champions.skill.events.SkillLocationEvent;
 import me.trae.api.damage.utility.UtilDamage;
 import me.trae.champions.Champions;
 import me.trae.champions.role.types.Brute;
@@ -172,9 +173,9 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
                     UtilServer.callEvent(playerDisplayNameEvent);
 
                     UtilMessage.simpleMessage(nearbyEntity, this.getModule().getName(), "<var> hit you with <green><var></green>.", Arrays.asList(playerDisplayNameEvent.getPlayerName(), this.getDisplayName(data.getLevel())));
-                }
 
-                count++;
+                    count++;
+                }
             }
 
             if (count > 0) {
@@ -188,9 +189,9 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
                     continue;
                 }
 
-//                if (UtilServer.getEvent(new SkillLocationEvent(this, block.getLocation())).isCancelled()) {
-//                    continue;
-//                }
+                if (UtilServer.getEvent(new SkillLocationEvent(this, block.getLocation())).isCancelled()) {
+                    continue;
+                }
 
                 block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType(), 100);
             }
