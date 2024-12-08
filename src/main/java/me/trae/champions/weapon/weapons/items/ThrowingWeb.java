@@ -54,6 +54,11 @@ public class ThrowingWeb extends ActiveCustomItem<Champions, WeaponManager, Weap
     }
 
     @Override
+    public int getModel() {
+        return 575091;
+    }
+
+    @Override
     public Class<WeaponData> getClassOfData() {
         return WeaponData.class;
     }

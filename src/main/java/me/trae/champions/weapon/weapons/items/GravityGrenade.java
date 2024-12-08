@@ -65,6 +65,11 @@ public class GravityGrenade extends ActiveCustomItem<Champions, WeaponManager, W
     }
 
     @Override
+    public int getModel() {
+        return 942149;
+    }
+
+    @Override
     public Class<WeaponData> getClassOfData() {
         return WeaponData.class;
     }

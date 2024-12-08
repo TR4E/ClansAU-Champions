@@ -14,6 +14,11 @@ public class BoosterAxe extends ChampionsPvPWeapon implements BoosterWeapon {
     }
 
     @Override
+    public int getModel() {
+        return 545759;
+    }
+
+    @Override
     public String[] getDescription() {
         return new String[]{
                 "Increases Axe Skill Level by 1.",

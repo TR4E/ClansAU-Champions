@@ -13,6 +13,11 @@ public class StandardAxe extends ChampionsPvPWeapon {
     }
 
     @Override
+    public int getModel() {
+        return 708266;
+    }
+
+    @Override
     public String[] getDescription() {
         return new String[]{
                 "Just a Standard Axe.",

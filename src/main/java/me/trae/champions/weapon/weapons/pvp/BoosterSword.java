@@ -14,6 +14,11 @@ public class BoosterSword extends ChampionsPvPWeapon implements BoosterWeapon {
     }
 
     @Override
+    public int getModel() {
+        return 992916;
+    }
+
+    @Override
     public String[] getDescription() {
         return new String[]{
                 "Increases Sword Skill Level by 1.",

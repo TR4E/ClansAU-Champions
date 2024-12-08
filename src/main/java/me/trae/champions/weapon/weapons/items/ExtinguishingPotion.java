@@ -58,6 +58,11 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
     }
 
     @Override
+    public int getModel() {
+        return 851346;
+    }
+
+    @Override
     public Class<WeaponData> getClassOfData() {
         return WeaponData.class;
     }

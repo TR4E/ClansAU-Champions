@@ -12,6 +12,11 @@ public class StandardBow extends ChampionsPvPWeapon {
     }
 
     @Override
+    public int getModel() {
+        return 118578;
+    }
+
+    @Override
     public String[] getDescription() {
         return new String[]{
                 "Just a Standard Bow."

@@ -62,6 +62,11 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
     }
 
     @Override
+    public int getModel() {
+        return 747456;
+    }
+
+    @Override
     public Class<WeaponData> getClassOfData() {
         return WeaponData.class;
     }

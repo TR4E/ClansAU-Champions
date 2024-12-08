@@ -13,6 +13,11 @@ public class PowerSword extends ChampionsPvPWeapon {
     }
 
     @Override
+    public int getModel() {
+        return 674655;
+    }
+
+    @Override
     public String[] getDescription() {
         return new String[]{
                 "Increases Melee Damage by 1.",
