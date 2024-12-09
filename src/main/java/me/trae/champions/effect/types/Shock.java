@@ -6,7 +6,6 @@ import me.trae.core.effect.Effect;
 import me.trae.core.effect.data.EffectData;
 import org.bukkit.EntityEffect;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 
 public class Shock extends Effect<Champions, EffectManager> {
 
@@ -16,8 +15,6 @@ public class Shock extends Effect<Champions, EffectManager> {
 
     @Override
     public void onUpdater(final LivingEntity entity, final EffectData data) {
-        if (entity instanceof Player) {
-            entity.playEffect(EntityEffect.HURT);
-        }
+        entity.playEffect(EntityEffect.HURT);
     }
 }
