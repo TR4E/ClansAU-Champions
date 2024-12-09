@@ -6,6 +6,7 @@ import me.trae.champions.Champions;
 import me.trae.champions.skill.SkillManager;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.DropSkill;
+import me.trae.champions.weapon.models.PassiveActivatorWeapon;
 import me.trae.champions.weapon.types.ChampionsPvPWeapon;
 import me.trae.core.Core;
 import me.trae.core.framework.types.frame.SpigotListener;
@@ -35,7 +36,7 @@ public class HandleDropSkillActivation extends SpigotListener<Champions, SkillMa
 
         final ItemStack itemStack = event.getItemDrop().getItemStack();
 
-        if (!(this.getInstance(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof ChampionsPvPWeapon)) {
+        if (!(this.getInstance(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof PassiveActivatorWeapon)) {
             return;
         }
 

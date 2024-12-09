@@ -26,6 +26,9 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
     @ConfigInject(type = Double.class, path = "Velocity", defaultValue = "0.3")
     private double velocity;
 
+    @ConfigInject(type = Boolean.class, path = "Friendly-Fire", defaultValue = "true")
+    private boolean friendlyFire;
+
     @ConfigInject(type = String.class, path = "Material", defaultValue = "DIAMOND_BLOCK")
     private String material;
 
@@ -89,8 +92,14 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
             if (targetPlayer instanceof Player) {
                 final SkillFriendlyFireEvent friendlyFireEvent = new SkillFriendlyFireEvent(this, player, UtilJava.cast(Player.class, targetPlayer));
                 UtilServer.callEvent(friendlyFireEvent);
-                if (friendlyFireEvent.isCancelled() || !(friendlyFireEvent.isVulnerable())) {
+                if (friendlyFireEvent.isCancelled()) {
                     continue;
+                }
+
+                if (!(this.friendlyFire)) {
+                    if (!(friendlyFireEvent.isVulnerable())) {
+                        continue;
+                    }
                 }
             }
 

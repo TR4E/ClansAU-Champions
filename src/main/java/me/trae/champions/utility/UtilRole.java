@@ -3,9 +3,6 @@ package me.trae.champions.utility;
 import me.trae.api.champions.role.Role;
 import me.trae.champions.build.data.RoleBuild;
 import me.trae.core.utility.UtilMessage;
-import me.trae.core.utility.UtilString;
-import me.trae.core.utility.objects.SoundCreator;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
@@ -14,9 +11,9 @@ public class UtilRole {
 
     public static void equipRoleEffect(final Role role, final Player player, final boolean updatedFromBuildMenu) {
         if (role == null) {
-            playEffect(player, "None", false);
+            me.trae.api.champions.utility.UtilRole.playEffect(player, "None", false);
         } else {
-            playEffect(player, role.getName(), true);
+            me.trae.api.champions.utility.UtilRole.playEffect(player, role.getName(), true);
 
             final RoleBuild roleBuild = role.getRoleBuildByPlayer(player);
 
@@ -28,18 +25,6 @@ public class UtilRole {
             }
 
             UtilMessage.simpleMessage(player, roleBuild.getEquipMessage());
-        }
-    }
-
-    public static void playEffect(final Player player, final String name, final boolean equip) {
-        if (equip) {
-            new SoundCreator(Sound.HORSE_ARMOR, 5.0F, 5.09F).play(player.getLocation());
-
-            UtilMessage.simpleMessage(player, "Class", UtilString.pair("Armor Class", String.format("<green>%s", name)));
-        } else {
-            new SoundCreator(Sound.HORSE_ARMOR, 2.0F, 1.09F).play(player.getLocation());
-
-            UtilMessage.simpleMessage(player, "Class", UtilString.pair("Armor Class", String.format("<red>%s", name)));
         }
     }
 }

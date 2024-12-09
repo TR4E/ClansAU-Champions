@@ -2,12 +2,13 @@ package me.trae.champions.weapon.weapons.pvp;
 
 import me.trae.champions.weapon.WeaponManager;
 import me.trae.champions.weapon.models.BoosterWeapon;
+import me.trae.champions.weapon.models.PassiveActivatorWeapon;
 import me.trae.champions.weapon.types.ChampionsPvPWeapon;
 import me.trae.core.utility.UtilString;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class BoosterSword extends ChampionsPvPWeapon implements BoosterWeapon {
+public class BoosterSword extends ChampionsPvPWeapon implements BoosterWeapon, PassiveActivatorWeapon {
 
     public BoosterSword(final WeaponManager manager) {
         super(manager, new ItemStack(Material.GOLD_SWORD));

@@ -19,7 +19,6 @@ import me.trae.core.updater.interfaces.Updater;
 import me.trae.core.utility.*;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Bukkit;
-import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -193,7 +192,7 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
                     continue;
                 }
 
-                block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, block.getType(), 100);
+                UtilBlock.playBrokenEffect(block);
             }
 
             return true;
