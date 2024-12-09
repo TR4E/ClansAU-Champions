@@ -29,6 +29,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 public class SmokeBomb extends DropSkill<Assassin, SkillData> implements Listener, Updater {
@@ -154,6 +155,10 @@ public class SmokeBomb extends DropSkill<Assassin, SkillData> implements Listene
             if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE && event.getProjectile() instanceof Arrow) {
                 return;
             }
+        }
+
+        if (!(Arrays.asList(EntityDamageEvent.DamageCause.ENTITY_ATTACK, EntityDamageEvent.DamageCause.PROJECTILE).contains(event.getCause()))) {
+            return;
         }
 
         if (!(event.getDamagee() instanceof Player)) {
