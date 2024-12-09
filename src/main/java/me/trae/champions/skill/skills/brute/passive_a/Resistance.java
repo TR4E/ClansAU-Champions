@@ -13,10 +13,10 @@ import org.bukkit.event.Listener;
 
 public class Resistance extends PassiveSkill<Brute, SkillData> implements Listener {
 
-    @ConfigInject(type = Integer.class, path = "Take-Damage-Percentage", defaultValue = "10")
+    @ConfigInject(type = Integer.class, path = "Take-Damage-Percentage", defaultValue = "5")
     private int takeDamagePercentage;
 
-    @ConfigInject(type = Integer.class, path = "Deal-Damage-Percentage", defaultValue = "10")
+    @ConfigInject(type = Integer.class, path = "Deal-Damage-Percentage", defaultValue = "5")
     private int dealDamagePercentage;
 
     public Resistance(final Brute module) {
@@ -28,11 +28,19 @@ public class Resistance extends PassiveSkill<Brute, SkillData> implements Listen
         return SkillData.class;
     }
 
+    private int getTakeDamagePercentage(final int level) {
+        return this.takeDamagePercentage * level;
+    }
+
+    private int getDealDamagePercentage(final int level) {
+        return this.dealDamagePercentage * level;
+    }
+
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("You take <green>%s</green> less damage", this.takeDamagePercentage + "%"),
-                String.format("but you deal <green>%s</green> less as well.", this.dealDamagePercentage + "%")
+                String.format("You take <green>%s</green> less damage", this.getTakeDamagePercentage(level) + "%"),
+                String.format("but you deal <green>%s</green> less as well.", this.getDealDamagePercentage(level) + "%")
         };
     }
 
@@ -58,7 +66,7 @@ public class Resistance extends PassiveSkill<Brute, SkillData> implements Listen
             final int level = getLevel(damagee);
 
             if (level > 0) {
-                final double modifier = level * this.takeDamagePercentage;
+                final double modifier = this.getTakeDamagePercentage(level);
                 final double modifier2 = modifier >= 10 ? 0.01D : 0.1D;
 
                 event.setDamage(event.getDamage() * (1.0 - (modifier * modifier2)));
@@ -71,7 +79,7 @@ public class Resistance extends PassiveSkill<Brute, SkillData> implements Listen
             final int level = getLevel(damager);
 
             if (level > 0) {
-                final double modifier = level * this.takeDamagePercentage;
+                final double modifier = this.getDealDamagePercentage(level);
                 final double modifier2 = modifier >= 10 ? 0.01D : 0.1D;
 
                 event.setDamage(event.getDamage() * (1.0 - (modifier * modifier2)));
