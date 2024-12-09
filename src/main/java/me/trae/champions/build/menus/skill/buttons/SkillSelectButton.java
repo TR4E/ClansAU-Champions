@@ -89,6 +89,10 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
             return;
         }
 
+        if (roleSkill == null && roleBuild.getSkills().values().stream().filter(value -> value.getType().equals(skill.getType())).anyMatch(value -> value.getLevel() > 0)) {
+            return;
+        }
+
         if (roleSkill != null) {
             if (roleSkill.getLevel() >= skill.getMaxLevel()) {
                 new SoundCreator(Sound.ITEM_BREAK, 1.0F, 2.0F).play(player);

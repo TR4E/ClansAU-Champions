@@ -167,11 +167,15 @@ public class Riposte extends ActiveSkill<Knight, RiposteData> implements Listene
 
     @Override
     public float getEnergy(final int level) {
-        return this.energy - ((level - 1) * 3);
+        final int value = (level - 1) * 3;
+
+        return this.energy - value;
     }
 
     @Override
     public long getRecharge(final int level) {
-        return (long) (this.recharge - ((level - 1) * 1.5));
+        final int value = (int) ((level - 1) * 1.5);
+
+        return this.recharge - (value * 1000L);
     }
 }

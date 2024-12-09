@@ -133,7 +133,7 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
 
         event.setDamage(event.getDamage() + damage);
 
-        event.setReason(this.getDisplayName(data.getLevel()), 1000L);
+        event.setLightReason(this.getDisplayName(data.getLevel()), 1000L);
 
         new SoundCreator(Sound.ZOMBIE_METAL, 1.0F, 1.5F).play(damagee.getLocation());
 

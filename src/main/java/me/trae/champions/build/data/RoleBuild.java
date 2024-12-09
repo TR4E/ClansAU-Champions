@@ -81,6 +81,19 @@ public class RoleBuild implements IRoleBuild, DataContainer<BuildProperty> {
     }
 
     @Override
+    public RoleSkill getRoleSkillByName(final String name) {
+        for (final RoleSkill roleSkill : this.getSkills().values()) {
+            if (!(roleSkill.getName().equals(name))) {
+                continue;
+            }
+
+            return roleSkill;
+        }
+
+        return null;
+    }
+
+    @Override
     public boolean isActive() {
         return this.active;
     }

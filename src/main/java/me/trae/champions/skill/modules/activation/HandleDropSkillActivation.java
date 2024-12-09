@@ -7,7 +7,6 @@ import me.trae.champions.skill.SkillManager;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.DropSkill;
 import me.trae.champions.weapon.models.PassiveActivatorWeapon;
-import me.trae.champions.weapon.types.ChampionsPvPWeapon;
 import me.trae.core.Core;
 import me.trae.core.framework.types.frame.SpigotListener;
 import me.trae.core.utility.UtilServer;

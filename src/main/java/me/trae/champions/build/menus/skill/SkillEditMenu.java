@@ -60,7 +60,7 @@ public abstract class SkillEditMenu extends Menu<Champions, BuildManager> implem
 
         for (final SkillType skillType : SkillType.values()) {
             for (final Skill<?, ?> skill : this.getRole().getSkillsByType(Skill.class, skillType)) {
-                final RoleSkill roleSkill = this.getRoleBuild().getRoleSkillByType(skillType);
+                final RoleSkill roleSkill = this.getRoleBuild().getRoleSkillByName(skill.getName());
 
                 addButton(new SkillSelectButton(this, slot) {
                     @Override

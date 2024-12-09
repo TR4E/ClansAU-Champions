@@ -108,16 +108,6 @@ public class Disengage extends ActiveSkill<Ranger, SkillData> implements Listene
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You failed to <green><var></green>", Collections.singletonList(this.getDisplayName(data.getLevel())));
     }
 
-    @Override
-    public float getEnergy(final int level) {
-        return this.energy;
-    }
-
-    @Override
-    public long getRecharge(final int level) {
-        return this.recharge;
-    }
-
     @EventHandler
     public void onCustomDamage(final CustomDamageEvent event) {
         if (event.isCancelled()) {
@@ -164,5 +154,15 @@ public class Disengage extends ActiveSkill<Ranger, SkillData> implements Listene
 
         UtilMessage.simpleMessage(damagee, this.getModule().getName(), "You used <green><var></green> against <var>.", Arrays.asList(this.getDisplayName(data.getLevel()), event.getDamagerName()));
         UtilMessage.simpleMessage(damager, this.getModule().getName(), "<var> used <green><var></green> against you.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));
+    }
+
+    @Override
+    public float getEnergy(final int level) {
+        return this.energy;
+    }
+
+    @Override
+    public long getRecharge(final int level) {
+        return this.recharge;
     }
 }

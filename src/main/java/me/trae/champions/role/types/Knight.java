@@ -3,6 +3,9 @@ package me.trae.champions.role.types;
 import me.trae.api.champions.role.Role;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.skills.knight.axe.BullsCharge;
+import me.trae.champions.skill.skills.knight.axe.HoldPosition;
+import me.trae.champions.skill.skills.knight.passive_a.Cleave;
+import me.trae.champions.skill.skills.knight.passive_a.Fury;
 import me.trae.champions.skill.skills.knight.passive_b.Swordsmanship;
 import me.trae.champions.skill.skills.knight.sword.Riposte;
 import me.trae.core.utility.objects.SoundCreator;
@@ -25,6 +28,11 @@ public class Knight extends Role {
 
         // Axe Skills
         addSubModule(new BullsCharge(this));
+        addSubModule(new HoldPosition(this));
+
+        // Passive A Skills
+        addSubModule(new Cleave(this));
+        addSubModule(new Fury(this));
 
         // Passive B Skills
         addSubModule(new Swordsmanship(this));

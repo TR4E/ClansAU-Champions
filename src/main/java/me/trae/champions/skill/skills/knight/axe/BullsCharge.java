@@ -28,7 +28,7 @@ import java.util.Collections;
 
 public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Listener {
 
-    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "30.0")
+    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "35.0")
     private float energy;
 
     @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "12_000")
@@ -137,7 +137,7 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
         event.setKnockback(0.0D);
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.LOW)
     public void onCustomPostDamage(final CustomPostDamageEvent event) {
         if (event.isCancelled()) {
             return;
@@ -186,11 +186,15 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
 
     @Override
     public float getEnergy(final int level) {
-        return this.energy;
+        final int value = (level - 1) * 5;
+
+        return this.energy - value;
     }
 
     @Override
     public long getRecharge(final int level) {
-        return this.recharge;
+        final int value = level - 1;
+
+        return this.recharge - (value * 1000L);
     }
 }

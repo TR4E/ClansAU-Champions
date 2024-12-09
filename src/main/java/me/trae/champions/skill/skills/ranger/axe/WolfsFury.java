@@ -90,6 +90,8 @@ public class WolfsFury extends ActiveSkill<Ranger, SkillData> implements Listene
 
     @Override
     public void onExpire(final Player player, final SkillData data) {
+        new SoundCreator(Sound.NOTE_STICKS).play(player);
+
         UtilMessage.simpleMessage(player, this.getModule().getName(), "<green><var></green> has ended.", Collections.singletonList(this.getDisplayName(data.getLevel())));
     }
 

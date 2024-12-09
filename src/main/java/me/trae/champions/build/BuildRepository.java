@@ -127,6 +127,6 @@ public class BuildRepository extends Repository<Champions, BuildManager, Config>
 
     @Override
     public boolean isInform(final Query query) {
-        return !(query instanceof UpdateQuery<?>);
+        return query instanceof SingleCallbackQuery<?>;
     }
 }

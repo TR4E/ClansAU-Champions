@@ -8,6 +8,7 @@ import me.trae.champions.role.types.submodules.SpeedEffect;
 import me.trae.champions.role.types.submodules.TakeNoKnockback;
 import me.trae.champions.skill.skills.assassin.axe.Leap;
 import me.trae.champions.skill.skills.assassin.bow.SilencingArrow;
+import me.trae.champions.skill.skills.assassin.passive_a.ShockingStrikes;
 import me.trae.champions.skill.skills.assassin.passive_b.SmokeBomb;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
@@ -34,6 +35,9 @@ public class Assassin extends Role implements Archer {
 
         // Active Bow Skills
         addSubModule(new SilencingArrow(this));
+
+        // Passive A Skills
+        addSubModule(new ShockingStrikes(this));
 
         // Passive B Skills
         addSubModule(new SmokeBomb(this));

@@ -25,6 +25,8 @@ public interface IRoleBuild {
 
     boolean isRoleSkillByType(final SkillType skillType);
 
+    RoleSkill getRoleSkillByName(final String name);
+
     boolean isActive();
 
     void setActive(final boolean active);
