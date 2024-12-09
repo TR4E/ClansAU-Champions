@@ -4,6 +4,7 @@ import me.trae.api.champions.role.Role;
 import me.trae.champions.Champions;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.role.menus.RoleSelectionMenu;
+import me.trae.champions.utility.constants.ChampionsArgumentType;
 import me.trae.core.Core;
 import me.trae.core.client.Client;
 import me.trae.core.client.ClientManager;
@@ -17,7 +18,6 @@ import org.bukkit.entity.Player;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class KitCommand extends Command<Champions, RoleManager> implements AnyCommandType {
 
@@ -90,7 +90,7 @@ public class KitCommand extends Command<Champions, RoleManager> implements AnyCo
     @Override
     public List<String> getTabCompletion(final CommandSender sender, final String[] args) {
         if (args.length == 1) {
-            return this.getManager().getModulesByClass(Role.class).stream().map(Role::getName).filter(name -> name.toLowerCase().startsWith(args[0].toLowerCase())).collect(Collectors.toList());
+            return ChampionsArgumentType.ROLES.apply(args[0]);
         }
 
         return Collections.emptyList();
