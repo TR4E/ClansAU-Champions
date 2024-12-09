@@ -12,6 +12,8 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class SpiritOfTheWolf extends ActiveSkill<Brute, SkillData> {
@@ -91,6 +93,10 @@ public class SpiritOfTheWolf extends ActiveSkill<Brute, SkillData> {
             }
 
             UtilEntity.givePotionEffect(targetPlayer, PotionEffectType.SPEED, this.amplifier, this.duration);
+
+            if (targetPlayer != player) {
+                UtilMessage.simpleMessage(targetPlayer, this.getModule().getName(), "<var> used <green><var></green>.", Arrays.asList(friendlyFireEvent.getPlayerName(), this.getDisplayName(level)));
+            }
 
             UtilMessage.simpleMessage(targetPlayer, this.getModule().getName(), "You received the Spirit of the Wolf!");
         }
