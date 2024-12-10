@@ -3,7 +3,6 @@ package me.trae.champions.build;
 import me.trae.champions.Champions;
 import me.trae.champions.build.data.RoleBuild;
 import me.trae.champions.build.enums.BuildProperty;
-import me.trae.champions.config.Config;
 import me.trae.core.database.query.Query;
 import me.trae.core.database.query.types.DeleteQuery;
 import me.trae.core.database.query.types.SaveQuery;
@@ -19,20 +18,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public class BuildRepository extends Repository<Champions, BuildManager, Config> implements ContainsRepository<UUID>, UpdateRepository<RoleBuild, BuildProperty>, SingleLoadRepository<UUID> {
+public class BuildRepository extends Repository<Champions, BuildManager> implements ContainsRepository<UUID>, UpdateRepository<RoleBuild, BuildProperty>, SingleLoadRepository<UUID> {
 
     public BuildRepository(final BuildManager manager) {
         super(manager, "Builds");
     }
 
     @Override
-    public Class<Config> getClassOfConfiguration() {
-        return Config.class;
-    }
-
-    @Override
     public boolean containsData(final UUID uuid) {
-        return this.getConfig().getYamlConfiguration().contains(uuid.toString());
+        return this.containsIdentifier(uuid.toString());
     }
 
     @Override

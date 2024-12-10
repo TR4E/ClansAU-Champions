@@ -13,10 +13,10 @@ import org.bukkit.event.Listener;
 
 public class Resistance extends PassiveSkill<Brute, SkillData> implements Listener {
 
-    @ConfigInject(type = Integer.class, path = "Take-Damage-Percentage", defaultValue = "5")
+    @ConfigInject(type = Integer.class, path = "Take-Damage-Percentage", defaultValue = "10")
     private int takeDamagePercentage;
 
-    @ConfigInject(type = Integer.class, path = "Deal-Damage-Percentage", defaultValue = "5")
+    @ConfigInject(type = Integer.class, path = "Deal-Damage-Percentage", defaultValue = "10")
     private int dealDamagePercentage;
 
     public Resistance(final Brute module) {
@@ -66,10 +66,9 @@ public class Resistance extends PassiveSkill<Brute, SkillData> implements Listen
             final int level = getLevel(damagee);
 
             if (level > 0) {
-                final double modifier = this.getTakeDamagePercentage(level);
-                final double modifier2 = modifier >= 10 ? 0.01D : 0.1D;
+                final double modifier = this.getTakeDamagePercentage(level) * 0.01D;
 
-                event.setDamage(event.getDamage() * (1.0 - (modifier * modifier2)));
+                event.setDamage(event.getDamage() * (1.0 - modifier));
             }
         }
 
@@ -79,10 +78,9 @@ public class Resistance extends PassiveSkill<Brute, SkillData> implements Listen
             final int level = getLevel(damager);
 
             if (level > 0) {
-                final double modifier = this.getDealDamagePercentage(level);
-                final double modifier2 = modifier >= 10 ? 0.01D : 0.1D;
+                final double modifier = this.getDealDamagePercentage(level) * 0.01D;
 
-                event.setDamage(event.getDamage() * (1.0 - (modifier * modifier2)));
+                event.setDamage(event.getDamage() * (1.0 - modifier));
             }
         }
     }
