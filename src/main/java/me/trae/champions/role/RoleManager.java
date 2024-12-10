@@ -10,8 +10,6 @@ import me.trae.champions.role.modules.HandleRoleEquip;
 import me.trae.champions.role.modules.RemovePositivePotionEffectsOnRoleChange;
 import me.trae.champions.role.modules.damage.HandleRoleCustomDamageSound;
 import me.trae.champions.role.modules.displayname.HandleChampionsPlayerDisplayNameFormat;
-import me.trae.champions.role.modules.durability.HandleAssassinArmourDurability;
-import me.trae.champions.role.modules.durability.HandleMageArmourDurability;
 import me.trae.champions.role.modules.item.HandleChampionsItemBuilderUpdate;
 import me.trae.champions.role.modules.reset.ResetPlayerRoleOnPlayerDeath;
 import me.trae.champions.role.modules.reset.ResetPlayerRoleOnPlayerQuit;
@@ -65,10 +63,6 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
 
         // DisplayName Modules
         addModule(new HandleChampionsPlayerDisplayNameFormat(this));
-
-        // Durability Modules
-        addModule(new HandleAssassinArmourDurability(this));
-        addModule(new HandleMageArmourDurability(this));
 
         // Item Modules
         addModule(new HandleChampionsItemBuilderUpdate(this));
