@@ -12,6 +12,7 @@ import me.trae.core.client.enums.Rank;
 import me.trae.core.command.types.Command;
 import me.trae.core.command.types.models.AnyCommandType;
 import me.trae.core.utility.*;
+import me.trae.core.utility.constants.CoreArgumentType;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -91,6 +92,10 @@ public class KitCommand extends Command<Champions, RoleManager> implements AnyCo
     public List<String> getTabCompletion(final CommandSender sender, final String[] args) {
         if (args.length == 1) {
             return ChampionsArgumentType.ROLES.apply(args[0]);
+        }
+
+        if (args.length == 2) {
+            return CoreArgumentType.PLAYERS.apply(sender, args[1]);
         }
 
         return Collections.emptyList();
