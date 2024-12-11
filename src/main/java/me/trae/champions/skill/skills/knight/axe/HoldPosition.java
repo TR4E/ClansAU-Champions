@@ -47,7 +47,7 @@ public class HoldPosition extends ActiveSkill<Knight, SkillData> implements List
     }
 
     private long getDuration(final int level) {
-        return this.duration + (((level - 1L) / 2) * 1000L);
+        return this.duration + ((level / 2) * 1000L);
     }
 
     @Override
