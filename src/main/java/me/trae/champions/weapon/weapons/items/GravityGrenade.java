@@ -3,6 +3,8 @@ package me.trae.champions.weapon.weapons.items;
 import me.trae.champions.Champions;
 import me.trae.champions.weapon.WeaponManager;
 import me.trae.core.Core;
+import me.trae.core.antihack.AntiHackManager;
+import me.trae.core.antihack.types.Speed;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.throwable.Throwable;
 import me.trae.core.throwable.ThrowableManager;
@@ -159,7 +161,9 @@ public class GravityGrenade extends ActiveCustomItem<Champions, WeaponManager, W
         final Player throwerPlayer = event.getThrowable().getThrowerPlayer();
 
         if (target instanceof Player) {
-            final WeaponFriendlyFireEvent weaponFriendlyFireEvent = new WeaponFriendlyFireEvent(this, throwerPlayer, event.getTargetByClass(Player.class));
+            final Player targetPlayer = event.getTargetByClass(Player.class);
+
+            final WeaponFriendlyFireEvent weaponFriendlyFireEvent = new WeaponFriendlyFireEvent(this, throwerPlayer, targetPlayer);
             UtilServer.callEvent(weaponFriendlyFireEvent);
             if (weaponFriendlyFireEvent.isCancelled()) {
                 return;
