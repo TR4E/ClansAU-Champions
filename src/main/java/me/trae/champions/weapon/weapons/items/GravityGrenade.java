@@ -95,7 +95,7 @@ public class GravityGrenade extends ActiveCustomItem<Champions, WeaponManager, W
 
     @Override
     public void onActivate(final Player player, final ActionType actionType) {
-        final Throwable throwable = new Throwable(this.getAbilityName(), this.getItemStack(), player, this.duration, player.getLocation().getDirection().multiply(this.itemVelocity)) {
+        final Throwable throwable = new Throwable(this.getAbilityName(), this.getItemStack(), player, this.duration, player.getEyeLocation().getDirection().multiply(this.itemVelocity)) {
             @Override
             public double getCollideRadius() {
                 return GravityGrenade.this.gravityRadius;
@@ -163,9 +163,9 @@ public class GravityGrenade extends ActiveCustomItem<Champions, WeaponManager, W
         if (target instanceof Player) {
             final Player targetPlayer = event.getTargetByClass(Player.class);
 
-            final WeaponFriendlyFireEvent weaponFriendlyFireEvent = new WeaponFriendlyFireEvent(this, throwerPlayer, targetPlayer);
-            UtilServer.callEvent(weaponFriendlyFireEvent);
-            if (weaponFriendlyFireEvent.isCancelled()) {
+            final WeaponFriendlyFireEvent friendlyFireEvent = new WeaponFriendlyFireEvent(this, throwerPlayer, targetPlayer);
+            UtilServer.callEvent(friendlyFireEvent);
+            if (friendlyFireEvent.isCancelled()) {
                 return;
             }
 
@@ -174,7 +174,7 @@ public class GravityGrenade extends ActiveCustomItem<Champions, WeaponManager, W
                     return;
                 }
 
-                if (!(weaponFriendlyFireEvent.isVulnerable())) {
+                if (!(friendlyFireEvent.isVulnerable())) {
                     return;
                 }
             }

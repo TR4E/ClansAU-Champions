@@ -39,15 +39,17 @@ public class DefensiveAura extends ActiveSkill<Mage, SkillData> {
         return level * 2;
     }
 
+    private int getAmplifier(final int level) {
+        return level;
+    }
+
     @Override
     public String[] getDescription(final int level) {
-        final int amplifier = level;
-
         return new String[]{
                 "Right-Click with an Axe to Activate.",
                 "",
                 String.format("Gives you and all allies within <green>%s</green> blocks", this.getDistance(level)),
-                String.format("<green>%s</green> bonus hearts.", amplifier),
+                String.format("<green>%s</green> bonus hearts.", this.getAmplifier(level)),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
@@ -92,7 +94,7 @@ public class DefensiveAura extends ActiveSkill<Mage, SkillData> {
                 continue;
             }
 
-            UtilEntity.givePotionEffect(targetPlayer, PotionEffectType.HEALTH_BOOST, level, this.duration);
+            UtilEntity.givePotionEffect(targetPlayer, PotionEffectType.HEALTH_BOOST, this.getAmplifier(level), this.duration);
 
             targetPlayer.setHealth(UtilMath.getMinAndMax(Double.class, 0.0D, targetPlayer.getMaxHealth(), targetPlayer.getHealth() + level * 2));
 

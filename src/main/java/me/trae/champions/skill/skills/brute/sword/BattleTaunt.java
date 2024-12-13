@@ -14,10 +14,10 @@ import org.bukkit.entity.Player;
 
 public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
 
-    @ConfigInject(type = Float.class, path = "Energy-Needed", defaultValue = "15.0")
+    @ConfigInject(type = Float.class, path = "Energy-Needed", defaultValue = "8.0")
     private float energyNeeded;
 
-    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "5_000")
+    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "3_000")
     private long recharge;
 
     @ConfigInject(type = Double.class, path = "Velocity", defaultValue = "0.3")
@@ -42,6 +42,15 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
         return level * 2;
     }
 
+    private Material getMaterial() {
+        try {
+            return Material.valueOf(this.material);
+        } catch (final Exception ignored) {
+        }
+
+        return Material.DIAMOND_BLOCK;
+    }
+
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
@@ -51,7 +60,7 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
                 "are slowly pulled in towards you.",
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyUsing(level)))
+                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyUsingString(level)))
         };
     }
 
@@ -67,9 +76,9 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
 
     @Override
     public void onUsing(final Player player, final ChannelSkillData data) {
-        player.getWorld().playEffect(player.getLocation(), Effect.STEP_SOUND, Material.valueOf(this.material));
+        player.getWorld().playEffect(player.getLocation(), Effect.STEP_SOUND, this.getMaterial());
 
-        for (double i = 0.0D; i < this.getDistance(data.getLevel()) + data.getLevel(); i++) {
+        for (double i = 0.0D; i < this.getDistance(data.getLevel()); i++) {
             final Location location = player.getEyeLocation().add(player.getLocation().getDirection().multiply(i));
 
             this.pull(player, location, i);

@@ -13,7 +13,6 @@ import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.effect.EffectManager;
 import me.trae.core.effect.data.EffectData;
 import me.trae.core.effect.types.NoFall;
-import me.trae.core.player.events.PlayerDisplayNameEvent;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.updater.interfaces.Updater;
 import me.trae.core.utility.*;
@@ -60,7 +59,7 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
     @ConfigInject(type = Boolean.class, path = "groundBoost", defaultValue = "true")
     private boolean groundBoost;
 
-    @ConfigInject(type = Boolean.class, path = "Friendly-Fire", defaultValue = "true")
+    @ConfigInject(type = Boolean.class, path = "Friendly-Fire", defaultValue = "false")
     private boolean friendlyFire;
 
     public SeismicSlam(final Brute module) {
@@ -161,20 +160,15 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
                             continue;
                         }
                     }
+
+                    count++;
+
+                    UtilMessage.simpleMessage(nearbyEntity, this.getModule().getName(), "<var> hit you with <green><var></green>.", Arrays.asList(friendlyFireEvent.getPlayerName(), this.getDisplayName(data.getLevel())));
                 }
 
                 UtilDamage.damage(nearbyEntity, player, EntityDamageEvent.DamageCause.CUSTOM, (data.getLevel() * 2) * nearbyEntityDistance + 0.5D, this.getDisplayName(data.getLevel()), 2000L);
 
                 UtilVelocity.velocity(nearbyEntity, 0.3 * (data.getHeight() - player.getLocation().getY()) * 0.1D, 0.8D, 1.2D, true);
-
-                if (nearbyEntity instanceof Player) {
-                    final PlayerDisplayNameEvent playerDisplayNameEvent = new PlayerDisplayNameEvent(player, UtilJava.cast(Player.class, nearbyEntity));
-                    UtilServer.callEvent(playerDisplayNameEvent);
-
-                    UtilMessage.simpleMessage(nearbyEntity, this.getModule().getName(), "<var> hit you with <green><var></green>.", Arrays.asList(playerDisplayNameEvent.getPlayerName(), this.getDisplayName(data.getLevel())));
-
-                    count++;
-                }
             }
 
             if (count > 0) {
@@ -183,7 +177,7 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
 
             new SoundCreator(Sound.ZOMBIE_WOOD, 2.0F, 2.0F).play(player.getLocation());
 
-            for (final Block block : UtilBlock.getInRadiusWithSquared(player.getLocation(), this.effectDistance)) {
+            for (final Block block : UtilBlock.getInSquaredRadius(player.getLocation(), this.effectDistance)) {
                 if (block.getType() == Material.AIR || UtilBlock.isInLiquid(block.getLocation())) {
                     continue;
                 }

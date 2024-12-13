@@ -82,7 +82,7 @@ public class ThrowingWeb extends ActiveCustomItem<Champions, WeaponManager, Weap
 
     @Override
     public void onActivate(final Player player, final ActionType actionType) {
-        final Throwable throwable = new Throwable(this.getAbilityName(), this.getItemStack(), player, this.duration, player.getLocation().getDirection().multiply(this.itemVelocity));
+        final Throwable throwable = new Throwable(this.getAbilityName(), this.getItemStack(), player, this.duration, player.getEyeLocation().getDirection().multiply(this.itemVelocity));
 
         this.getInstance(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
 

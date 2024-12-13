@@ -44,6 +44,16 @@ public class ShockingStrikes extends PassiveSkill<Assassin, SkillData> implement
         };
     }
 
+    @Override
+    public int getDefaultLevel() {
+        return 2;
+    }
+
+    @Override
+    public int getMaxLevel() {
+        return 3;
+    }
+
     @EventHandler(priority = EventPriority.NORMAL)
     public void onCustomPostDamage(final CustomPostDamageEvent event) {
         if (event.isCancelled()) {

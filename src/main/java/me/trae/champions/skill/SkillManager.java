@@ -8,6 +8,7 @@ import me.trae.champions.build.data.RoleSkill;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.components.energy.EnergySkillComponent;
 import me.trae.champions.skill.components.recharge.RechargeSkillComponent;
+import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.interfaces.ISkillManager;
 import me.trae.champions.skill.modules.HandleBoosterWeaponOnSkillLevel;
@@ -18,6 +19,7 @@ import me.trae.champions.skill.modules.friendlyfire.DisableSkillFriendlyFireWhil
 import me.trae.champions.skill.skills.global.modules.SwimAbility;
 import me.trae.champions.skill.types.ChannelSkill;
 import me.trae.champions.skill.types.interfaces.IActiveSkill;
+import me.trae.champions.skill.types.models.ToggleSkill;
 import me.trae.core.Core;
 import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.SpigotManager;
@@ -94,6 +96,18 @@ public class SkillManager extends SpigotManager<Champions> implements ISkillMana
         final int level = skill.getLevel(player);
         if (level == 0) {
             return false;
+        }
+
+        if (skill instanceof ToggleSkill<?> && skill.isUserByPlayer(player)) {
+            final ToggleSkill<?> toggleSkill = UtilJava.cast(ToggleSkill.class, skill);
+
+            final SkillData data = skill.getUserByPlayer(player);
+
+            toggleSkill.onDeActivate(player, UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
+
+            skill.reset(player);
+            skill.removeUser(player);
+            return true;
         }
 
         if (!(skill instanceof SelfManagedAbilityComponent)) {

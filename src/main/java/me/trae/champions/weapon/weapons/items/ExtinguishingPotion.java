@@ -50,8 +50,8 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
     @ConfigInject(type = Double.class, path = "Item-Velocity", defaultValue = "1.8")
     private double itemVelocity;
 
-    @ConfigInject(type = Boolean.class, path = "Friendly-Fire", defaultValue = "true")
-    private boolean friendlyFire;
+    @ConfigInject(type = Boolean.class, path = "Enemy-Fire", defaultValue = "true")
+    private boolean enemyFire;
 
     public ExtinguishingPotion(final WeaponManager manager) {
         super(manager, new ItemStack(Material.POTION, 1, (short) 0), ActionType.ALL);
@@ -112,7 +112,7 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
     }
 
     private void onLeftClick(final Player player) {
-        final Throwable throwable = new Throwable(this.getAbilityName(ActionType.LEFT_CLICK), this.getItemStack(), player, this.duration, player.getLocation().getDirection().multiply(this.itemVelocity));
+        final Throwable throwable = new Throwable(this.getAbilityName(ActionType.LEFT_CLICK), this.getItemStack(), player, this.duration, player.getEyeLocation().getDirection().multiply(this.itemVelocity));
 
         this.getInstance(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
 
@@ -183,25 +183,23 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
             return;
         }
 
-        if (event.getThrowable().isCollided(target)) {
+        final Throwable throwable = event.getThrowable();
+
+        if (throwable.isCollided(target)) {
             return;
         }
 
-        final Player throwerPlayer = event.getThrowable().getThrowerPlayer();
+        final Player throwerPlayer = throwable.getThrowerPlayer();
 
         if (target instanceof Player) {
-            final WeaponFriendlyFireEvent weaponFriendlyFireEvent = new WeaponFriendlyFireEvent(this, throwerPlayer, event.getTargetByClass(Player.class));
-            UtilServer.callEvent(weaponFriendlyFireEvent);
-            if (weaponFriendlyFireEvent.isCancelled()) {
+            final WeaponFriendlyFireEvent friendlyFireEvent = new WeaponFriendlyFireEvent(this, throwerPlayer, event.getTargetByClass(Player.class));
+            UtilServer.callEvent(friendlyFireEvent);
+            if (friendlyFireEvent.isCancelled()) {
                 return;
             }
 
-            if (!(this.friendlyFire)) {
-                if (target == throwerPlayer) {
-                    return;
-                }
-
-                if (!(weaponFriendlyFireEvent.isVulnerable())) {
+            if (!(this.enemyFire)) {
+                if (friendlyFireEvent.isVulnerable()) {
                     return;
                 }
             }
@@ -212,6 +210,8 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
         UtilEntity.givePotionEffect(target, PotionEffectType.FIRE_RESISTANCE, ExtinguishingPotion.this.amplifier, ExtinguishingPotion.this.duration);
 
         UtilBlock.splash(target.getEyeLocation());
+
+        throwable.addCollided(target);
     }
 
     @Override

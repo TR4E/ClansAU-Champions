@@ -21,7 +21,7 @@ public class DisableSkillFriendlyFireWhileAdministrating extends SpigotListener<
             return;
         }
 
-        if (!(this.getInstance(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(event.getPlayer()).isAdministrating())) {
+        if (!(this.getInstance(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(event.getTarget()).isAdministrating())) {
             return;
         }
 

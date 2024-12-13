@@ -90,7 +90,7 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
 
     @Override
     public void onActivate(final Player player, final ActionType actionType) {
-        final Throwable throwable = new Throwable(this.getAbilityName(), this.getItemStack(), player, this.duration, player.getLocation().getDirection().multiply(this.itemVelocity)) {
+        final Throwable throwable = new Throwable(this.getAbilityName(), this.getItemStack(), player, this.duration, player.getEyeLocation().getDirection().multiply(this.itemVelocity)) {
             @Override
             public double getCollideRadius() {
                 return IncendiaryGrenade.this.radius;
@@ -153,9 +153,9 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
         final LivingEntity targetEntity = event.getTarget();
 
         if (targetEntity instanceof Player) {
-            final WeaponFriendlyFireEvent weaponFriendlyFireEvent = new WeaponFriendlyFireEvent(this, throwerPlayer, event.getTargetByClass(Player.class));
-            UtilServer.callEvent(weaponFriendlyFireEvent);
-            if (weaponFriendlyFireEvent.isCancelled()) {
+            final WeaponFriendlyFireEvent friendlyFireEvent = new WeaponFriendlyFireEvent(this, throwerPlayer, event.getTargetByClass(Player.class));
+            UtilServer.callEvent(friendlyFireEvent);
+            if (friendlyFireEvent.isCancelled()) {
                 return;
             }
 
@@ -164,7 +164,7 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
                     return;
                 }
 
-                if (!(weaponFriendlyFireEvent.isVulnerable())) {
+                if (!(friendlyFireEvent.isVulnerable())) {
                     return;
                 }
             }

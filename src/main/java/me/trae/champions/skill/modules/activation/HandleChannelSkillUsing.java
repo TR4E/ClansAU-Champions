@@ -47,11 +47,11 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
     }
 
     private boolean canActivate(final Player player, final ChannelSkill<?, ?> skill) {
-        if (!(player.isBlocking())) {
+        if (!(skill.getType().isItemStack(player.getEquipment().getItemInHand()))) {
             return false;
         }
 
-        if (WeaponRegistry.getWeaponsByClass(ChampionsPvPWeapon.class).stream().noneMatch(championsPvPWeapon -> championsPvPWeapon.hasWeaponByPlayer(player))) {
+        if (!(player.isBlocking())) {
             return false;
         }
 
