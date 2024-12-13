@@ -4,7 +4,7 @@ import me.trae.api.champions.skill.events.SkillFriendlyFireEvent;
 import me.trae.api.damage.events.damage.CustomPreDamageEvent;
 import me.trae.api.damage.utility.UtilDamage;
 import me.trae.champions.role.types.Mage;
-import me.trae.champions.skill.skills.mage.axe.data.FireBlastData;
+import me.trae.champions.skill.skills.mage.axe.data.MoltenBlastData;
 import me.trae.champions.skill.types.ActiveSkill;
 import me.trae.champions.skill.types.enums.ActiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
@@ -22,7 +22,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class MoltenBlast extends ActiveSkill<Mage, FireBlastData> implements Listener {
+public class MoltenBlast extends ActiveSkill<Mage, MoltenBlastData> implements Listener {
 
     @ConfigInject(type = Float.class, path = "Energy", defaultValue = "50.0")
     private float energy;
@@ -56,8 +56,8 @@ public class MoltenBlast extends ActiveSkill<Mage, FireBlastData> implements Lis
     }
 
     @Override
-    public Class<FireBlastData> getClassOfData() {
-        return FireBlastData.class;
+    public Class<MoltenBlastData> getClassOfData() {
+        return MoltenBlastData.class;
     }
 
     @Override
@@ -80,7 +80,7 @@ public class MoltenBlast extends ActiveSkill<Mage, FireBlastData> implements Lis
 
     @Override
     public void onActivate(final Player player, final int level) {
-        final FireBlastData data = new FireBlastData(player, level);
+        final MoltenBlastData data = new MoltenBlastData(player, level);
 
         final LargeFireball fireball = player.launchProjectile(LargeFireball.class);
 
@@ -108,7 +108,7 @@ public class MoltenBlast extends ActiveSkill<Mage, FireBlastData> implements Lis
 
         final LargeFireball fireball = UtilJava.cast(LargeFireball.class, event.getEntity());
 
-        final FireBlastData data = this.getDataByFireball(fireball);
+        final MoltenBlastData data = this.getDataByFireball(fireball);
         if (data == null) {
             return;
         }
@@ -179,7 +179,7 @@ public class MoltenBlast extends ActiveSkill<Mage, FireBlastData> implements Lis
 
         final LargeFireball fireball = event.getProjectileByClass(LargeFireball.class);
 
-        final FireBlastData data = this.getDataByFireball(fireball);
+        final MoltenBlastData data = this.getDataByFireball(fireball);
         if (data == null) {
             return;
         }
@@ -187,8 +187,8 @@ public class MoltenBlast extends ActiveSkill<Mage, FireBlastData> implements Lis
         event.setCancelled(true);
     }
 
-    private FireBlastData getDataByFireball(final LargeFireball fireball) {
-        for (final FireBlastData data : this.getUsers().values()) {
+    private MoltenBlastData getDataByFireball(final LargeFireball fireball) {
+        for (final MoltenBlastData data : this.getUsers().values()) {
             if (data.getFireBall() == null || !(data.getFireBall().equals(fireball))) {
                 continue;
             }
@@ -215,7 +215,7 @@ public class MoltenBlast extends ActiveSkill<Mage, FireBlastData> implements Lis
 
     @Override
     public void onShutdown() {
-        for (final FireBlastData data : this.getUsers().values()) {
+        for (final MoltenBlastData data : this.getUsers().values()) {
             final LargeFireball fireBall = data.getFireBall();
             if (fireBall == null) {
                 continue;
