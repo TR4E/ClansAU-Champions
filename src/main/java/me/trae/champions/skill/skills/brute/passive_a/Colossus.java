@@ -53,7 +53,7 @@ public class Colossus extends PassiveSkill<Brute, SkillData> implements Listener
 
         final Player damagee = damageEvent.getDamageeByClass(Player.class);
 
-        final int level = getLevel(damagee);
+        final int level = this.getLevel(damagee);
 
         if (level == 0) {
             return;

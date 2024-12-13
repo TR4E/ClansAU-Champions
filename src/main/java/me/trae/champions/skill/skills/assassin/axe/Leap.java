@@ -12,10 +12,10 @@ import org.bukkit.entity.Player;
 
 public class Leap extends ActiveSkill<Assassin, SkillData> implements SelfManagedAbilityComponent {
 
-    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "30.0")
+    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "20.0")
     private float energy;
 
-    @ConfigInject(type = Long.class, path = "Leap-Recharge", defaultValue = "5_000")
+    @ConfigInject(type = Long.class, path = "Leap-Recharge", defaultValue = "8_000")
     private long leapRecharge;
 
     @ConfigInject(type = Long.class, path = "WallKick-Recharge", defaultValue = "150")
@@ -67,11 +67,15 @@ public class Leap extends ActiveSkill<Assassin, SkillData> implements SelfManage
 
     @Override
     public float getEnergy(final int level) {
-        return this.energy;
+        final int value = level - 1;
+
+        return this.energy - value;
     }
 
     @Override
     public long getRecharge(final int level) {
-        return this.leapRecharge;
+        final int value = (level - 1) / 2;
+
+        return this.leapRecharge - (value * 1000L);
     }
 }

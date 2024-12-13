@@ -64,7 +64,7 @@ public class ShockingStrikes extends PassiveSkill<Assassin, SkillData> implement
 
         final Player damager = event.getDamagerByClass(Player.class);
 
-        final int level = getLevel(damager);
+        final int level = this.getLevel(damager);
         if (level == 0) {
             return;
         }

@@ -1,20 +1,12 @@
 package me.trae.champions.skill.skills.global.modules;
 
-import me.trae.api.champions.skill.events.SkillPreActivateEvent;
-import me.trae.champions.effect.EffectManager;
-import me.trae.champions.effect.types.Silenced;
 import me.trae.champions.skill.SkillManager;
 import me.trae.champions.skill.skills.global.Swim;
 import me.trae.champions.skill.skills.global.modules.abstracts.GlobalAbility;
 import me.trae.core.Core;
-import me.trae.core.client.Client;
 import me.trae.core.client.ClientManager;
 import me.trae.core.config.annotations.ConfigInject;
-import me.trae.core.energy.EnergyManager;
-import me.trae.core.recharge.RechargeManager;
 import me.trae.core.utility.UtilBlock;
-import me.trae.core.utility.UtilMessage;
-import me.trae.core.utility.UtilServer;
 import me.trae.core.utility.UtilVelocity;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Effect;
@@ -26,11 +18,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 
-import java.util.Collections;
-
 public class SwimAbility extends GlobalAbility<Swim> implements Listener {
 
-    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "8.0")
+    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "10.0")
     public float energy;
 
     @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "350")
@@ -57,11 +47,15 @@ public class SwimAbility extends GlobalAbility<Swim> implements Listener {
         return Swim.class;
     }
 
-    private float getEnergy(final int level) {
-        return this.energy;
+    @Override
+    public float getEnergy(final int level) {
+        final int value = (level - 1) * 2;
+
+        return this.energy - value;
     }
 
-    private long getRecharge(final int level) {
+    @Override
+    public long getRecharge(final int level) {
         return this.recharge;
     }
 
@@ -85,53 +79,14 @@ public class SwimAbility extends GlobalAbility<Swim> implements Listener {
             return;
         }
 
-        final Client client = this.getInstance(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(player);
-        if (client == null) {
+        if (!(this.canActivate(player, this.getSkillByPlayer(player)))) {
             return;
         }
 
-        if (!(this.canSwim(player, client))) {
-            return;
-        }
-
-        this.activateSwim(player, client);
+        this.activateSwim(player);
     }
 
-    private boolean canSwim(final Player player, final Client client) {
-        final Swim skill = this.getSkillByPlayer(player);
-
-        final int level = skill.getLevel(player);
-        if (level == 0) {
-            return false;
-        }
-
-        if (!(client.isAdministrating())) {
-            if (UtilServer.getEvent(new SkillPreActivateEvent(this.getSkillByPlayer(player), player)).isCancelled()) {
-                return false;
-            }
-
-            if (this.getInstance().getManagerByClass(EffectManager.class).getModuleByClass(Silenced.class).isUserByEntity(player)) {
-                UtilMessage.simpleMessage(player, "Skill", "You cannot use <green><var></green> while silenced.", Collections.singletonList(this.getName()));
-                return false;
-            }
-
-            final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
-            if (rechargeManager.isCooling(player, skill.getName(), false)) {
-                return false;
-            }
-
-            if (!(this.getInstance(Core.class).getManagerByClass(EnergyManager.class).use(player, skill.getName(), this.getEnergy(level), true))) {
-                return false;
-            }
-
-
-            return rechargeManager.add(player, skill.getName(), this.getRecharge(level), false);
-        }
-
-        return true;
-    }
-
-    private void activateSwim(final Player player, final Client client) {
+    private void activateSwim(final Player player) {
         new SoundCreator(Sound.SPLASH, 0.3F, 2.0F).play(player.getLocation());
 
         player.getWorld().playEffect(player.getLocation(), Effect.STEP_SOUND, Material.WATER, 100);
@@ -141,7 +96,7 @@ public class SwimAbility extends GlobalAbility<Swim> implements Listener {
         final double yMax = this.yMax;
         final boolean groundBoost = this.groundBoost;
 
-        if (client.isAdministrating()) {
+        if (this.getInstance(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(player).isAdministrating()) {
             strength += 0.2D;
             yAdd += 0.2D;
         }

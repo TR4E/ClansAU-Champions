@@ -137,13 +137,13 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
 
         new SoundCreator(Sound.ZOMBIE_METAL, 1.0F, 1.5F).play(damagee.getLocation());
 
-        final String damageString = String.format("<white>+%s dmg", damage);
+        final String damageString = String.format("<white>+%s dmg</white>", damage);
 
         if (damagee instanceof Player) {
-            UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit <var> with <green><var></green> (<var><reset>).", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel()), damageString));
-            UtilMessage.simpleMessage(damagee, this.getModule().getName(), "<var> hit you with <green><var></green> (<var><reset>).", Arrays.asList(event.getDamagerName(), this.getDisplayName(data.getLevel()), damageString));
+            UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit <var> with <green><var></green> (<var>).", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel()), damageString));
+            UtilMessage.simpleMessage(damagee, this.getModule().getName(), "<var> hit you with <green><var></green> (<var>).", Arrays.asList(event.getDamagerName(), this.getDisplayName(data.getLevel()), damageString));
         } else {
-            UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit a <var> with <green><var></green> (<var><reset>).", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel()), damageString));
+            UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit a <var> with <green><var></green> (<var>).", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel()), damageString));
         }
 
         this.removeUser(damager);
@@ -157,7 +157,7 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
                 continue;
             }
 
-            final int level = getLevel(player);
+            final int level = this.getLevel(player);
             if (level == 0) {
                 this.removeUser(player);
                 continue;
@@ -190,7 +190,7 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
 
             data.setCharges(data.getCharges() + 1);
 
-            UtilMessage.simpleMessage(player, this.getModule().getName(), UtilString.pair(String.format("%s Charges", this.getName()), String.format("<yellow>%s", data.getCharges())));
+            UtilMessage.simpleMessage(player, this.getName(), UtilString.pair("Charges", String.format("<yellow>%s", data.getCharges())));
         }
     }
 }

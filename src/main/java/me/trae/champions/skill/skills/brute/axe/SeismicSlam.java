@@ -33,10 +33,10 @@ import java.util.Map;
 
 public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements Updater {
 
-    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "40.0")
+    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "50.0")
     private float energy;
 
-    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "30_000")
+    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "25_000")
     private long recharge;
 
     @ConfigInject(type = Integer.class, path = "Effect-Distance", defaultValue = "3")
@@ -201,11 +201,15 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
 
     @Override
     public float getEnergy(final int level) {
-        return this.energy;
+        final int value = (level - 1) * 5;
+
+        return this.energy - value;
     }
 
     @Override
     public long getRecharge(final int level) {
-        return this.recharge;
+        final int value = (level - 1) * 2;
+
+        return this.recharge - level;
     }
 }

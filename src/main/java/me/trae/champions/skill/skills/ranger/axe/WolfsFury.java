@@ -22,10 +22,10 @@ import java.util.Collections;
 
 public class WolfsFury extends ActiveSkill<Ranger, SkillData> implements Listener {
 
-    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "28.0")
+    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "40.0")
     private float energy;
 
-    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "24_000")
+    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "25_000")
     private long recharge;
 
     @ConfigInject(type = Long.class, path = "Duration", defaultValue = "4_000")
@@ -123,11 +123,15 @@ public class WolfsFury extends ActiveSkill<Ranger, SkillData> implements Listene
 
     @Override
     public float getEnergy(final int level) {
-        return this.energy;
+        final int value = (level - 1) * 2;
+
+        return this.energy - value;
     }
 
     @Override
     public long getRecharge(final int level) {
-        return this.recharge;
+        final int value = (int) ((level - 1) * 1.5D);
+
+        return this.recharge - value;
     }
 }

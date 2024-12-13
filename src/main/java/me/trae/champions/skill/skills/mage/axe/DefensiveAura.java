@@ -17,10 +17,10 @@ import java.util.Collections;
 
 public class DefensiveAura extends ActiveSkill<Mage, SkillData> {
 
-    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "40.0")
+    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "30.0")
     private float energy;
 
-    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "28_000")
+    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "30_000")
     private long recharge;
 
     @ConfigInject(type = Long.class, path = "Duration", defaultValue = "10_000")
@@ -110,11 +110,15 @@ public class DefensiveAura extends ActiveSkill<Mage, SkillData> {
 
     @Override
     public float getEnergy(final int level) {
-        return this.energy;
+        final int value = (level - 1) * 2;
+
+        return this.energy - value;
     }
 
     @Override
     public long getRecharge(final int level) {
-        return this.recharge;
+        final int value = (level - 1) * 2;
+
+        return this.recharge - (value * 1000L);
     }
 }

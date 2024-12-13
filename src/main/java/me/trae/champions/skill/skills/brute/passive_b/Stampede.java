@@ -172,7 +172,7 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
                 continue;
             }
 
-            final int level = getLevel(player);
+            final int level = this.getLevel(player);
             if (level == 0) {
                 this.reset(player);
                 this.removeUser(player);
@@ -212,7 +212,7 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
 
             UtilEntity.givePotionEffect(player, PotionEffectType.SPEED, data.getAmplifier(), Integer.MAX_VALUE);
 
-            UtilMessage.simpleMessage(player, this.getModule().getName(), UtilString.pair(String.format("%s Speed", this.getName()), String.format("<yellow>%s", data.getAmplifier())));
+            UtilMessage.simpleMessage(player, this.getName(), UtilString.pair("Speed", String.format("<yellow>%s", data.getAmplifier())));
         }
     }
 }

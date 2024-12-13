@@ -62,11 +62,13 @@ public class HandlePassiveBowSkillActivation extends SpigotListener<Champions, S
             return;
         }
 
-        final BowSkillData data = new BowSkillData(player, level);
+        if (skill.resetDataOnShoot() || !(skill.isUserByPlayer(player))) {
+            skill.onActivate(player, level);
+        }
+
+        final BowSkillData data = skill.getUserByPlayer(player);
 
         data.setArrow(UtilJava.cast(Arrow.class, event.getProjectile()));
-
-        skill.addUser(UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
 
         skill.onFire(player, UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
     }

@@ -245,11 +245,15 @@ public class SmokeBomb extends DropSkill<Assassin, SkillData> implements Listene
 
     @Override
     public float getEnergy(final int level) {
-        return this.energy;
+        final int value = (level - 1) * 5;
+
+        return this.energy - value;
     }
 
     @Override
     public long getRecharge(final int level) {
-        return this.recharge;
+        final int value = (int) ((level - 1) * 2.5D);
+
+        return this.recharge - (value * 1000L);
     }
 }

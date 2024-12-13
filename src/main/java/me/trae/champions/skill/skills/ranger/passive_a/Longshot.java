@@ -9,14 +9,13 @@ import me.trae.champions.skill.types.enums.PassiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.utility.UtilMath;
 import me.trae.core.utility.particle.ParticleEffect;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 public class Longshot extends PassiveBowSkill<Ranger, BowSkillData> {
 
-    @ConfigInject(type = Double.class, path = "Max-Damage", defaultValue = "18.0")
+    @ConfigInject(type = Double.class, path = "Max-Damage", defaultValue = "14.0")
     private double maxDamage;
 
     public Longshot(final Ranger module) {
@@ -78,7 +77,7 @@ public class Longshot extends PassiveBowSkill<Ranger, BowSkillData> {
     }
 
     @Override
-    public void onUpdater(final Player player, final Arrow arrow) {
-        ParticleEffect.FIREWORKS_SPARK.display(new Vector(0.0D, 0.0D, 0.0D), 1, arrow.getLocation().add(0.0D, 0.25D, 0.0D), 500);
+    public void onUpdater(final Player player, final BowSkillData data) {
+        ParticleEffect.FIREWORKS_SPARK.display(new Vector(0.0D, 0.0D, 0.0D), 1, data.getArrow().getLocation().add(0.0D, 0.25D, 0.0D), 500);
     }
 }

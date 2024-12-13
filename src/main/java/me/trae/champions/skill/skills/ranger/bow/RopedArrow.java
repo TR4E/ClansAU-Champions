@@ -19,10 +19,10 @@ import org.bukkit.entity.Player;
 
 public class RopedArrow extends ActiveBowSkill<Ranger, BowSkillData> {
 
-    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "18.0")
+    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "30.0")
     private float energy;
 
-    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "18_000")
+    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "17_000")
     private long recharge;
 
     @ConfigInject(type = Double.class, path = "Strength", defaultValue = "2.5")
@@ -104,11 +104,15 @@ public class RopedArrow extends ActiveBowSkill<Ranger, BowSkillData> {
 
     @Override
     public float getEnergy(final int level) {
-        return this.energy;
+        final int value = (level - 1) * 2;
+
+        return this.energy - value;
     }
 
     @Override
     public long getRecharge(final int level) {
-        return this.recharge;
+        final int value = level - 1;
+
+        return this.recharge - (value * 1000L);
     }
 }

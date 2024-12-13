@@ -87,7 +87,7 @@ public class Cleave extends PassiveSkill<Knight, SkillData> implements Listener 
             return;
         }
 
-        final int level = getLevel(damager);
+        final int level = this.getLevel(damager);
         if (level == 0) {
             return;
         }

@@ -16,7 +16,7 @@ public class Swim extends GlobalSkill<SwimAbility> {
         return new String[]{
                 "Tap Crouch to Swim forwards.",
                 "",
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getAbility().energy))
+                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getAbility().getEnergy(level)))
         };
     }
 

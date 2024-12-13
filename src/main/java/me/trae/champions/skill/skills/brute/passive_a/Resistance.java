@@ -63,7 +63,7 @@ public class Resistance extends PassiveSkill<Brute, SkillData> implements Listen
         if (event.getDamagee() instanceof Player) {
             final Player damagee = event.getDamageeByClass(Player.class);
 
-            final int level = getLevel(damagee);
+            final int level = this.getLevel(damagee);
 
             if (level > 0) {
                 final double modifier = this.getTakeDamagePercentage(level) * 0.01D;
@@ -75,7 +75,7 @@ public class Resistance extends PassiveSkill<Brute, SkillData> implements Listen
         if (event.getDamager() instanceof Player) {
             final Player damager = event.getDamagerByClass(Player.class);
 
-            final int level = getLevel(damager);
+            final int level = this.getLevel(damager);
 
             if (level > 0) {
                 final double modifier = this.getDealDamagePercentage(level) * 0.01D;

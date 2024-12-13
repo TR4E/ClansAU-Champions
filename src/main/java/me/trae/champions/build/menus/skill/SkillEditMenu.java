@@ -11,6 +11,8 @@ import me.trae.champions.build.menus.skill.buttons.SkillTypeButton;
 import me.trae.champions.build.menus.skill.interfaces.ISkillMenu;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.core.menu.Menu;
+import me.trae.core.utility.UtilColor;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public abstract class SkillEditMenu extends Menu<Champions, BuildManager> implements ISkillMenu {
@@ -18,7 +20,7 @@ public abstract class SkillEditMenu extends Menu<Champions, BuildManager> implem
     private Role updatedRole;
 
     public SkillEditMenu(final BuildManager manager, final Player player, final Role role, final int id) {
-        super(manager, player, 54, String.format("%s Skill Page #%s", role.getName(), id));
+        super(manager, player, 54, UtilColor.bold(ChatColor.GREEN) + String.format("%s Skill Page #%s", role.getName(), id));
     }
 
     @Override

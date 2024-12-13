@@ -5,6 +5,7 @@ import me.trae.api.champions.skill.Skill;
 import me.trae.champions.Champions;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
+import me.trae.champions.skill.types.PassiveBowSkill;
 import me.trae.champions.skill.types.data.BowSkillData;
 import me.trae.champions.skill.types.interfaces.IBowSkill;
 import me.trae.core.framework.types.frame.SpigotUpdater;
@@ -38,11 +39,13 @@ public class HandleBowSkillUpdater extends SpigotUpdater<Champions, SkillManager
                         return false;
                     }
 
-                    if (arrow.isDead() || !(arrow.isValid())) {
-                        return true;
+                    if (!(skill instanceof PassiveBowSkill<?, ?>) || UtilJava.cast(PassiveBowSkill.class, skill).resetDataOnShoot()) {
+                        if (arrow.isDead() || !(arrow.isValid())) {
+                            return true;
+                        }
                     }
 
-                    bowSkill.onUpdater(player, arrow);
+                    bowSkill.onUpdater(player, UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
                     return false;
                 });
             }

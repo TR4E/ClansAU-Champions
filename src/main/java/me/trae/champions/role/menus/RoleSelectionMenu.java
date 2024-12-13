@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 public abstract class RoleSelectionMenu extends Menu<Champions, RoleManager> implements IRoleSelectionMenu {
 
     public RoleSelectionMenu(final RoleManager manager, final Player player) {
-        super(manager, player, 36, "Select a Class");
+        super(manager, player, 36, UtilColor.bold(ChatColor.GREEN) + "Select a Class");
     }
 
     @Override

@@ -25,7 +25,7 @@ import java.util.Collections;
 
 public class Disengage extends ActiveSkill<Ranger, SkillData> implements Listener {
 
-    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "12.0")
+    @ConfigInject(type = Float.class, path = "Energy", defaultValue = "30.0")
     private float energy;
 
     @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "12_000")
@@ -158,11 +158,15 @@ public class Disengage extends ActiveSkill<Ranger, SkillData> implements Listene
 
     @Override
     public float getEnergy(final int level) {
-        return this.energy;
+        final int value = (level - 1) * 3;
+
+        return this.energy - value;
     }
 
     @Override
     public long getRecharge(final int level) {
-        return this.recharge;
+        final int value = (int) ((level - 1) * 1.5);
+
+        return this.recharge - (value * 1000L);
     }
 }

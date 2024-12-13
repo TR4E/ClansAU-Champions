@@ -116,14 +116,14 @@ public class HoldPosition extends ActiveSkill<Knight, SkillData> implements List
 
     @Override
     public float getEnergy(final int level) {
-        final int value = ((level - 1) * 5);
+        final int value = (level - 1) * 5;
 
         return this.energy - value;
     }
 
     @Override
     public long getRecharge(final int level) {
-        final int value = ((level - 1) * 2);
+        final int value = (level - 1) * 2;
 
         return this.recharge - (value * 1000L);
     }

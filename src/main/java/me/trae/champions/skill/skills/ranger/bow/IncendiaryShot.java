@@ -1,38 +1,30 @@
-package me.trae.champions.skill.skills.assassin.bow;
+package me.trae.champions.skill.skills.ranger.bow;
 
 import me.trae.api.damage.events.damage.CustomPostDamageEvent;
-import me.trae.champions.effect.EffectManager;
-import me.trae.champions.effect.types.Silenced;
-import me.trae.champions.role.types.Assassin;
+import me.trae.champions.role.types.Ranger;
 import me.trae.champions.skill.types.ActiveBowSkill;
 import me.trae.champions.skill.types.data.BowSkillData;
 import me.trae.core.config.annotations.ConfigInject;
-import me.trae.core.effect.data.EffectData;
-import me.trae.core.utility.UtilJava;
 import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilString;
 import me.trae.core.utility.UtilTime;
-import me.trae.core.utility.particle.ParticleEffect;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
 
 import java.util.Arrays;
 
-public class SilencingArrow extends ActiveBowSkill<Assassin, BowSkillData> {
+public class IncendiaryShot extends ActiveBowSkill<Ranger, BowSkillData> {
 
     @ConfigInject(type = Float.class, path = "Energy", defaultValue = "30.0")
     private float energy;
 
-    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "15_000")
+    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "12_000")
     private long recharge;
 
-    @ConfigInject(type = Long.class, path = "Duration", defaultValue = "6_000")
+    @ConfigInject(type = Long.class, path = "Duration", defaultValue = "1_500")
     private long duration;
 
-    public SilencingArrow(final Assassin module) {
+    public IncendiaryShot(final Ranger module) {
         super(module);
     }
 
@@ -41,28 +33,21 @@ public class SilencingArrow extends ActiveBowSkill<Assassin, BowSkillData> {
         return BowSkillData.class;
     }
 
+    private long getDuration(final int level) {
+        return level * this.duration;
+    }
+
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
                 "Left-Click with a Bow to Prepare.",
                 "",
-                "Your next arrow will silence your",
-                String.format("target for <green>%s</green>.", UtilTime.getTime(this.duration)),
-                "Making them unable to use any active skills.",
+                "Shoot an ignited arrow",
+                String.format("burning anyone hit for <green>%s</green>.", UtilTime.getTime(this.getDuration(level))),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
         };
-    }
-
-    @Override
-    public int getDefaultLevel() {
-        return 2;
-    }
-
-    @Override
-    public int getMaxLevel() {
-        return 3;
     }
 
     @Override
@@ -74,23 +59,19 @@ public class SilencingArrow extends ActiveBowSkill<Assassin, BowSkillData> {
 
     @Override
     public void onHitByEntity(final Player damager, final Entity damagee, final CustomPostDamageEvent event, final BowSkillData data) {
+        event.setReason(this.getDisplayName(data.getLevel()), this.getDuration(data.getLevel()));
+
         if (damagee instanceof Player) {
             UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));
             UtilMessage.simpleMessage(damagee, this.getModule().getName(), "<var> hit you with <green><var></green>.", Arrays.asList(event.getDamagerName(), this.getDisplayName(data.getLevel())));
         } else {
             UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit a <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));
         }
-
-        if (damagee instanceof LivingEntity) {
-            final LivingEntity damageeLivingEntity = UtilJava.cast(LivingEntity.class, damagee);
-
-            this.getInstance().getManagerByClass(EffectManager.class).getModuleByClass(Silenced.class).addUser(new EffectData(damageeLivingEntity, this.duration));
-        }
     }
 
     @Override
     public void onUpdater(final Player player, final BowSkillData data) {
-        ParticleEffect.VILLAGER_HAPPY.display(new Vector(0.0D, 0.0D, 0.0D), 1, data.getArrow().getLocation().add(0.0D, 0.25D, 0.0D), 500);
+        data.getArrow().setFireTicks((int) ((this.getDuration(data.getLevel()) + 1000L) / 50));
     }
 
     @Override
@@ -102,7 +83,7 @@ public class SilencingArrow extends ActiveBowSkill<Assassin, BowSkillData> {
 
     @Override
     public long getRecharge(final int level) {
-        final int value = (level - 1) / 2;
+        final int value = level - 1;
 
         return this.recharge - (value * 1000L);
     }

@@ -59,7 +59,7 @@ public class Fury extends PassiveSkill<Knight, SkillData> implements Listener {
 
         final Player damager = event.getDamagerByClass(Player.class);
 
-        final int level = getLevel(damager);
+        final int level = this.getLevel(damager);
         if (level == 0) {
             return;
         }

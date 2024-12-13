@@ -63,6 +63,6 @@ public abstract class ActiveBowSkill<R extends Role, D extends BowSkillData> ext
     }
 
     @Override
-    public void onUpdater(final Player player, final Arrow arrow) {
+    public void onUpdater(final Player player, final D data) {
     }
 }
