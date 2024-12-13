@@ -1,11 +1,11 @@
 package me.trae.champions.skill.skills.mage.axe.data;
 
 import me.trae.champions.skill.data.SkillData;
-import me.trae.champions.skill.skills.mage.axe.data.interfaces.IFireBlastData;
+import me.trae.champions.skill.skills.mage.axe.data.interfaces.IMoltenBlastData;
 import org.bukkit.entity.LargeFireball;
 import org.bukkit.entity.Player;
 
-public class MoltenBlastData extends SkillData implements IFireBlastData {
+public class MoltenBlastData extends SkillData implements IMoltenBlastData {
 
     private LargeFireball fireball;
 
