@@ -1,6 +1,6 @@
 package me.trae.champions.skill.skills.knight.axe;
 
-import me.trae.api.damage.events.damage.CustomDamageEvent;
+import me.trae.api.damage.events.CustomKnockbackEvent;
 import me.trae.api.damage.events.damage.CustomPostDamageEvent;
 import me.trae.champions.role.types.Knight;
 import me.trae.champions.skill.data.SkillData;
@@ -111,30 +111,32 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
     }
 
     @EventHandler
-    public void onCustomDamage(final CustomDamageEvent event) {
+    public void onCustomKnockback(final CustomKnockbackEvent event) {
         if (event.isCancelled()) {
             return;
         }
 
-        if (event.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+        final CustomPostDamageEvent damageEvent = event.getDamageEvent();
+
+        if (damageEvent.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
             return;
         }
 
-        if (!(event.getDamagee() instanceof Player)) {
+        if (!(damageEvent.getDamagee() instanceof Player)) {
             return;
         }
 
-        if (!(event.getDamager() instanceof LivingEntity)) {
+        if (!(damageEvent.getDamager() instanceof LivingEntity)) {
             return;
         }
 
-        final Player damagee = event.getDamageeByClass(Player.class);
+        final Player damagee = damageEvent.getDamageeByClass(Player.class);
 
         if (!(this.isUserByPlayer(damagee))) {
             return;
         }
 
-        event.setKnockback(0.0D);
+        event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.LOW)

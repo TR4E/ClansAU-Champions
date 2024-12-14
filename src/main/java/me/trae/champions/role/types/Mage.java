@@ -8,6 +8,7 @@ import me.trae.champions.skill.skills.mage.passive_a.MagmaBlade;
 import me.trae.champions.skill.skills.mage.passive_a.MoltenShield;
 import me.trae.champions.skill.skills.mage.passive_a.NullBlade;
 import me.trae.champions.skill.skills.mage.passive_b.HolyLight;
+import me.trae.champions.skill.skills.mage.passive_b.Immolate;
 import me.trae.champions.skill.skills.mage.sword.Cyclone;
 import me.trae.champions.skill.skills.mage.sword.GlacialPrison;
 import me.trae.champions.skill.skills.mage.sword.Inferno;
@@ -42,6 +43,7 @@ public class Mage extends Role {
 
         // Passive B Skills
         addSubModule(new HolyLight(this));
+        addSubModule(new Immolate(this));
 
         super.registerSubModules();
     }

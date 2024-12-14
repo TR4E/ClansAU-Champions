@@ -43,6 +43,7 @@ public class SkillManager extends SpigotManager<Champions> implements ISkillMana
         addModule(new HandleChannelSkillUsing(this));
         addModule(new HandleDropSkillActivation(this));
         addModule(new HandlePassiveBowSkillActivation(this));
+        addModule(new HandleToggleUpdaterDropSkillUsing(this));
 
         // Modules
         addModule(new DisableSkillFriendlyFireWhileAdministrating(this));
@@ -85,73 +86,5 @@ public class SkillManager extends SpigotManager<Champions> implements ISkillMana
         }
 
         return UtilJava.cast(clazz, skill);
-    }
-
-    @Override
-    public boolean canActivateActiveSkill(final Player player, final Skill<?, ?> skill) {
-        if (!(skill.canActivate(player))) {
-            return false;
-        }
-
-        final int level = skill.getLevel(player);
-        if (level == 0) {
-            return false;
-        }
-
-        if (skill instanceof ToggleSkill<?> && skill.isUserByPlayer(player)) {
-            final ToggleSkill<?> toggleSkill = UtilJava.cast(ToggleSkill.class, skill);
-
-            final SkillData data = skill.getUserByPlayer(player);
-
-            toggleSkill.onDeActivate(player, UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
-
-            skill.reset(player);
-            skill.removeUser(player);
-            return true;
-        }
-
-        if (!(skill instanceof SelfManagedAbilityComponent)) {
-            final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
-
-            if (skill instanceof RechargeSkillComponent) {
-                final RechargeSkillComponent rechargeSkillComponent = UtilJava.cast(RechargeSkillComponent.class, skill);
-
-                if (rechargeSkillComponent.hasRecharge(level)) {
-                    if (rechargeManager.isCooling(player, skill.getName(), true)) {
-                        return false;
-                    }
-                }
-            }
-
-            if (skill instanceof IActiveSkill) {
-                if (UtilJava.cast(IActiveSkill.class, skill).isActive(player)) {
-                    return false;
-                }
-            }
-
-            if (skill instanceof EnergySkillComponent) {
-                final EnergySkillComponent energySkillComponent = UtilJava.cast(EnergySkillComponent.class, skill);
-
-                if (energySkillComponent.hasEnergy(level)) {
-                    final EnergyManager energyManager = this.getInstance(Core.class).getManagerByClass(EnergyManager.class);
-
-                    if (!(energyManager.use(player, skill.getName(), energySkillComponent.getEnergy(level), true))) {
-                        return false;
-                    }
-                }
-            }
-
-            if (skill instanceof RechargeSkillComponent && !(skill instanceof ChannelSkill<?, ?>)) {
-                final RechargeSkillComponent rechargeSkillComponent = UtilJava.cast(RechargeSkillComponent.class, skill);
-
-                if (rechargeSkillComponent.hasRecharge(level)) {
-                    if (!(rechargeManager.add(player, skill.getName(), rechargeSkillComponent.getRecharge(level), true))) {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return true;
     }
 }

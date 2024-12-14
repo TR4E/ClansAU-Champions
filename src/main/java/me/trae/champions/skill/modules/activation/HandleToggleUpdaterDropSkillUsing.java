@@ -4,26 +4,30 @@ import me.trae.api.champions.role.Role;
 import me.trae.champions.Champions;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
-import me.trae.champions.skill.types.ChannelSkill;
+import me.trae.champions.skill.data.SkillData;
+import me.trae.champions.skill.types.ToggleUpdaterDropSkill;
+import me.trae.champions.skill.types.models.ToggleSkill;
+import me.trae.champions.weapon.models.PassiveActivatorWeapon;
 import me.trae.core.Core;
 import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.types.frame.SpigotUpdater;
 import me.trae.core.recharge.RechargeManager;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.utility.UtilJava;
+import me.trae.core.weapon.WeaponManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManager> {
+public class HandleToggleUpdaterDropSkillUsing extends SpigotUpdater<Champions, SkillManager> {
 
-    public HandleChannelSkillUsing(final SkillManager manager) {
+    public HandleToggleUpdaterDropSkillUsing(final SkillManager manager) {
         super(manager);
     }
 
     @Update(delay = 50L)
     public void onUpdater() {
         for (final Role role : this.getInstance().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
-            for (final ChannelSkill<?, ?> skill : role.getSkillsByClass(ChannelSkill.class)) {
+            for (final ToggleUpdaterDropSkill<?, ?> skill : role.getSkillsByClass(ToggleUpdaterDropSkill.class)) {
                 skill.getUsers().values().removeIf(data -> {
                     final Player player = Bukkit.getPlayer(data.getUUID());
                     if (player == null) {
@@ -32,6 +36,7 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
 
                     if (!(this.canActivateSkill(player, skill))) {
                         skill.reset(player);
+                        UtilJava.cast(ToggleSkill.class, skill).onDeActivate(player, UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
                         return true;
                     }
 
@@ -44,17 +49,13 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
         }
     }
 
-    private boolean canActivateSkill(final Player player, final ChannelSkill<?, ?> skill) {
-        if (!(skill.getType().isItemStack(player.getEquipment().getItemInHand()))) {
+    private boolean canActivateSkill(final Player player, final ToggleUpdaterDropSkill<?, ?> skill) {
+        if (!(this.getInstance(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(player.getEquipment().getItemInHand()) instanceof PassiveActivatorWeapon)) {
             return false;
         }
 
         final int level = skill.getLevel(player);
         if (level == 0) {
-            return false;
-        }
-
-        if (!(player.isBlocking())) {
             return false;
         }
 

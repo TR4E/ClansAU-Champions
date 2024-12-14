@@ -5,5 +5,5 @@ import org.bukkit.entity.Player;
 
 public interface ToggleSkill<D extends SkillData> {
 
-    void onDeActivate(final Player player, D data);
+    void onDeActivate(final Player player, final D data);
 }

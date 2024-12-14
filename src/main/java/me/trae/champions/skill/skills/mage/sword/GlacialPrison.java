@@ -1,5 +1,6 @@
 package me.trae.champions.skill.skills.mage.sword;
 
+import me.trae.api.champions.skill.events.SkillLocationEvent;
 import me.trae.champions.role.types.Mage;
 import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.types.ActiveSkill;
@@ -125,6 +126,10 @@ public class GlacialPrison extends ActiveSkill<Mage, SkillData> implements Liste
 
         for (final Block block : UtilBlock.getSphere(event.getLocation(), this.getDistance(data.getLevel()), true)) {
             if (!(UtilBlock.airFoliage(block.getType()))) {
+                continue;
+            }
+
+            if (UtilServer.getEvent(new SkillLocationEvent(this, block.getLocation())).isCancelled()) {
                 continue;
             }
 

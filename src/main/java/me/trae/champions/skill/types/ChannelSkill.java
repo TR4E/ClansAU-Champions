@@ -13,6 +13,13 @@ public abstract class ChannelSkill<R extends Role, D extends ChannelSkillData> e
     }
 
     @Override
+    public void reset(final Player player) {
+        if (this.isUserByPlayer(player)) {
+            this.getUserByPlayer(player).setUsing(false);
+        }
+    }
+
+    @Override
     public boolean isUsingByPlayer(final Player player) {
         return this.isUserByPlayer(player) && this.getUserByPlayer(player).isUsing();
     }

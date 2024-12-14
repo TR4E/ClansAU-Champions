@@ -31,8 +31,13 @@ public class Colossus extends PassiveSkill<Brute, SkillData> implements Listener
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("You take <green>%s</green> reduced knockback.", this.getKnockback(level))
+                String.format("You take <green>%s</green> reduced knockback.", this.getKnockback(level) + "%")
         };
+    }
+
+    @Override
+    public int getMaxLevel() {
+        return 3;
     }
 
     @EventHandler
@@ -59,6 +64,6 @@ public class Colossus extends PassiveSkill<Brute, SkillData> implements Listener
             return;
         }
 
-        event.setKnockback(event.getKnockback() * (1 - (this.getKnockback(level) * 0.01D)));
+        event.setKnockback(event.getKnockback() * (1.0D - (this.getKnockback(level) * 0.01D)));
     }
 }

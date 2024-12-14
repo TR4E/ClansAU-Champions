@@ -74,6 +74,8 @@ public class SmokeBomb extends DropSkill<Assassin, SkillData> implements Listene
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
+                "Drop Sword/Axe to Activate.",
+                "",
                 "Instantly vanish before your foes for a ",
                 String.format("maximum of <green>%s</green>", UtilTime.getTime(this.getDuration(level))),
                 "hitting an enemy or using abilities",

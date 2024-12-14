@@ -2,7 +2,7 @@ package me.trae.champions.skill.components.energy;
 
 import me.trae.core.utility.UtilMath;
 
-public interface EnergyUsingChannelSkillComponent {
+public interface EnergyUsingSkillComponent {
 
     float getEnergyUsing(final int level);
 

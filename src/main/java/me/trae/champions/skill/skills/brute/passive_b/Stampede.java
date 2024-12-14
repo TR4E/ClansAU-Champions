@@ -51,7 +51,7 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
         return StampedeData.class;
     }
 
-    private int getAmplifier(final int level) {
+    private int getMaxAmplifier(final int level) {
         return level;
     }
 
@@ -65,7 +65,7 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
                 "You slowly build up speed as you",
                 "sprint. You gain a level of Speed",
                 String.format("for every %s,", UtilTime.getTime(this.getDuration(level))),
-                String.format("up to max of Speed <green>%s</green>.", this.getAmplifier(level)),
+                String.format("up to max of Speed <green>%s</green>.", this.getMaxAmplifier(level)),
                 "",
                 "Attacking during stampede deals",
                 String.format("%s bonus damage per speed level", this.damageMultiplier)
@@ -200,7 +200,7 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
 
             final StampedeData data = this.getUserByPlayer(player);
 
-            if (data.getAmplifier() >= this.getAmplifier(level)) {
+            if (data.getAmplifier() >= this.getMaxAmplifier(level)) {
                 continue;
             }
 

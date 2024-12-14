@@ -5,6 +5,7 @@ import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.skills.brute.axe.*;
 import me.trae.champions.skill.skills.brute.passive_a.Colossus;
 import me.trae.champions.skill.skills.brute.passive_a.Resistance;
+import me.trae.champions.skill.skills.brute.passive_b.Bloodlust;
 import me.trae.champions.skill.skills.brute.passive_b.Stampede;
 import me.trae.champions.skill.skills.brute.sword.BattleTaunt;
 import me.trae.core.utility.objects.SoundCreator;
@@ -37,6 +38,7 @@ public class Brute extends Role {
         addSubModule(new Resistance(this));
 
         // Passive B Skills
+        addSubModule(new Bloodlust(this));
         addSubModule(new Stampede(this));
 
         super.registerSubModules();

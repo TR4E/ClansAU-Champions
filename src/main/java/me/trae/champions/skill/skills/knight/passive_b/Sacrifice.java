@@ -1,7 +1,7 @@
-package me.trae.champions.skill.skills.brute.passive_a;
+package me.trae.champions.skill.skills.knight.passive_b;
 
 import me.trae.api.damage.events.damage.CustomPostDamageEvent;
-import me.trae.champions.role.types.Brute;
+import me.trae.champions.role.types.Knight;
 import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.types.PassiveSkill;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
@@ -10,14 +10,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 
-public class Resistance extends PassiveSkill<Brute, SkillData> implements Listener {
+public class Sacrifice extends PassiveSkill<Knight, SkillData> implements Listener {
 
     @ConfigInject(type = Integer.class, path = "Base-Percentage", defaultValue = "10")
     private int basePercentage;
 
-    public Resistance(final Brute module) {
-        super(module, PassiveSkillType.PASSIVE_A);
+    public Sacrifice(final Knight module) {
+        super(module, PassiveSkillType.PASSIVE_B);
     }
 
     @Override
@@ -25,21 +26,16 @@ public class Resistance extends PassiveSkill<Brute, SkillData> implements Listen
         return SkillData.class;
     }
 
-    private int getPercentage(final int level) {
+    private double getPercentage(final int level) {
         return this.basePercentage * level;
     }
 
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("You take <green>%s</green> less damage", this.getPercentage(level) + "%"),
-                String.format("but you deal <green>%s</green> less as well.", this.getPercentage(level) + "%")
+                String.format("Deal an extra <green>%s</green> melee damage,", this.getPercentage(level) + "%"),
+                String.format("but you now also take <green>%s</green> extra damage from melee attacks.", this.getPercentage(level) + "%")
         };
-    }
-
-    @Override
-    public int getDefaultLevel() {
-        return 2;
     }
 
     @Override
@@ -53,6 +49,10 @@ public class Resistance extends PassiveSkill<Brute, SkillData> implements Listen
             return;
         }
 
+        if (event.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+            return;
+        }
+
         if (event.getDamagee() instanceof Player) {
             final Player damagee = event.getDamageeByClass(Player.class);
 
@@ -61,7 +61,7 @@ public class Resistance extends PassiveSkill<Brute, SkillData> implements Listen
             if (level > 0) {
                 final double modifier = this.getPercentage(level) * 0.01D;
 
-                event.setDamage(event.getDamage() * (1.0D - modifier));
+                event.setDamage(event.getDamage() * (1.0D + modifier));
             }
         }
 
@@ -73,7 +73,7 @@ public class Resistance extends PassiveSkill<Brute, SkillData> implements Listen
             if (level > 0) {
                 final double modifier = this.getPercentage(level) * 0.01D;
 
-                event.setDamage(event.getDamage() * (1.0D - modifier));
+                event.setDamage(event.getDamage() * (1.0D + modifier));
             }
         }
     }

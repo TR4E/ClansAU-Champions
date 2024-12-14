@@ -96,6 +96,17 @@ public class MoltenBlast extends ActiveSkill<Mage, MoltenBlastData> implements L
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You used <green><var></green>.", Collections.singletonList(this.getDisplayName(level)));
     }
 
+    @Override
+    public boolean isActive(final Player player) {
+        final MoltenBlastData data = this.getUserByPlayer(player);
+        if (data != null && data.getFireBall() != null) {
+            UtilMessage.simpleMessage(player, this.getModule().getName(), "<green><var></green> is already active.", Collections.singletonList(this.getDisplayName(data.getLevel())));
+            return true;
+        }
+
+        return false;
+    }
+
     @EventHandler
     public void onEntityExplode(final EntityExplodeEvent event) {
         if (event.isCancelled()) {
@@ -122,7 +133,7 @@ public class MoltenBlast extends ActiveSkill<Mage, MoltenBlastData> implements L
         int count = 0;
 
         for (final LivingEntity targetEntity : UtilEntity.getNearbyEntities(LivingEntity.class, event.getLocation(), this.distance)) {
-            if (targetEntity instanceof Player && player != null) {
+            if (targetEntity instanceof Player) {
                 final Player targetPlayer = UtilJava.cast(Player.class, targetEntity);
 
                 final SkillFriendlyFireEvent friendlyFireEvent = new SkillFriendlyFireEvent(this, player, targetPlayer);
@@ -149,11 +160,7 @@ public class MoltenBlast extends ActiveSkill<Mage, MoltenBlastData> implements L
                 }
             }
 
-            if (player == null) {
-                UtilDamage.damage(targetEntity, EntityDamageEvent.DamageCause.CUSTOM, this.damage);
-            } else {
-                UtilDamage.damage(targetEntity, player, EntityDamageEvent.DamageCause.CUSTOM, this.damage, this.getDisplayName(data.getLevel()), 1000L);
-            }
+            UtilDamage.damage(targetEntity, player, EntityDamageEvent.DamageCause.CUSTOM, this.damage, this.getDisplayName(data.getLevel()), 1000L);
 
             targetEntity.setFireTicks((int) (this.duration / 50L));
         }
@@ -161,6 +168,8 @@ public class MoltenBlast extends ActiveSkill<Mage, MoltenBlastData> implements L
         if (count > 0) {
             UtilMessage.simpleMessage(player, this.getModule().getName(), "You attacked <yellow><var></yellow> opponents with <green><var></green>.", Arrays.asList(String.valueOf(count), this.getDisplayName(data.getLevel())));
         }
+
+        this.removeUser(player);
     }
 
     @EventHandler

@@ -7,6 +7,4 @@ import org.bukkit.entity.Player;
 public interface ISkillManager {
 
     <T extends Skill<?, ?>> T getSkillByType(final Class<T> clazz, final Player player, final SkillType skillType);
-
-    boolean canActivateActiveSkill(final Player player, final Skill<?, ?> skill);
 }

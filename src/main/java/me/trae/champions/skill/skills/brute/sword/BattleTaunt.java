@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 
 public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
 
-    @ConfigInject(type = Float.class, path = "Energy-Needed", defaultValue = "8.0")
+    @ConfigInject(type = Float.class, path = "Energy-Needed", defaultValue = "10.0")
     private float energyNeeded;
 
     @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "3_000")
