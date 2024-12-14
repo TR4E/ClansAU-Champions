@@ -17,7 +17,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
@@ -77,7 +76,7 @@ public class Sever extends ActiveSkill<Assassin, SkillData> implements Listener 
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You failed <green><var></green>", Collections.singletonList(this.getDisplayName(data.getLevel())));
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler
     public void onCustomPostDamage(final CustomPostDamageEvent event) {
         if (event.isCancelled()) {
             return;
