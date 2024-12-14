@@ -64,6 +64,10 @@ public class Inferno extends ChannelSkill<Mage, ChannelSkillData> implements Lis
         return Material.DIAMOND_BLOCK;
     }
 
+    private long getDuration(final int level) {
+        return this.duration;
+    }
+
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
@@ -89,7 +93,7 @@ public class Inferno extends ChannelSkill<Mage, ChannelSkillData> implements Lis
 
     @Override
     public void onUsing(final Player player, final ChannelSkillData data) {
-        final Throwable throwable = new Throwable(this.getDisplayName(data.getLevel()), new ItemStack(this.getMaterial()), player, this.duration, player.getEyeLocation().getDirection().add(new Vector(UtilMath.getRandomNumber(Double.class, -0.2D, 0.2D), UtilMath.getRandomNumber(Double.class, -0.2D, 0.3D), UtilMath.getRandomNumber(Double.class, -0.2D, 0.2D))));
+        final Throwable throwable = new Throwable(this.getDisplayName(data.getLevel()), new ItemStack(this.getMaterial()), player, this.getDuration(data.getLevel()), player.getEyeLocation().getDirection().add(new Vector(UtilMath.getRandomNumber(Double.class, -0.2D, 0.2D), UtilMath.getRandomNumber(Double.class, -0.2D, 0.3D), UtilMath.getRandomNumber(Double.class, -0.2D, 0.2D))));
 
         this.getInstance(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
 

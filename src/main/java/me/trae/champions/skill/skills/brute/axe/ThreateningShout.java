@@ -45,6 +45,10 @@ public class ThreateningShout extends ActiveSkill<Brute, SkillData> {
         return this.distance + level;
     }
 
+    private int getAmplifier(final int level) {
+        return this.amplifier;
+    }
+
     private long getDuration(final int level) {
         return this.duration + (level * 1000L);
     }
@@ -56,7 +60,7 @@ public class ThreateningShout extends ActiveSkill<Brute, SkillData> {
                 "",
                 "Release a roar, which frightens all enemies",
                 String.format("within <green>%s</green> blocks", this.getDistance(level)),
-                String.format("and grants them Weakness %s for <green>%s</green>", this.amplifier, UtilTime.getTime(this.getDuration(level))),
+                String.format("and grants them Weakness %s for <green>%s</green>", this.getAmplifier(level), UtilTime.getTime(this.getDuration(level))),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
@@ -100,7 +104,7 @@ public class ThreateningShout extends ActiveSkill<Brute, SkillData> {
                 continue;
             }
 
-            UtilEntity.givePotionEffect(targetPlayer, PotionEffectType.WEAKNESS, this.amplifier, this.getDuration(level));
+            UtilEntity.givePotionEffect(targetPlayer, PotionEffectType.WEAKNESS, this.getAmplifier(level), this.getDuration(level));
 
             UtilMessage.simpleMessage(targetPlayer, this.getModule().getName(), "<var> used <green><var></green>.", Arrays.asList(friendlyFireEvent.getPlayerName(), this.getDisplayName(level)));
 

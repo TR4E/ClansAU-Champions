@@ -55,12 +55,16 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
         return level;
     }
 
+    private long getDuration(final int level) {
+        return this.duration;
+    }
+
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
                 "You slowly build up speed as you",
                 "sprint. You gain a level of Speed",
-                String.format("for every %s,", UtilTime.getTime(this.duration)),
+                String.format("for every %s,", UtilTime.getTime(this.getDuration(level))),
                 String.format("up to max of Speed <green>%s</green>.", this.getAmplifier(level)),
                 "",
                 "Attacking during stampede deals",
@@ -200,7 +204,7 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
                 continue;
             }
 
-            if (!(UtilTime.elapsed(data.getLastUpdated(), this.duration))) {
+            if (!(UtilTime.elapsed(data.getLastUpdated(), this.getDuration(level)))) {
                 continue;
             }
 

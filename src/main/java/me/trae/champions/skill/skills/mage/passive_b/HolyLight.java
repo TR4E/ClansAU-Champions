@@ -32,6 +32,10 @@ public class HolyLight extends PassiveSkill<Mage, SkillData> implements Updater 
         return level;
     }
 
+    private long getDuration(final int level) {
+        return this.duration;
+    }
+
     private int getDistance(final int level) {
         return level * 3;
     }
@@ -95,7 +99,7 @@ public class HolyLight extends PassiveSkill<Mage, SkillData> implements Updater 
                     continue;
                 }
 
-                this.giveEffect(player, data.getLevel(), this.duration);
+                this.giveEffect(player, data.getLevel(), this.getDuration(data.getLevel()));
             }
         }
     }

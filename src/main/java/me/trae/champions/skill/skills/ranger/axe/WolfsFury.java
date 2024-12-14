@@ -43,13 +43,21 @@ public class WolfsFury extends ActiveSkill<Ranger, SkillData> implements Listene
         return SkillData.class;
     }
 
+    private int getAmplifier(final int level) {
+        return this.amplifier;
+    }
+
+    private long getDuration(final int level) {
+        return this.duration;
+    }
+
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
                 "Right-Click with an Axe to Activate.",
                 "",
                 "Summon the power of the wolf, gaining",
-                String.format("Strength %s for %s, and giving", this.amplifier, UtilTime.getTime(this.duration)),
+                String.format("Strength %s for %s, and giving", this.getAmplifier(level), UtilTime.getTime(this.getDuration(level))),
                 "no knockback on your attacks.",
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
@@ -70,11 +78,13 @@ public class WolfsFury extends ActiveSkill<Ranger, SkillData> implements Listene
 
     @Override
     public void onActivate(final Player player, final int level) {
-        UtilEntity.givePotionEffect(player, PotionEffectType.INCREASE_DAMAGE, this.amplifier, this.duration);
+        final long duration = this.getDuration(level);
+
+        UtilEntity.givePotionEffect(player, PotionEffectType.INCREASE_DAMAGE, this.getAmplifier(level), duration);
 
         new SoundCreator(Sound.WOLF_HOWL, 2.0F, 2.0F).play(player.getLocation());
 
-        this.addUser(new SkillData(player, level, this.duration));
+        this.addUser(new SkillData(player, level, duration));
 
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You activated <green><var></green>.", Collections.singletonList(this.getDisplayName(level)));
     }
@@ -118,7 +128,7 @@ public class WolfsFury extends ActiveSkill<Ranger, SkillData> implements Listene
 
         new SoundCreator(Sound.WOLF_HOWL, 2.0F, 2.0F).play(damager.getLocation());
 
-        event.setReason(this.getDisplayName(data.getLevel()), this.duration);
+        event.setReason(this.getDisplayName(data.getLevel()), this.getDuration(data.getLevel()));
     }
 
     @Override
@@ -132,6 +142,6 @@ public class WolfsFury extends ActiveSkill<Ranger, SkillData> implements Listene
     public long getRecharge(final int level) {
         final int value = (int) ((level - 1) * 1.5D);
 
-        return this.recharge - value;
+        return this.recharge - (value * 1000L);
     }
 }

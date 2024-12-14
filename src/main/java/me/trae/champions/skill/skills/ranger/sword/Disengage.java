@@ -34,7 +34,7 @@ public class Disengage extends ActiveSkill<Ranger, SkillData> implements Listene
     @ConfigInject(type = Long.class, path = "Prepare-Duration", defaultValue = "1_000")
     private long prepareDuration;
 
-    @ConfigInject(type = Long.class, path = "Slowness-Duration", defaultValue = "4_000")
+    @ConfigInject(type = Long.class, path = "Slowness-Duration", defaultValue = "2_000")
     private long slownessDuration;
 
     @ConfigInject(type = Integer.class, path = "Slowness-Amplifier", defaultValue = "4")
@@ -65,6 +65,10 @@ public class Disengage extends ActiveSkill<Ranger, SkillData> implements Listene
         return SkillData.class;
     }
 
+    private long getSlownessDuration(final int level) {
+        return this.slownessDuration + (level * 1000L);
+    }
+
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
@@ -75,7 +79,7 @@ public class Disengage extends ActiveSkill<Ranger, SkillData> implements Listene
                 "",
                 "If successful, you leap backwards",
                 String.format("and your attacker receives Slowness <green>%s</green>", this.slownessAmplifier),
-                String.format("for <green>%s</green>.", UtilTime.getTime(this.slownessDuration)),
+                String.format("for <green>%s</green>.", UtilTime.getTime(this.getSlownessDuration(level))),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
@@ -141,7 +145,7 @@ public class Disengage extends ActiveSkill<Ranger, SkillData> implements Listene
 
         this.removeUser(damagee);
 
-        UtilEntity.givePotionEffect(damager, PotionEffectType.SLOW, this.slownessAmplifier, this.slownessDuration);
+        UtilEntity.givePotionEffect(damager, PotionEffectType.SLOW, this.slownessAmplifier, this.getSlownessDuration(data.getLevel()));
 
         this.getInstance(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(NoFall.class).addUser(new EffectData(damagee, 3000L) {
             @Override

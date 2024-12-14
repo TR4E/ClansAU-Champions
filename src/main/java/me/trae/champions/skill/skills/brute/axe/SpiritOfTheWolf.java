@@ -12,7 +12,6 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -42,6 +41,14 @@ public class SpiritOfTheWolf extends ActiveSkill<Brute, SkillData> {
         return SkillData.class;
     }
 
+    private int getAmplifier(final int level) {
+        return this.amplifier;
+    }
+
+    private long getDuration(final int level) {
+        return this.duration;
+    }
+
     private int getDistance(final int level) {
         return this.distance + level;
     }
@@ -53,7 +60,7 @@ public class SpiritOfTheWolf extends ActiveSkill<Brute, SkillData> {
                 "",
                 "Call upon the Spirit of the Wolf",
                 String.format("granting all allies within <green>%s</green> blocks", this.getDistance(level)),
-                String.format("Speed %s for %s.", this.amplifier, UtilTime.getTime(this.duration)),
+                String.format("Speed %s for %s.", this.getAmplifier(level), UtilTime.getTime(this.getDuration(level))),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
@@ -92,7 +99,7 @@ public class SpiritOfTheWolf extends ActiveSkill<Brute, SkillData> {
                 continue;
             }
 
-            UtilEntity.givePotionEffect(targetPlayer, PotionEffectType.SPEED, this.amplifier, this.duration);
+            UtilEntity.givePotionEffect(targetPlayer, PotionEffectType.SPEED, this.getAmplifier(level), this.getDuration(level));
 
             if (targetPlayer != player) {
                 UtilMessage.simpleMessage(targetPlayer, this.getModule().getName(), "<var> used <green><var></green>.", Arrays.asList(friendlyFireEvent.getPlayerName(), this.getDisplayName(level)));

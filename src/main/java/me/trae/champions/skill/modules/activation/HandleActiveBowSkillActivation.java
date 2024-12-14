@@ -145,5 +145,8 @@ public class HandleActiveBowSkillActivation extends SpigotListener<Champions, Sk
         }
 
         skill.onHitByEntity(damager, event.getDamagee(), event, UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
+
+        skill.reset(damager);
+        skill.removeUser(damager);
     }
 }

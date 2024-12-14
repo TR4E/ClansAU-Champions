@@ -11,6 +11,7 @@ import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.effect.data.EffectData;
 import me.trae.core.utility.UtilEntity;
 import me.trae.core.utility.UtilTime;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,6 +33,10 @@ public class ShockingStrikes extends PassiveSkill<Assassin, SkillData> implement
         return SkillData.class;
     }
 
+    private int getAmplifier(final int level) {
+        return this.amplifier;
+    }
+
     private long getDuration(final int level) {
         return level * 1000L;
     }
@@ -40,7 +45,7 @@ public class ShockingStrikes extends PassiveSkill<Assassin, SkillData> implement
     public String[] getDescription(final int level) {
         return new String[]{
                 String.format("Your attacks shock targets for <green>%s</green>,", UtilTime.getTime(this.getDuration(level))),
-                String.format("giving them Slowness %s and Screen-Shake.", this.amplifier)
+                String.format("giving them Slowness %s and Screen-Shake.", this.getAmplifier(level))
         };
     }
 
@@ -64,7 +69,7 @@ public class ShockingStrikes extends PassiveSkill<Assassin, SkillData> implement
             return;
         }
 
-        if (!(event.getDamagee() instanceof Player)) {
+        if (!(event.getDamagee() instanceof LivingEntity)) {
             return;
         }
 
@@ -79,13 +84,13 @@ public class ShockingStrikes extends PassiveSkill<Assassin, SkillData> implement
             return;
         }
 
-        final Player damagee = event.getDamageeByClass(Player.class);
+        final LivingEntity damagee = event.getDamageeByClass(LivingEntity.class);
 
         final long duration = this.getDuration(level);
 
         this.getInstance().getManagerByClass(EffectManager.class).getModuleByClass(Shock.class).addUser(new EffectData(damagee, duration));
 
-        UtilEntity.givePotionEffect(damagee, PotionEffectType.SLOW, this.amplifier, duration);
+        UtilEntity.givePotionEffect(damagee, PotionEffectType.SLOW, this.getAmplifier(level), duration);
 
         event.setReason(this.getDisplayName(level), duration);
     }

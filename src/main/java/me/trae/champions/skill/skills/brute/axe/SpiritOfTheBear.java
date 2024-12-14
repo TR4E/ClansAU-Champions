@@ -22,11 +22,11 @@ public class SpiritOfTheBear extends ActiveSkill<Brute, SkillData> {
     @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "20_000")
     private long recharge;
 
-    @ConfigInject(type = Long.class, path = "Duration", defaultValue = "5_000")
-    private long duration;
-
     @ConfigInject(type = Integer.class, path = "Amplifier", defaultValue = "2")
     private int amplifier;
+
+    @ConfigInject(type = Long.class, path = "Duration", defaultValue = "5_000")
+    private long duration;
 
     @ConfigInject(type = Integer.class, path = "Distance", defaultValue = "5")
     private int distance;
@@ -40,6 +40,14 @@ public class SpiritOfTheBear extends ActiveSkill<Brute, SkillData> {
         return SkillData.class;
     }
 
+    private int getAmplifier(final int level) {
+        return this.amplifier;
+    }
+
+    private long getDuration(final int level) {
+        return this.duration;
+    }
+
     private int getDistance(final int level) {
         return this.distance + level;
     }
@@ -51,7 +59,7 @@ public class SpiritOfTheBear extends ActiveSkill<Brute, SkillData> {
                 "",
                 "Call upon the Spirit of the Bear",
                 String.format("granting all allies within <green>%s</green> blocks", this.getDistance(level)),
-                String.format("Resistance %s for %s.", this.amplifier, UtilTime.getTime(this.duration)),
+                String.format("Resistance %s for %s.", this.getAmplifier(level), UtilTime.getTime(this.getDuration(level))),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
@@ -90,7 +98,7 @@ public class SpiritOfTheBear extends ActiveSkill<Brute, SkillData> {
                 continue;
             }
 
-            UtilEntity.givePotionEffect(targetPlayer, PotionEffectType.DAMAGE_RESISTANCE, this.amplifier, this.duration);
+            UtilEntity.givePotionEffect(targetPlayer, PotionEffectType.DAMAGE_RESISTANCE, this.getAmplifier(level), this.getDuration(level));
 
             UtilMessage.simpleMessage(targetPlayer, this.getModule().getName(), "You received the Spirit of the Bear!");
         }

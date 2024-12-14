@@ -43,6 +43,10 @@ public class DefensiveAura extends ActiveSkill<Mage, SkillData> {
         return level;
     }
 
+    private long getDuration(final int level) {
+        return this.duration;
+    }
+
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
@@ -94,7 +98,7 @@ public class DefensiveAura extends ActiveSkill<Mage, SkillData> {
                 continue;
             }
 
-            UtilEntity.givePotionEffect(targetPlayer, PotionEffectType.HEALTH_BOOST, this.getAmplifier(level), this.duration);
+            UtilEntity.givePotionEffect(targetPlayer, PotionEffectType.HEALTH_BOOST, this.getAmplifier(level), this.getDuration(level));
 
             targetPlayer.setHealth(UtilMath.getMinAndMax(Double.class, 0.0D, targetPlayer.getMaxHealth(), targetPlayer.getHealth() + level * 2));
 

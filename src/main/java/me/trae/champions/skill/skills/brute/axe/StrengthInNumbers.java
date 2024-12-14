@@ -52,6 +52,10 @@ public class StrengthInNumbers extends ActiveSkill<Brute, SkillData> implements 
         return this.distance + level;
     }
 
+    private int getAmplifier(final int level) {
+        return this.amplifier;
+    }
+
     private long getDuration(final int level) {
         return this.duration + (level * 1000L);
     }
@@ -62,7 +66,7 @@ public class StrengthInNumbers extends ActiveSkill<Brute, SkillData> implements 
                 "Right-Click with an Axe to Activate.",
                 "",
                 String.format("Grant all allies within <green>%s</green> blocks", this.getDistance(level)),
-                String.format("Strength %s for <green>%s</green>.", this.amplifier, UtilTime.getTime(this.getDuration(level))),
+                String.format("Strength %s for <green>%s</green>.", this.getAmplifier(level), UtilTime.getTime(this.getDuration(level))),
                 this.buffSelf ? "" : "\nThis does not give you the buff.\n",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
@@ -93,7 +97,7 @@ public class StrengthInNumbers extends ActiveSkill<Brute, SkillData> implements 
                 }
             }
 
-            UtilEntity.givePotionEffect(targetPlayer, PotionEffectType.INCREASE_DAMAGE, this.amplifier, this.getDuration(level));
+            UtilEntity.givePotionEffect(targetPlayer, PotionEffectType.INCREASE_DAMAGE, this.getAmplifier(level), this.getDuration(level));
 
             if (targetPlayer != player) {
                 UtilMessage.simpleMessage(targetPlayer, this.getModule().getName(), "<var> used <green><var></green>.", Arrays.asList(friendlyFireEvent.getPlayerName(), this.getDisplayName(level)));
@@ -140,7 +144,7 @@ public class StrengthInNumbers extends ActiveSkill<Brute, SkillData> implements 
 
         new SoundCreator(Sound.WOLF_HOWL, 2.0F, 2.0F).play(damager.getLocation());
 
-        event.setReason(this.getDisplayName(data.getLevel()), this.duration);
+        event.setReason(this.getDisplayName(data.getLevel()), this.getDuration(data.getLevel()));
     }
 
     @Override
