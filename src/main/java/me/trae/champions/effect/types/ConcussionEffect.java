@@ -17,6 +17,11 @@ public class ConcussionEffect extends Effect<Champions, EffectManager> implement
     }
 
     @Override
+    public boolean removeOnDeath() {
+        return true;
+    }
+
+    @Override
     public PotionEffectType getPotionEffectType() {
         return PotionEffectType.BLINDNESS;
     }

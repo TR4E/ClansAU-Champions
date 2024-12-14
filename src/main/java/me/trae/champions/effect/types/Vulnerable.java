@@ -16,6 +16,11 @@ public class Vulnerable extends Effect<Champions, EffectManager> implements Poti
     }
 
     @Override
+    public boolean removeOnDeath() {
+        return true;
+    }
+
+    @Override
     public void onReceive(final LivingEntity entity, final EffectData data) {
         super.onReceive(entity, data);
 

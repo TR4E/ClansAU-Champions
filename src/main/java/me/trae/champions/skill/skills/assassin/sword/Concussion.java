@@ -16,6 +16,7 @@ import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
@@ -86,7 +87,7 @@ public class Concussion extends ActiveSkill<Assassin, SkillData> implements List
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You failed <green><var></green>", Collections.singletonList(this.getDisplayName(data.getLevel())));
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onCustomPostDamage(final CustomPostDamageEvent event) {
         if (event.isCancelled()) {
             return;
@@ -115,8 +116,11 @@ public class Concussion extends ActiveSkill<Assassin, SkillData> implements List
 
         this.getInstance().getManagerByClass(EffectManager.class).getModuleByClass(ConcussionEffect.class).addUser(new EffectData(damagee, this.getAmplifier(data.getLevel()), this.getDuration(data.getLevel())));
 
+        event.setReason(this.getDisplayName(data.getLevel()), this.getDuration(data.getLevel()));
+
         UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));
         UtilMessage.simpleMessage(damagee, this.getModule().getName(), "<var> hit you with <green><var></green>.", Arrays.asList(event.getDamagerName(), this.getDisplayName(data.getLevel())));
+
 
         this.removeUser(damager);
     }

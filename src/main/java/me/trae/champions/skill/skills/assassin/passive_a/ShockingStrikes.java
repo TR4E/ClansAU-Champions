@@ -59,7 +59,7 @@ public class ShockingStrikes extends PassiveSkill<Assassin, SkillData> implement
         return 3;
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onCustomPostDamage(final CustomPostDamageEvent event) {
         if (event.isCancelled()) {
             return;
@@ -92,6 +92,6 @@ public class ShockingStrikes extends PassiveSkill<Assassin, SkillData> implement
 
         UtilEntity.givePotionEffect(damagee, PotionEffectType.SLOW, this.getAmplifier(level), duration);
 
-        event.setReason(this.getDisplayName(level), duration);
+        event.setLightReason(this.getDisplayName(level), duration);
     }
 }

@@ -17,6 +17,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
@@ -61,6 +62,16 @@ public class Sever extends ActiveSkill<Assassin, SkillData> implements Listener 
     }
 
     @Override
+    public int getDefaultLevel() {
+        return 2;
+    }
+
+    @Override
+    public int getMaxLevel() {
+        return 3;
+    }
+
+    @Override
     public void onActivate(final Player player, final int level) {
         this.addUser(new SkillData(player, level, this.prepareDuration));
 
@@ -76,7 +87,7 @@ public class Sever extends ActiveSkill<Assassin, SkillData> implements Listener 
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You failed <green><var></green>", Collections.singletonList(this.getDisplayName(data.getLevel())));
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onCustomPostDamage(final CustomPostDamageEvent event) {
         if (event.isCancelled()) {
             return;

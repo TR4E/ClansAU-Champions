@@ -29,6 +29,11 @@ public class Bleed extends Effect<Champions, EffectManager> {
     }
 
     @Override
+    public boolean removeOnDeath() {
+        return true;
+    }
+
+    @Override
     public void onUpdater(final LivingEntity entity, final EffectData data) {
         if (this.MAP.containsKey(entity)) {
             if (!(UtilTime.elapsed(this.MAP.get(entity), this.delay))) {

@@ -52,7 +52,7 @@ public class RepeatedStrikes extends PassiveSkill<Assassin, RepeatedStrikesData>
         };
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onCustomPostDamage(final CustomPostDamageEvent event) {
         if (event.isCancelled()) {
             return;

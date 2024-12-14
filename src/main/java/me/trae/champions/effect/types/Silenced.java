@@ -15,6 +15,11 @@ public class Silenced extends Effect<Champions, EffectManager> {
     }
 
     @Override
+    public boolean removeOnDeath() {
+        return true;
+    }
+
+    @Override
     public void onReceive(final LivingEntity entity, final EffectData data) {
         if (entity instanceof Player) {
             UtilMessage.message(entity, "Condition", "You are now Silenced!");

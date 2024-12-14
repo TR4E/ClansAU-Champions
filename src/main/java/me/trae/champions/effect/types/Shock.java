@@ -14,6 +14,11 @@ public class Shock extends Effect<Champions, EffectManager> {
     }
 
     @Override
+    public boolean removeOnDeath() {
+        return true;
+    }
+
+    @Override
     public void onUpdater(final LivingEntity entity, final EffectData data) {
         entity.playEffect(EntityEffect.HURT);
     }
