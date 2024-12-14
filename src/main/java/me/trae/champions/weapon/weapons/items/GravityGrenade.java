@@ -3,8 +3,6 @@ package me.trae.champions.weapon.weapons.items;
 import me.trae.champions.Champions;
 import me.trae.champions.weapon.WeaponManager;
 import me.trae.core.Core;
-import me.trae.core.antihack.AntiHackManager;
-import me.trae.core.antihack.types.Speed;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.throwable.Throwable;
 import me.trae.core.throwable.ThrowableManager;
@@ -95,7 +93,7 @@ public class GravityGrenade extends ActiveCustomItem<Champions, WeaponManager, W
 
     @Override
     public void onActivate(final Player player, final ActionType actionType) {
-        final Throwable throwable = new Throwable(this.getAbilityName(), this.getItemStack(), player, this.duration, player.getEyeLocation().getDirection().multiply(this.itemVelocity)) {
+        final Throwable throwable = new Throwable(this.getAbilityName(), this.getItemStack(), player, this.duration, player.getEyeLocation(), player.getEyeLocation().getDirection().multiply(this.itemVelocity)) {
             @Override
             public double getCollideRadius() {
                 return GravityGrenade.this.gravityRadius;

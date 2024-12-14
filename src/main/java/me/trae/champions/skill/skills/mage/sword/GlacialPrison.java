@@ -96,7 +96,7 @@ public class GlacialPrison extends ActiveSkill<Mage, SkillData> implements Liste
     public void onActivate(final Player player, final int level) {
         final long duration = this.getDuration(level);
 
-        final Throwable throwable = new Throwable(this.getName(), new ItemStack(this.getMaterial()), player, duration, player.getEyeLocation().getDirection().multiply(this.itemVelocity));
+        final Throwable throwable = new Throwable(this.getName(), new ItemStack(this.getMaterial()), player, duration, player.getEyeLocation(), player.getEyeLocation().getDirection().multiply(this.itemVelocity));
 
         this.getInstance(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
 

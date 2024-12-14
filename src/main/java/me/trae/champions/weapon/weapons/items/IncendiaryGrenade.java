@@ -90,7 +90,7 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
 
     @Override
     public void onActivate(final Player player, final ActionType actionType) {
-        final Throwable throwable = new Throwable(this.getAbilityName(), this.getItemStack(), player, this.duration, player.getEyeLocation().getDirection().multiply(this.itemVelocity)) {
+        final Throwable throwable = new Throwable(this.getAbilityName(), this.getItemStack(), player, this.duration, player.getEyeLocation(), player.getEyeLocation().getDirection().multiply(this.itemVelocity)) {
             @Override
             public double getCollideRadius() {
                 return IncendiaryGrenade.this.radius;
