@@ -12,6 +12,7 @@ import me.trae.champions.skill.skills.assassin.bow.SilencingArrow;
 import me.trae.champions.skill.skills.assassin.bow.ToxicArrow;
 import me.trae.champions.skill.skills.assassin.passive_a.RepeatedStrikes;
 import me.trae.champions.skill.skills.assassin.passive_a.ShockingStrikes;
+import me.trae.champions.skill.skills.assassin.passive_b.Recall;
 import me.trae.champions.skill.skills.assassin.passive_b.SmokeBomb;
 import me.trae.champions.skill.skills.assassin.sword.Concussion;
 import me.trae.champions.skill.skills.assassin.sword.Sever;
@@ -52,6 +53,7 @@ public class Assassin extends Role implements Archer {
         addSubModule(new ShockingStrikes(this));
 
         // Passive B Skills
+        addSubModule(new Recall(this));
         addSubModule(new SmokeBomb(this));
 
         super.registerSubModules();

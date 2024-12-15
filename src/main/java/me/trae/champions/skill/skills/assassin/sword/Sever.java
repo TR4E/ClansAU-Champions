@@ -97,7 +97,7 @@ public class Sever extends ActiveSkill<Assassin, SkillData> implements Listener 
             return;
         }
 
-        if (!(event.getDamagee() instanceof Player)) {
+        if (!(event.getDamagee() instanceof LivingEntity)) {
             return;
         }
 
@@ -112,7 +112,7 @@ public class Sever extends ActiveSkill<Assassin, SkillData> implements Listener 
             return;
         }
 
-        final Player damagee = event.getDamageeByClass(Player.class);
+        final LivingEntity damagee = event.getDamageeByClass(LivingEntity.class);
 
         this.getInstance().getManagerByClass(EffectManager.class).getModuleByClass(Bleed.class).addUser(new EffectData(damagee, this.getDuration(data.getLevel())) {
             @Override
@@ -123,8 +123,12 @@ public class Sever extends ActiveSkill<Assassin, SkillData> implements Listener 
 
         event.setReason(this.getDisplayName(data.getLevel()), this.getDuration(data.getLevel()));
 
-        UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));
-        UtilMessage.simpleMessage(damagee, this.getModule().getName(), "<var> hit you with <green><var></green>.", Arrays.asList(event.getDamagerName(), this.getDisplayName(data.getLevel())));
+        if (damagee instanceof Player) {
+            UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));
+            UtilMessage.simpleMessage(damagee, this.getModule().getName(), "<var> hit you with <green><var></green>.", Arrays.asList(event.getDamagerName(), this.getDisplayName(data.getLevel())));
+        } else {
+            UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit a <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));
+        }
 
         this.removeUser(damager);
     }

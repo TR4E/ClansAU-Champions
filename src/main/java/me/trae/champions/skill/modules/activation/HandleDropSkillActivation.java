@@ -8,8 +8,6 @@ import me.trae.champions.skill.components.energy.EnergySkillComponent;
 import me.trae.champions.skill.components.recharge.RechargeSkillComponent;
 import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.enums.SkillType;
-import me.trae.champions.skill.types.ActiveSkill;
-import me.trae.champions.skill.types.ChannelSkill;
 import me.trae.champions.skill.types.DropSkill;
 import me.trae.champions.skill.types.ToggleUpdaterDropSkill;
 import me.trae.champions.skill.types.interfaces.IActiveSkill;
@@ -19,6 +17,7 @@ import me.trae.core.Core;
 import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.types.frame.SpigotListener;
 import me.trae.core.recharge.RechargeManager;
+import me.trae.core.utility.UtilInventory;
 import me.trae.core.utility.UtilJava;
 import me.trae.core.utility.UtilServer;
 import me.trae.core.utility.components.SelfManagedAbilityComponent;
@@ -35,7 +34,7 @@ public class HandleDropSkillActivation extends SpigotListener<Champions, SkillMa
         super(manager);
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDropItem(final PlayerDropItemEvent event) {
         if (event.isCancelled()) {
             return;
@@ -45,13 +44,17 @@ public class HandleDropSkillActivation extends SpigotListener<Champions, SkillMa
             return;
         }
 
+        final Player player = event.getPlayer();
+
+        if (UtilInventory.isInventoryTracker(player)) {
+            return;
+        }
+
         final ItemStack itemStack = event.getItemDrop().getItemStack();
 
         if (!(this.getInstance(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof PassiveActivatorWeapon)) {
             return;
         }
-
-        final Player player = event.getPlayer();
 
         final DropSkill<?, ?> skill = this.getManager().getSkillByType(DropSkill.class, player, SkillType.PASSIVE_B);
         if (skill == null) {

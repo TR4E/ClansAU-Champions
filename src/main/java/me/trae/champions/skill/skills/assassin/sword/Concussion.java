@@ -121,7 +121,6 @@ public class Concussion extends ActiveSkill<Assassin, SkillData> implements List
         UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));
         UtilMessage.simpleMessage(damagee, this.getModule().getName(), "<var> hit you with <green><var></green>.", Arrays.asList(event.getDamagerName(), this.getDisplayName(data.getLevel())));
 
-
         this.removeUser(damager);
     }
 
