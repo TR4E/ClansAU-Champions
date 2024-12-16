@@ -66,7 +66,7 @@ public enum SkillType implements ISkillType {
             return false;
         }
 
-        if (!(UtilPlugin.getInstance(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof ChampionsPvPWeapon)) {
+        if (!(UtilPlugin.getInstanceByClass(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof ChampionsPvPWeapon)) {
             return false;
         }
 

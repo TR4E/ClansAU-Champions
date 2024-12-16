@@ -4,6 +4,7 @@ import me.trae.api.champions.role.Role;
 import me.trae.api.champions.role.events.RoleChangeEvent;
 import me.trae.api.champions.role.events.RoleUpdaterEvent;
 import me.trae.champions.Champions;
+import me.trae.champions.build.BuildManager;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.utility.UtilRole;
 import me.trae.core.Core;
@@ -29,14 +30,20 @@ public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
         final ClientManager clientManager = this.getInstance(Core.class).getManagerByClass(ClientManager.class);
 
         for (final Player player : UtilServer.getOnlinePlayers()) {
-            final Client client = clientManager.getClientByPlayer(player);
-            if (client != null && !(UtilTime.elapsed(client.getLastJoined(), 250L))) {
-                continue;
+            if (!(this.getInstance().getManagerByClass(BuildManager.class).getBuilds().containsKey(player.getUniqueId()))) {
+                final Client client = clientManager.getClientByPlayer(player);
+                if (client != null && !(UtilTime.elapsed(client.getLastJoined(), 400L))) {
+                    continue;
+                }
             }
 
             Role playerRole = null;
 
             for (final Role role : this.getManager().getModulesByClass(Role.class)) {
+                if (!(role.isEnabled())) {
+                    continue;
+                }
+
                 if (!(role.hasArmour(player))) {
                     continue;
                 }
@@ -75,5 +82,10 @@ public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
         UtilRole.equipRoleEffect(role, player, false);
 
         UtilServer.callEvent(new RoleChangeEvent(role, player));
+    }
+
+    @Override
+    public boolean isLocked() {
+        return true;
     }
 }

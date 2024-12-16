@@ -16,4 +16,9 @@ public class HandleRemoveBuildDataOnPlayerQuit extends SpigotListener<Champions,
     public void onPlayerQuit(final PlayerQuitEvent event) {
         this.getManager().removeBuilds(event.getPlayer());
     }
+
+    @Override
+    public boolean isLocked() {
+        return true;
+    }
 }

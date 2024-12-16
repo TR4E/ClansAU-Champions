@@ -79,7 +79,12 @@ public class SwimAbility extends GlobalAbility<Swim> implements Listener {
             return;
         }
 
-        if (!(this.canActivate(player, this.getSkillByPlayer(player)))) {
+        final Swim skill = this.getSkillByPlayer(player);
+        if (skill == null) {
+            return;
+        }
+
+        if (!(this.canActivate(player, skill))) {
             return;
         }
 

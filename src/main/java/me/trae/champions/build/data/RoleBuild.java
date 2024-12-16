@@ -1,11 +1,15 @@
 package me.trae.champions.build.data;
 
 import me.trae.api.champions.role.Role;
+import me.trae.champions.Champions;
 import me.trae.champions.build.data.interfaces.IRoleBuild;
 import me.trae.champions.build.enums.BuildProperty;
+import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.core.database.containers.DataContainer;
 import me.trae.core.database.query.constants.DefaultProperty;
+import me.trae.core.utility.UtilJava;
+import me.trae.core.utility.UtilPlugin;
 import me.trae.core.utility.UtilString;
 import me.trae.core.utility.objects.EnumData;
 import org.bukkit.entity.Player;
@@ -116,12 +120,20 @@ public class RoleBuild implements IRoleBuild, DataContainer<BuildProperty> {
     public List<String> getEquipMessage() {
         final List<String> list = new ArrayList<>();
 
+        final Role role = UtilJava.cast(Role.class, UtilPlugin.getInstanceByClass(Champions.class).getManagerByClass(RoleManager.class).getModuleByName(this.getRole()));
+
         for (final SkillType skillType : SkillType.values()) {
             final String typeName = skillType.getName();
 
             String skillName = "";
             if (this.isRoleSkillByType(skillType)) {
-                skillName = this.getRoleSkillByType(skillType).getDisplayName();
+                final RoleSkill roleSkill = this.getRoleSkillByType(skillType);
+
+                if (role.getSubModuleByName(roleSkill.getName()).isEnabled()) {
+                    skillName = roleSkill.getDisplayName();
+                } else {
+                    skillName = UtilString.format("%s (<red>System Disabled</red>)", roleSkill.getDisplayName());
+                }
             }
 
             list.add(UtilString.pair(String.format("<green>%s", typeName), String.format("<white>%s", skillName)));

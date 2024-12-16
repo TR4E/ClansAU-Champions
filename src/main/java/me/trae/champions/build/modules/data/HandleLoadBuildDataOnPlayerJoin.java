@@ -16,4 +16,9 @@ public class HandleLoadBuildDataOnPlayerJoin extends SpigotListener<Champions, B
     public void onPlayerJoin(final PlayerJoinEvent event) {
         this.getManager().getRepository().loadData(event.getPlayer().getUniqueId());
     }
+
+    @Override
+    public boolean isLocked() {
+        return true;
+    }
 }

@@ -104,6 +104,8 @@ public class HandleActiveBowSkillActivation extends SpigotListener<Champions, Sk
         }
 
         skill.onHitByLocation(player, arrow.getLocation(), UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
+
+        arrow.remove();
     }
 
     @EventHandler

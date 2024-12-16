@@ -1,6 +1,7 @@
 package me.trae.champions.skill.modules.activation;
 
 import me.trae.api.champions.role.Role;
+import me.trae.api.champions.skill.events.SkillLocationEvent;
 import me.trae.champions.Champions;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
@@ -11,6 +12,7 @@ import me.trae.core.framework.types.frame.SpigotUpdater;
 import me.trae.core.recharge.RechargeManager;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.utility.UtilJava;
+import me.trae.core.utility.UtilServer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -55,6 +57,10 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
         }
 
         if (!(player.isBlocking())) {
+            return false;
+        }
+
+        if (UtilServer.getEvent(new SkillLocationEvent(skill, player, player.getLocation())).isCancelled()) {
             return false;
         }
 

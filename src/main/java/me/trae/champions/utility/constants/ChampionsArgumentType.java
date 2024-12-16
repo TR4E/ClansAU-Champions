@@ -12,5 +12,5 @@ import java.util.stream.Collectors;
 
 public class ChampionsArgumentType {
 
-    public static Function<String, List<String>> ROLES = (arg) -> CoreArgumentType.CUSTOM.apply(UtilPlugin.getInstance(Champions.class).getManagerByClass(RoleManager.class).getModulesByClass(Role.class).stream().map(Role::getName).collect(Collectors.toList()), arg);
+    public static Function<String, List<String>> ROLES = (arg) -> CoreArgumentType.CUSTOM.apply(UtilPlugin.getInstanceByClass(Champions.class).getManagerByClass(RoleManager.class).getModulesByClass(Role.class).stream().map(Role::getName).collect(Collectors.toList()), arg);
 }

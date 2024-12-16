@@ -1,7 +1,6 @@
 package me.trae.champions.skill.skills.mage.passive_b;
 
 import me.trae.api.champions.skill.events.SkillFriendlyFireEvent;
-import me.trae.api.champions.skill.events.SkillLocationEvent;
 import me.trae.champions.role.types.Mage;
 import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.types.PassiveSkill;
@@ -73,10 +72,6 @@ public class HolyLight extends PassiveSkill<Mage, SkillData> implements Updater 
         for (final Player player : this.getModule().getUsers()) {
             final int level = this.getLevel(player);
             if (level == 0) {
-                continue;
-            }
-
-            if (UtilServer.getEvent(new SkillLocationEvent(this, player.getLocation())).isCancelled()) {
                 continue;
             }
 

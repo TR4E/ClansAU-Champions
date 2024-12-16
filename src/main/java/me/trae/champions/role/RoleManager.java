@@ -139,4 +139,9 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
 
         UtilItem.insertArmour(player, new ItemStack(role.getArmour().get(0)), new ItemStack(role.getArmour().get(1)), new ItemStack(role.getArmour().get(2)), new ItemStack(role.getArmour().get(3)));
     }
+
+    @Override
+    public boolean isLocked() {
+        return true;
+    }
 }

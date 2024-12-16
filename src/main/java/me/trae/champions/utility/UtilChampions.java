@@ -9,6 +9,6 @@ import org.bukkit.inventory.ItemStack;
 public class UtilChampions {
 
     public static boolean isBoosterWeapon(final ItemStack itemStack) {
-        return UtilPlugin.getInstance(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof BoosterWeapon;
+        return UtilPlugin.getInstanceByClass(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof BoosterWeapon;
     }
 }

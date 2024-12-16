@@ -43,7 +43,7 @@ public abstract class GlobalAbility<T extends GlobalSkill<?>> extends SpigotModu
         }
 
         if (!(this.getInstance(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(player).isAdministrating())) {
-            if (UtilServer.getEvent(new SkillPreActivateEvent(this.getSkillByPlayer(player), player)).isCancelled()) {
+            if (UtilServer.getEvent(new SkillPreActivateEvent(skill, player)).isCancelled()) {
                 return false;
             }
 

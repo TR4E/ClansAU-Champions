@@ -6,9 +6,6 @@ import me.trae.champions.Champions;
 import me.trae.champions.build.data.RoleBuild;
 import me.trae.champions.build.data.RoleSkill;
 import me.trae.champions.role.RoleManager;
-import me.trae.champions.skill.components.energy.EnergySkillComponent;
-import me.trae.champions.skill.components.recharge.RechargeSkillComponent;
-import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.interfaces.ISkillManager;
 import me.trae.champions.skill.modules.HandleBoosterWeaponOnSkillLevel;
@@ -17,15 +14,8 @@ import me.trae.champions.skill.modules.HandleSkillRechargeProgressBar;
 import me.trae.champions.skill.modules.activation.*;
 import me.trae.champions.skill.modules.friendlyfire.DisableSkillFriendlyFireWhileAdministrating;
 import me.trae.champions.skill.skills.global.modules.SwimAbility;
-import me.trae.champions.skill.types.ChannelSkill;
-import me.trae.champions.skill.types.interfaces.IActiveSkill;
-import me.trae.champions.skill.types.models.ToggleSkill;
-import me.trae.core.Core;
-import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.SpigotManager;
-import me.trae.core.recharge.RechargeManager;
 import me.trae.core.utility.UtilJava;
-import me.trae.core.utility.components.SelfManagedAbilityComponent;
 import org.bukkit.entity.Player;
 
 public class SkillManager extends SpigotManager<Champions> implements ISkillManager {
@@ -66,6 +56,10 @@ public class SkillManager extends SpigotManager<Champions> implements ISkillMana
             return null;
         }
 
+        if (!(role.isEnabled())) {
+            return null;
+        }
+
         final RoleBuild roleBuild = role.getRoleBuildByPlayer(player);
         if (roleBuild == null) {
             return null;
@@ -78,6 +72,10 @@ public class SkillManager extends SpigotManager<Champions> implements ISkillMana
 
         final T skill = UtilJava.cast(clazz, role.getSubModuleByName(roleSkill.getName()));
         if (skill == null) {
+            return null;
+        }
+
+        if (!(skill.isEnabled())) {
             return null;
         }
 

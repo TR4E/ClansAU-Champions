@@ -189,4 +189,9 @@ public class BuildManager extends SpigotManager<Champions> implements IBuildMana
             }
         });
     }
+
+    @Override
+    public boolean isLocked() {
+        return true;
+    }
 }
