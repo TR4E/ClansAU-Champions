@@ -107,27 +107,27 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
         if (!(skill instanceof SelfManagedAbilityComponent)) {
             final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
 
-                final RechargeSkillComponent rechargeSkillComponent = UtilJava.cast(RechargeSkillComponent.class, skill);
+            final RechargeSkillComponent rechargeSkillComponent = UtilJava.cast(RechargeSkillComponent.class, skill);
 
-                if (rechargeSkillComponent.hasRecharge(level)) {
-                    if (rechargeManager.isCooling(player, skill.getName(), true)) {
-                        return false;
-                    }
-                }
-
-                if (UtilJava.cast(IActiveSkill.class, skill).isActive(player)) {
+            if (rechargeSkillComponent.hasRecharge(level)) {
+                if (rechargeManager.isCooling(player, skill.getName(), true)) {
                     return false;
                 }
+            }
 
-                final EnergySkillComponent energySkillComponent = UtilJava.cast(EnergySkillComponent.class, skill);
+            if (UtilJava.cast(IActiveSkill.class, skill).isActive(player)) {
+                return false;
+            }
 
-                if (energySkillComponent.hasEnergy(level)) {
-                    final EnergyManager energyManager = this.getInstance(Core.class).getManagerByClass(EnergyManager.class);
+            final EnergySkillComponent energySkillComponent = UtilJava.cast(EnergySkillComponent.class, skill);
 
-                    if (!(energyManager.use(player, skill.getName(), energySkillComponent.getEnergy(level), true))) {
-                        return false;
-                    }
+            if (energySkillComponent.hasEnergy(level)) {
+                final EnergyManager energyManager = this.getInstance(Core.class).getManagerByClass(EnergyManager.class);
+
+                if (!(energyManager.use(player, skill.getName(), energySkillComponent.getEnergy(level), true))) {
+                    return false;
                 }
+            }
 
             if (!(skill instanceof ChannelSkill<?, ?>)) {
                 if (rechargeSkillComponent.hasRecharge(level)) {

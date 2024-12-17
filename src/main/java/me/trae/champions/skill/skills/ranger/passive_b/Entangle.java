@@ -59,5 +59,7 @@ public class Entangle extends PassiveBowSkill<Ranger, BowSkillData> {
         final LivingEntity damageeLivingEntity = UtilJava.cast(LivingEntity.class, damagee);
 
         UtilEntity.givePotionEffect(damageeLivingEntity, PotionEffectType.SLOW, this.getAmplifier(data.getLevel()), this.getDuration(data.getLevel()));
+
+        System.out.println(this.getDisplayName(data.getLevel()));
     }
 }

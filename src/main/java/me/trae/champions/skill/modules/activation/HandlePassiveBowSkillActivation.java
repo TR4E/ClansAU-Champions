@@ -20,6 +20,8 @@ import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
+
 public class HandlePassiveBowSkillActivation extends SpigotListener<Champions, SkillManager> {
 
     public HandlePassiveBowSkillActivation(final SkillManager manager) {
@@ -48,29 +50,31 @@ public class HandlePassiveBowSkillActivation extends SpigotListener<Champions, S
 
         final Player player = UtilJava.cast(Player.class, event.getEntity());
 
-        final PassiveBowSkill<?, ?> skill = this.getManager().getSkillByType(PassiveBowSkill.class, player, SkillType.PASSIVE_A);
-        if (skill == null) {
-            return;
+        for (final SkillType skillType : Arrays.asList(SkillType.PASSIVE_A, SkillType.PASSIVE_B)) {
+            final PassiveBowSkill<?, ?> skill = this.getManager().getSkillByType(PassiveBowSkill.class, player, skillType);
+            if (skill == null) {
+                return;
+            }
+
+            if (skill.requireFullBowPullRange() && event.getForce() != 1.0F) {
+                return;
+            }
+
+            final int level = skill.getLevel(player);
+            if (level == 0) {
+                return;
+            }
+
+            if (skill.resetDataOnShoot() || !(skill.isUserByPlayer(player))) {
+                skill.onActivate(player, level);
+            }
+
+            final BowSkillData data = skill.getUserByPlayer(player);
+
+            data.setArrow(UtilJava.cast(Arrow.class, event.getProjectile()));
+
+            skill.onFire(player, UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
         }
-
-        if (skill.requireFullBowPullRange() && event.getForce() != 1.0F) {
-            return;
-        }
-
-        final int level = skill.getLevel(player);
-        if (level == 0) {
-            return;
-        }
-
-        if (skill.resetDataOnShoot() || !(skill.isUserByPlayer(player))) {
-            skill.onActivate(player, level);
-        }
-
-        final BowSkillData data = skill.getUserByPlayer(player);
-
-        data.setArrow(UtilJava.cast(Arrow.class, event.getProjectile()));
-
-        skill.onFire(player, UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -87,25 +91,27 @@ public class HandlePassiveBowSkillActivation extends SpigotListener<Champions, S
 
         final Player player = UtilJava.cast(Player.class, arrow.getShooter());
 
-        final PassiveBowSkill<?, ?> skill = this.getManager().getSkillByType(PassiveBowSkill.class, player, SkillType.PASSIVE_A);
-        if (skill == null) {
-            return;
-        }
+        for (final SkillType skillType : Arrays.asList(SkillType.PASSIVE_A, SkillType.PASSIVE_B)) {
+            final PassiveBowSkill<?, ?> skill = this.getManager().getSkillByType(PassiveBowSkill.class, player, skillType);
+            if (skill == null) {
+                return;
+            }
 
-        final BowSkillData data = skill.getUserByPlayer(player);
-        if (data == null) {
-            return;
-        }
+            final BowSkillData data = skill.getUserByPlayer(player);
+            if (data == null) {
+                return;
+            }
 
-        if (!(data.hasArrow())) {
-            return;
-        }
+            if (!(data.hasArrow())) {
+                return;
+            }
 
-        if (!(data.isArrow(arrow))) {
-            return;
-        }
+            if (!(data.isArrow(arrow))) {
+                return;
+            }
 
-        skill.onHitByLocation(player, arrow.getLocation(), UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
+            skill.onHitByLocation(player, arrow.getLocation(), UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
+        }
 
         arrow.remove();
     }
@@ -130,27 +136,29 @@ public class HandlePassiveBowSkillActivation extends SpigotListener<Champions, S
 
         final Player damager = event.getDamagerByClass(Player.class);
 
-        final PassiveBowSkill<?, ?> skill = this.getManager().getSkillByType(PassiveBowSkill.class, damager, SkillType.PASSIVE_A);
-        if (skill == null) {
-            return;
+        for (final SkillType skillType : Arrays.asList(SkillType.PASSIVE_A, SkillType.PASSIVE_B)) {
+            final PassiveBowSkill<?, ?> skill = this.getManager().getSkillByType(PassiveBowSkill.class, damager, skillType);
+            if (skill == null) {
+                return;
+            }
+
+            final BowSkillData data = skill.getUserByPlayer(damager);
+            if (data == null) {
+                return;
+            }
+
+            if (!(data.hasArrow())) {
+                return;
+            }
+
+            if (!(data.isArrow(event.getProjectileByClass(Arrow.class)))) {
+                return;
+            }
+
+            skill.onHitByEntity(damager, event.getDamagee(), event, UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
+
+            skill.reset(damager);
+            skill.removeUser(damager);
         }
-
-        final BowSkillData data = skill.getUserByPlayer(damager);
-        if (data == null) {
-            return;
-        }
-
-        if (!(data.hasArrow())) {
-            return;
-        }
-
-        if (!(data.isArrow(event.getProjectileByClass(Arrow.class)))) {
-            return;
-        }
-
-        skill.onHitByEntity(damager, event.getDamagee(), event, UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
-
-        skill.reset(damager);
-        skill.removeUser(damager);
     }
 }

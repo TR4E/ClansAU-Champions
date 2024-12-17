@@ -38,11 +38,14 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
     @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "25_000")
     private long recharge;
 
-    @ConfigInject(type = Integer.class, path = "Effect-Distance", defaultValue = "3")
-    private int effectDistance;
+    @ConfigInject(type = Integer.class, path = "Block-Distance", defaultValue = "3")
+    private int blockDistance;
 
-    @ConfigInject(type = Double.class, path = "Distance", defaultValue = "5.5")
-    private double distance;
+    @ConfigInject(type = Double.class, path = "Entity-Distance", defaultValue = "4.0")
+    private double entityDistance;
+
+    @ConfigInject(type = Double.class, path = "Max-Damage", defaultValue = "6.0")
+    private double maxDamage;
 
     @ConfigInject(type = Double.class, path = "Strength", defaultValue = "0.6")
     private double strength;
@@ -69,10 +72,6 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
     @Override
     public Class<SeismicSlamData> getClassOfData() {
         return SeismicSlamData.class;
-    }
-
-    private double getDistance(final int level) {
-        return this.distance + (0.5D * level);
     }
 
     @Override
@@ -140,7 +139,7 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
 
             int count = 0;
 
-            for (final Map.Entry<LivingEntity, Double> entry : UtilEntity.getNearbyEntitiesWithDistance(LivingEntity.class, player.getLocation(), this.getDistance(data.getLevel())).entrySet()) {
+            for (final Map.Entry<LivingEntity, Double> entry : UtilEntity.getNearbyEntitiesWithDistance(LivingEntity.class, player.getLocation(), this.entityDistance).entrySet()) {
                 final LivingEntity nearbyEntity = entry.getKey();
                 final double nearbyEntityDistance = entry.getValue();
 
@@ -166,7 +165,7 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
                     UtilMessage.simpleMessage(nearbyEntity, this.getModule().getName(), "<var> hit you with <green><var></green>.", Arrays.asList(friendlyFireEvent.getPlayerName(), this.getDisplayName(data.getLevel())));
                 }
 
-                UtilDamage.damage(nearbyEntity, player, EntityDamageEvent.DamageCause.CUSTOM, (data.getLevel() * 2) * nearbyEntityDistance + 0.5D, this.getDisplayName(data.getLevel()), 2000L);
+                UtilDamage.damage(nearbyEntity, player, EntityDamageEvent.DamageCause.CUSTOM, Math.min(this.maxDamage, data.getLevel() * nearbyEntityDistance + 0.5D), this.getDisplayName(data.getLevel()), 2000L);
 
                 UtilVelocity.velocity(nearbyEntity, 0.3 * (data.getHeight() - player.getLocation().getY()) * 0.1D, 0.8D, 1.2D, true);
             }
@@ -177,7 +176,7 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
 
             new SoundCreator(Sound.ZOMBIE_WOOD, 2.0F, 2.0F).play(player.getLocation());
 
-            for (final Block block : UtilBlock.getInSquaredRadius(player.getLocation(), this.effectDistance)) {
+            for (final Block block : UtilBlock.getInSquaredRadius(player.getLocation(), this.blockDistance)) {
                 if (block.getType() == Material.AIR || UtilBlock.isInLiquid(block.getLocation())) {
                     continue;
                 }
@@ -204,6 +203,6 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
     public long getRecharge(final int level) {
         final int value = (level - 1) * 2;
 
-        return this.recharge - level;
+        return this.recharge - (value * 1000L);
     }
 }
