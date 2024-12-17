@@ -28,7 +28,7 @@ import org.bukkit.util.Vector;
 
 public class Inferno extends ChannelSkill<Mage, ChannelSkillData> implements Listener {
 
-    @ConfigInject(type = Float.class, path = "Energy-Needed", defaultValue = "10.0")
+    @ConfigInject(type = Float.class, path = "Energy-Needed", defaultValue = "6.0")
     private float energyNeeded;
 
     @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "3_000")
