@@ -92,7 +92,7 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
             return false;
         }
 
-        if (skill instanceof ToggleSkill<?> && skill.isUserByPlayer(player)) {
+        if (!(skill instanceof ChannelSkill<?, ?>) && skill instanceof ToggleSkill<?> && skill.isUserByPlayer(player)) {
             final ToggleSkill<?> toggleSkill = UtilJava.cast(ToggleSkill.class, skill);
 
             final SkillData data = skill.getUserByPlayer(player);

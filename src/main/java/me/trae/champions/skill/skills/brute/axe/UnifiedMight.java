@@ -19,7 +19,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class StrengthInNumbers extends ActiveSkill<Brute, SkillData> implements Listener {
+public class UnifiedMight extends ActiveSkill<Brute, SkillData> implements Listener {
 
     @ConfigInject(type = Float.class, path = "Energy", defaultValue = "30.0")
     private float energy;
@@ -39,7 +39,7 @@ public class StrengthInNumbers extends ActiveSkill<Brute, SkillData> implements 
     @ConfigInject(type = Boolean.class, path = "Buff-Self", defaultValue = "true")
     private boolean buffSelf;
 
-    public StrengthInNumbers(final Brute module) {
+    public UnifiedMight(final Brute module) {
         super(module, ActiveSkillType.AXE);
     }
 
@@ -82,6 +82,10 @@ public class StrengthInNumbers extends ActiveSkill<Brute, SkillData> implements 
     public void onActivate(final Player player, final int level) {
         new SoundCreator(Sound.WITHER_SPAWN, 1.0F, 2.0F).play(player.getLocation());
 
+        final long duration = this.getDuration(level);
+
+        this.addUser(new SkillData(player, level, duration));
+
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You used <green><var></green>.", Collections.singletonList(this.getDisplayName(level)));
 
         for (final Player targetPlayer : UtilEntity.getNearbyEntities(Player.class, player.getLocation(), this.getDistance(level))) {
@@ -97,7 +101,7 @@ public class StrengthInNumbers extends ActiveSkill<Brute, SkillData> implements 
                 }
             }
 
-            UtilEntity.givePotionEffect(targetPlayer, PotionEffectType.INCREASE_DAMAGE, this.getAmplifier(level), this.getDuration(level));
+            UtilEntity.givePotionEffect(targetPlayer, PotionEffectType.INCREASE_DAMAGE, this.getAmplifier(level), duration);
 
             if (targetPlayer != player) {
                 UtilMessage.simpleMessage(targetPlayer, this.getModule().getName(), "<var> used <green><var></green>.", Arrays.asList(friendlyFireEvent.getPlayerName(), this.getDisplayName(level)));

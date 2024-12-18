@@ -4,10 +4,14 @@ import me.trae.api.champions.role.Role;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.skills.brute.axe.*;
 import me.trae.champions.skill.skills.brute.passive_a.Colossus;
+import me.trae.champions.skill.skills.brute.passive_a.CripplingBlow;
 import me.trae.champions.skill.skills.brute.passive_a.Resistance;
 import me.trae.champions.skill.skills.brute.passive_b.Bloodlust;
+import me.trae.champions.skill.skills.brute.passive_b.Overwhelm;
 import me.trae.champions.skill.skills.brute.passive_b.Stampede;
 import me.trae.champions.skill.skills.brute.sword.BattleTaunt;
+import me.trae.champions.skill.skills.brute.sword.FleshHook;
+import me.trae.champions.skill.skills.brute.sword.Takedown;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -25,20 +29,24 @@ public class Brute extends Role {
     public void registerSubModules() {
         // Sword Skills
         addSubModule(new BattleTaunt(this));
+        addSubModule(new FleshHook(this));
+        addSubModule(new Takedown(this));
 
         // Axe Skills
         addSubModule(new SeismicSlam(this));
         addSubModule(new SpiritOfTheBear(this));
         addSubModule(new SpiritOfTheWolf(this));
-        addSubModule(new StrengthInNumbers(this));
+        addSubModule(new UnifiedMight(this));
         addSubModule(new ThreateningShout(this));
 
         // Passive A Skills
         addSubModule(new Colossus(this));
+        addSubModule(new CripplingBlow(this));
         addSubModule(new Resistance(this));
 
         // Passive B Skills
         addSubModule(new Bloodlust(this));
+        addSubModule(new Overwhelm(this));
         addSubModule(new Stampede(this));
 
         super.registerSubModules();

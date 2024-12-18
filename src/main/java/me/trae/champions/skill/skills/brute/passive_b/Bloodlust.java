@@ -1,6 +1,7 @@
 package me.trae.champions.skill.skills.brute.passive_b;
 
 import me.trae.api.champions.skill.events.SkillLocationEvent;
+import me.trae.api.damage.events.damage.CustomDamageEvent;
 import me.trae.api.death.events.CustomDeathEvent;
 import me.trae.champions.role.types.Brute;
 import me.trae.champions.skill.skills.brute.passive_b.data.BloodlustData;
@@ -14,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Collections;
@@ -114,5 +116,37 @@ public class Bloodlust extends PassiveSkill<Brute, BloodlustData> implements Lis
 
             UtilMessage.simpleMessage(player, this.getModule().getName(), "You entered Bloodlust at Level: <yellow><var>", Collections.singletonList(String.valueOf(data.getAmplifier())));
         }
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void onCustomDamage(final CustomDamageEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
+
+        if (event.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+            return;
+        }
+
+        if (!(event.getDamagee() instanceof Player)) {
+            return;
+        }
+
+        if (!(event.getDamager() instanceof Player)) {
+            return;
+        }
+
+        final Player damager = event.getDamagerByClass(Player.class);
+
+        final BloodlustData data = this.getUserByPlayer(damager);
+        if (data == null) {
+            return;
+        }
+
+        if (data.hasExpired()) {
+            return;
+        }
+
+        event.setReason(this.getDisplayName(data.getLevel()), 1000L);
     }
 }

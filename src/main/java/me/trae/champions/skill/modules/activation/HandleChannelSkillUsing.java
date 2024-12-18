@@ -5,7 +5,9 @@ import me.trae.api.champions.skill.events.SkillLocationEvent;
 import me.trae.champions.Champions;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
+import me.trae.champions.skill.data.types.ChannelSkillData;
 import me.trae.champions.skill.types.ChannelSkill;
+import me.trae.champions.skill.types.models.ToggleSkill;
 import me.trae.core.Core;
 import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.types.frame.SpigotUpdater;
@@ -56,7 +58,22 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
             return false;
         }
 
+        final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
+
         if (!(player.isBlocking())) {
+            if (skill instanceof ToggleSkill<?> && skill.isUsingByPlayer(player)) {
+                final ToggleSkill<?> toggleSkill = UtilJava.cast(ToggleSkill.class, skill);
+
+                final ChannelSkillData data = skill.getUserByPlayer(player);
+
+                toggleSkill.onDeActivate(player, UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
+
+                if (skill.hasRecharge(level)) {
+                    if (!(rechargeManager.add(player, skill.getName(), skill.getRecharge(level), true))) {
+                        return false;
+                    }
+                }
+            }
             return false;
         }
 
@@ -81,8 +98,6 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
         if (skill.hasEnergyUsing(level)) {
             if (!(energyManager.use(player, skill.getName(), skill.getEnergyUsing(level), true))) {
                 if (skill.hasRecharge(level)) {
-                    final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
-
                     if (!(rechargeManager.add(player, skill.getName(), skill.getRecharge(level), true))) {
                         return false;
                     }

@@ -20,14 +20,26 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
     @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "3_000")
     private long recharge;
 
-    @ConfigInject(type = Double.class, path = "Velocity", defaultValue = "0.3")
-    private double velocity;
-
     @ConfigInject(type = Boolean.class, path = "Friendly-Fire", defaultValue = "true")
     private boolean friendlyFire;
 
     @ConfigInject(type = String.class, path = "Material", defaultValue = "DIAMOND_BLOCK")
     private String material;
+
+    @ConfigInject(type = Double.class, path = "Strength", defaultValue = "0.3")
+    private double strength;
+
+    @ConfigInject(type = Double.class, path = "yBase", defaultValue = "0.0")
+    private double yBase;
+
+    @ConfigInject(type = Double.class, path = "yAdd", defaultValue = "0.0")
+    private double yAdd;
+
+    @ConfigInject(type = Double.class, path = "yMax", defaultValue = "1.0")
+    private double yMax;
+
+    @ConfigInject(type = Boolean.class, path = "groundBoost", defaultValue = "true")
+    private boolean groundBoost;
 
     public BattleTaunt(final Brute module) {
         super(module);
@@ -109,7 +121,7 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
                 }
             }
 
-            UtilVelocity.velocity(targetPlayer, UtilVelocity.getTrajectory(targetPlayer.getLocation().toVector(), player.getLocation().toVector()), this.velocity, 0.0D, 0.0D, 1.0D, true);
+            UtilVelocity.velocity(targetPlayer, UtilVelocity.getTrajectory(targetPlayer.getLocation().toVector(), player.getLocation().toVector()), this.strength, this.yBase, this.yAdd, this.yMax, this.groundBoost);
         }
     }
 
