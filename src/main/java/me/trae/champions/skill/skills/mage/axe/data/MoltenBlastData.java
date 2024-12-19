@@ -9,8 +9,8 @@ public class MoltenBlastData extends SkillData implements IMoltenBlastData {
 
     private LargeFireball fireball;
 
-    public MoltenBlastData(final Player player, final int level) {
-        super(player, level);
+    public MoltenBlastData(final Player player, final int level, final long duration) {
+        super(player, level, duration);
     }
 
     @Override

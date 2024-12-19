@@ -85,7 +85,7 @@ public class Immolate extends ToggleUpdaterDropSkill<Mage, ToggleUpdaterDropSkil
                 "burns players that go near it.",
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyUsingString(level)))
         };
     }
 

@@ -45,7 +45,5 @@ public class Precision extends PassiveBowSkill<Ranger, BowSkillData> implements 
         event.setDamage(event.getDamage() + this.getDamage(data.getLevel()));
 
         event.setReason(this.getDisplayName(data.getLevel()), 1000L);
-
-        System.out.println(this.getDisplayName(data.getLevel()));
     }
 }

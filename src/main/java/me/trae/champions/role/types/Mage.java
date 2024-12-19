@@ -3,10 +3,12 @@ package me.trae.champions.role.types;
 import me.trae.api.champions.role.Role;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.skills.mage.axe.DefensiveAura;
+import me.trae.champions.skill.skills.mage.axe.LightningOrb;
 import me.trae.champions.skill.skills.mage.axe.MoltenBlast;
 import me.trae.champions.skill.skills.mage.passive_a.MagmaBlade;
 import me.trae.champions.skill.skills.mage.passive_a.MoltenShield;
 import me.trae.champions.skill.skills.mage.passive_a.NullBlade;
+import me.trae.champions.skill.skills.mage.passive_b.ArcticArmour;
 import me.trae.champions.skill.skills.mage.passive_b.HolyLight;
 import me.trae.champions.skill.skills.mage.passive_b.Immolate;
 import me.trae.champions.skill.skills.mage.sword.Cyclone;
@@ -34,6 +36,7 @@ public class Mage extends Role {
 
         // Axe Skills
         addSubModule(new DefensiveAura(this));
+        addSubModule(new LightningOrb(this));
         addSubModule(new MoltenBlast(this));
 
         // Passive A Skills
@@ -42,6 +45,7 @@ public class Mage extends Role {
         addSubModule(new NullBlade(this));
 
         // Passive B Skills
+        addSubModule(new ArcticArmour(this));
         addSubModule(new HolyLight(this));
         addSubModule(new Immolate(this));
 

@@ -9,8 +9,10 @@ import me.trae.champions.skill.types.ActiveSkill;
 import me.trae.champions.skill.types.enums.ActiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.utility.*;
+import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
+import org.bukkit.Sound;
 import org.bukkit.entity.LargeFireball;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -32,6 +34,9 @@ public class MoltenBlast extends ActiveSkill<Mage, MoltenBlastData> implements L
 
     @ConfigInject(type = Long.class, path = "Duration", defaultValue = "10_000")
     private long duration;
+
+    @ConfigInject(type = Long.class, path = "Fire-Duration", defaultValue = "10_000")
+    private long fireDuration;
 
     @ConfigInject(type = Double.class, path = "Damage", defaultValue = "6.0")
     private double damage;
@@ -80,7 +85,7 @@ public class MoltenBlast extends ActiveSkill<Mage, MoltenBlastData> implements L
 
     @Override
     public void onActivate(final Player player, final int level) {
-        final MoltenBlastData data = new MoltenBlastData(player, level);
+        final MoltenBlastData data = new MoltenBlastData(player, level, this.duration);
 
         final LargeFireball fireball = player.launchProjectile(LargeFireball.class);
 
@@ -94,6 +99,25 @@ public class MoltenBlast extends ActiveSkill<Mage, MoltenBlastData> implements L
         this.addUser(data);
 
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You used <green><var></green>.", Collections.singletonList(this.getDisplayName(level)));
+    }
+
+    @Override
+    public void reset(final Player player) {
+        if (this.isUserByPlayer(player)) {
+            final MoltenBlastData data = this.getUserByPlayer(player);
+            if (data.getFireBall() != null) {
+                data.getFireBall().remove();
+            }
+        }
+
+        super.reset(player);
+    }
+
+    @Override
+    public void onExpire(final Player player, final MoltenBlastData data) {
+        new SoundCreator(Sound.NOTE_STICKS).play(player);
+
+        UtilMessage.simpleMessage(player, this.getModule().getName(), "You failed <green><var></green>.", Collections.singletonList(this.getDisplayName(data.getLevel())));
     }
 
     @Override
@@ -162,7 +186,7 @@ public class MoltenBlast extends ActiveSkill<Mage, MoltenBlastData> implements L
 
             UtilDamage.damage(targetEntity, player, EntityDamageEvent.DamageCause.CUSTOM, this.damage, this.getDisplayName(data.getLevel()), 1000L);
 
-            targetEntity.setFireTicks((int) (this.duration / 50L));
+            targetEntity.setFireTicks((int) (this.fireDuration / 50L));
         }
 
         if (count > 0) {

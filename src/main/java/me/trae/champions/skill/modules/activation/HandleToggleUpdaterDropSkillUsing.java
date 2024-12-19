@@ -24,7 +24,7 @@ public class HandleToggleUpdaterDropSkillUsing extends SpigotUpdater<Champions, 
         super(manager);
     }
 
-    @Update(delay = 25L)
+    @Update(delay = 10L)
     public void onUpdater() {
         for (final Role role : this.getInstance().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
             for (final ToggleUpdaterDropSkill<?, ?> skill : role.getSkillsByClass(ToggleUpdaterDropSkill.class)) {

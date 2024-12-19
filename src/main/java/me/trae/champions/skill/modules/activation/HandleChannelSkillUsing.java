@@ -24,7 +24,7 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
         super(manager);
     }
 
-    @Update(delay = 25L)
+    @Update(delay = 10L)
     public void onUpdater() {
         for (final Role role : this.getInstance().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
             for (final ChannelSkill<?, ?> skill : role.getSkillsByClass(ChannelSkill.class)) {
