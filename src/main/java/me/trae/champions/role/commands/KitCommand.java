@@ -11,6 +11,8 @@ import me.trae.core.client.ClientManager;
 import me.trae.core.client.enums.Rank;
 import me.trae.core.command.types.Command;
 import me.trae.core.command.types.models.AnyCommandType;
+import me.trae.core.config.annotations.ConfigInject;
+import me.trae.core.recharge.RechargeManager;
 import me.trae.core.utility.*;
 import me.trae.core.utility.constants.CoreArgumentType;
 import org.bukkit.command.CommandSender;
@@ -22,8 +24,11 @@ import java.util.List;
 
 public class KitCommand extends Command<Champions, RoleManager> implements AnyCommandType {
 
+    @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "86_400_000")
+    private long recharge;
+
     public KitCommand(final RoleManager manager) {
-        super(manager, "kit", new String[]{"role", "class"}, Rank.ADMIN);
+        super(manager, "kit", new String[]{"role", "class"}, Rank.DEFAULT);
     }
 
     @Override
@@ -35,6 +40,12 @@ public class KitCommand extends Command<Champions, RoleManager> implements AnyCo
 
             final Player player = UtilJava.cast(Player.class, sender);
 
+            final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
+
+            if (rechargeManager.isCooling(player, "Kit Command", true)) {
+                return;
+            }
+
             UtilMenu.open(new RoleSelectionMenu(this.getManager(), player) {
                 @Override
                 public void onClick(final Player player, final Role role) {
@@ -43,8 +54,14 @@ public class KitCommand extends Command<Champions, RoleManager> implements AnyCo
                     final Client client = this.getManager().getInstance(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(player);
 
                     this.getManager().giveKit(player, role, client.isAdministrating());
+
+                    rechargeManager.add(player, "Kit Command", KitCommand.this.recharge, true, true);
                 }
             });
+            return;
+        }
+
+        if (!(UtilCommand.hasRequiredRank(sender, this, Rank.ADMIN, true))) {
             return;
         }
 
