@@ -4,7 +4,6 @@ import me.trae.api.champions.role.Role;
 import me.trae.champions.Champions;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
-import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.types.ToggleUpdaterDropSkill;
 import me.trae.champions.skill.types.models.ToggleSkill;
 import me.trae.champions.weapon.models.PassiveActivatorWeapon;
@@ -24,7 +23,7 @@ public class HandleToggleUpdaterDropSkillUsing extends SpigotUpdater<Champions, 
         super(manager);
     }
 
-    @Update(delay = 10L)
+    @Update(delay = 50L)
     public void onUpdater() {
         for (final Role role : this.getInstance().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
             for (final ToggleUpdaterDropSkill<?, ?> skill : role.getSkillsByClass(ToggleUpdaterDropSkill.class)) {

@@ -17,6 +17,7 @@ import org.bukkit.entity.LargeFireball;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
@@ -131,13 +132,13 @@ public class MoltenBlast extends ActiveSkill<Mage, MoltenBlastData> implements L
         return false;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityExplode(final EntityExplodeEvent event) {
-        if (event.isCancelled()) {
+        if (!(event.getEntity() instanceof LargeFireball)) {
             return;
         }
 
-        if (!(event.getEntity() instanceof LargeFireball)) {
+        if (event.isCancelled()) {
             return;
         }
 
