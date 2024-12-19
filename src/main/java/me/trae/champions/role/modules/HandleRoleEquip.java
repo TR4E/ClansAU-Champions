@@ -19,18 +19,23 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
 
     public HandleRoleEquip(final RoleManager manager) {
         super(manager);
     }
 
-    @Update(delay = 125L)
+    @Update(delay = 200L)
     public void onUpdater() {
+        final BuildManager buildManager = this.getInstance().getManagerByClass(BuildManager.class);
         final ClientManager clientManager = this.getInstance(Core.class).getManagerByClass(ClientManager.class);
 
+        final List<Role> roleList = this.getManager().getModulesByClass(Role.class);
+
         for (final Player player : UtilServer.getOnlinePlayers()) {
-            if (!(this.getInstance().getManagerByClass(BuildManager.class).getBuilds().containsKey(player.getUniqueId()))) {
+            if (!(buildManager.getBuilds().containsKey(player.getUniqueId()))) {
                 final Client client = clientManager.getClientByPlayer(player);
                 if (client != null && !(UtilTime.elapsed(client.getLastJoined(), 400L))) {
                     continue;
@@ -39,7 +44,7 @@ public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
 
             Role playerRole = null;
 
-            for (final Role role : this.getManager().getModulesByClass(Role.class)) {
+            for (final Role role : roleList) {
                 if (!(role.isEnabled())) {
                     continue;
                 }
