@@ -9,7 +9,10 @@ import me.trae.core.throwable.Throwable;
 import me.trae.core.throwable.ThrowableManager;
 import me.trae.core.throwable.events.ThrowableCollideEntityEvent;
 import me.trae.core.throwable.events.ThrowableGroundedEvent;
-import me.trae.core.utility.*;
+import me.trae.core.utility.UtilMessage;
+import me.trae.core.utility.UtilParticle;
+import me.trae.core.utility.UtilServer;
+import me.trae.core.utility.UtilString;
 import me.trae.core.utility.enums.ActionType;
 import me.trae.core.utility.objects.SoundCreator;
 import me.trae.core.weapon.data.WeaponData;
@@ -82,9 +85,6 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
                 "Burns people who enter the blast area.",
                 "",
                 UtilString.pair("<gray>Left-Click", "<yellow>Throw"),
-                "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", UtilTime.getTime(this.recharge))),
-                UtilString.pair("<gray>Duration", String.format("<green>%s", UtilTime.getTime(this.duration)))
         };
     }
 

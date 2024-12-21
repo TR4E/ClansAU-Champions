@@ -8,7 +8,10 @@ import me.trae.core.throwable.Throwable;
 import me.trae.core.throwable.ThrowableManager;
 import me.trae.core.throwable.events.ThrowableCollideEntityEvent;
 import me.trae.core.throwable.events.ThrowableGroundedEvent;
-import me.trae.core.utility.*;
+import me.trae.core.utility.UtilEntity;
+import me.trae.core.utility.UtilMessage;
+import me.trae.core.utility.UtilServer;
+import me.trae.core.utility.UtilString;
 import me.trae.core.utility.enums.ActionType;
 import me.trae.core.weapon.data.WeaponData;
 import me.trae.core.weapon.events.WeaponFriendlyFireEvent;
@@ -28,7 +31,7 @@ import org.bukkit.util.Vector;
 
 import java.util.Collections;
 
-public class GravityGrenade extends ActiveCustomItem<Champions, WeaponManager, WeaponData> implements Listener {
+public class GravityBomb extends ActiveCustomItem<Champions, WeaponManager, WeaponData> implements Listener {
 
     @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "15_000")
     private long recharge;
@@ -60,7 +63,7 @@ public class GravityGrenade extends ActiveCustomItem<Champions, WeaponManager, W
     @ConfigInject(type = Boolean.class, path = "Friendly-Fire", defaultValue = "true")
     private boolean friendlyFire;
 
-    public GravityGrenade(final WeaponManager manager) {
+    public GravityBomb(final WeaponManager manager) {
         super(manager, new ItemStack(Material.STAINED_CLAY, 1, (byte) 15), ActionType.LEFT_CLICK);
     }
 
@@ -85,9 +88,6 @@ public class GravityGrenade extends ActiveCustomItem<Champions, WeaponManager, W
                 "Creates a field that disrupts all players caught inside.",
                 "",
                 UtilString.pair("<gray>Left-Click", "<yellow>Throw"),
-                "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", UtilTime.getTime(this.recharge))),
-                UtilString.pair("<gray>Duration", String.format("<green>%s", UtilTime.getTime(this.duration)))
         };
     }
 
@@ -96,7 +96,7 @@ public class GravityGrenade extends ActiveCustomItem<Champions, WeaponManager, W
         final Throwable throwable = new Throwable(this.getAbilityName(), this.getItemStack(), player, this.duration, player.getEyeLocation(), player.getEyeLocation().getDirection().multiply(this.itemVelocity)) {
             @Override
             public double getCollideRadius() {
-                return GravityGrenade.this.gravityRadius;
+                return GravityBomb.this.gravityRadius;
             }
         };
 

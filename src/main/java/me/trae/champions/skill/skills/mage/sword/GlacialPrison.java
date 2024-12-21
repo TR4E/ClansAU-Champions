@@ -8,11 +8,14 @@ import me.trae.champions.skill.types.enums.ActiveSkillType;
 import me.trae.core.Core;
 import me.trae.core.blockrestore.BlockRestore;
 import me.trae.core.blockrestore.BlockRestoreManager;
+import me.trae.core.blockrestore.events.BlockRestoreRemoveEvent;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.throwable.Throwable;
 import me.trae.core.throwable.ThrowableManager;
 import me.trae.core.throwable.events.ThrowableGroundedEvent;
 import me.trae.core.utility.*;
+import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -141,7 +144,24 @@ public class GlacialPrison extends ActiveSkill<Mage, SkillData> implements Liste
             };
 
             blockRestoreManager.addBlockRestore(blockRestore);
+
+            block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, this.getMaterial(), 1);
         }
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onBlockRestoreRemove(final BlockRestoreRemoveEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
+
+        if (!(event.getBlockRestore().getName().equals(this.getName()))) {
+            return;
+        }
+
+        final Location location = event.getBlockRestore().getLocation();
+
+        location.getWorld().playEffect(location, Effect.WATERDRIP, 1);
     }
 
     @Override

@@ -149,10 +149,6 @@ public class MoltenBlast extends ActiveSkill<Mage, MoltenBlastData> implements L
             return;
         }
 
-        event.setCancelled(true);
-
-        fireball.getWorld().playEffect(fireball.getLocation(), Effect.EXPLOSION_HUGE, 100);
-
         final Player player = Bukkit.getPlayer(data.getUUID());
 
         int count = 0;
@@ -168,6 +164,10 @@ public class MoltenBlast extends ActiveSkill<Mage, MoltenBlastData> implements L
                 }
 
                 if (!(this.friendlyFire)) {
+                    if (player == targetPlayer || !(friendlyFireEvent.isVulnerable())) {
+                        targetEntity.setVelocity(targetEntity.getLocation().toVector().subtract(fireball.getLocation().toVector()).normalize().multiply(2.0D).setY(0.75D));
+                    }
+
                     if (player == targetPlayer) {
                         continue;
                     }
@@ -185,6 +185,8 @@ public class MoltenBlast extends ActiveSkill<Mage, MoltenBlastData> implements L
                 }
             }
 
+            targetEntity.setVelocity(targetEntity.getLocation().toVector().subtract(fireball.getLocation().toVector()).normalize().multiply(2.0D).setY(0.75D));
+
             UtilDamage.damage(targetEntity, player, EntityDamageEvent.DamageCause.CUSTOM, this.damage, this.getDisplayName(data.getLevel()), 1000L);
 
             targetEntity.setFireTicks((int) (this.fireDuration / 50L));
@@ -197,7 +199,7 @@ public class MoltenBlast extends ActiveSkill<Mage, MoltenBlastData> implements L
         this.removeUser(player);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOW)
     public void onCustomPreDamage(final CustomPreDamageEvent event) {
         if (event.isCancelled()) {
             return;

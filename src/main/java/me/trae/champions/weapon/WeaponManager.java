@@ -2,7 +2,7 @@ package me.trae.champions.weapon;
 
 import me.trae.champions.Champions;
 import me.trae.champions.weapon.weapons.items.ExtinguishingPotion;
-import me.trae.champions.weapon.weapons.items.GravityGrenade;
+import me.trae.champions.weapon.weapons.items.GravityBomb;
 import me.trae.champions.weapon.weapons.items.IncendiaryGrenade;
 import me.trae.champions.weapon.weapons.items.ThrowingWeb;
 import me.trae.champions.weapon.weapons.pvp.*;
@@ -18,7 +18,7 @@ public class WeaponManager extends AbstractWeaponManager<Champions> {
     public void registerModules() {
         // Custom Items
         addModule(new ExtinguishingPotion(this));
-        addModule(new GravityGrenade(this));
+        addModule(new GravityBomb(this));
         addModule(new IncendiaryGrenade(this));
         addModule(new ThrowingWeb(this));
 

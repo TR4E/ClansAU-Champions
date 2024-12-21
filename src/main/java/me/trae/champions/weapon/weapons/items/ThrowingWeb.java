@@ -10,7 +10,10 @@ import me.trae.core.throwable.Throwable;
 import me.trae.core.throwable.ThrowableManager;
 import me.trae.core.throwable.events.ThrowableGroundedEvent;
 import me.trae.core.throwable.events.ThrowableUpdaterEvent;
-import me.trae.core.utility.*;
+import me.trae.core.utility.UtilBlock;
+import me.trae.core.utility.UtilMessage;
+import me.trae.core.utility.UtilServer;
+import me.trae.core.utility.UtilString;
 import me.trae.core.utility.enums.ActionType;
 import me.trae.core.weapon.data.WeaponData;
 import me.trae.core.weapon.events.WeaponLocationEvent;
@@ -74,9 +77,6 @@ public class ThrowingWeb extends ActiveCustomItem<Champions, WeaponManager, Weap
                 "Creates a Web Trap.",
                 "",
                 UtilString.pair("<gray>Left-Click", "<yellow>Throw"),
-                "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", UtilTime.getTime(this.recharge))),
-                UtilString.pair("<gray>Duration", String.format("<green>%s", UtilTime.getTime(this.duration)))
         };
     }
 
