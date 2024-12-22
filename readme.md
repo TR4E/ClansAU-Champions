@@ -38,11 +38,11 @@ Champions is a modular Minecraft plugin designed to enhance gameplay by introduc
 
 ## Integration
 
-### ClansAU-Core
-- This plugin works as an extension of the ClansAU-Core, relying on its infrastructure for core functionality.
+### Core
+- This plugin works as an extension of the Core, relying on its infrastructure for core functionality.
 
-### Champions-API
-- Provides integration capabilities between Champions and other child plugins, such as ClansAU-Clans, allowing seamless interaction between systems.
+### [Champions-API](https://github.com/TR4E/Champions-API)
+- Provides integration capabilities between Champions and other child plugins, such as Clans, allowing seamless interaction between systems.
 
 <br>
 
