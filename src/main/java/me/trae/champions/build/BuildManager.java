@@ -18,6 +18,7 @@ import me.trae.champions.role.menus.RoleSelectionMenu;
 import me.trae.core.database.repository.containers.RepositoryContainer;
 import me.trae.core.framework.SpigotManager;
 import me.trae.core.utility.UtilMenu;
+import me.trae.core.utility.UtilServer;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -143,6 +144,8 @@ public class BuildManager extends SpigotManager<Champions> implements IBuildMana
 
             oldRoleBuild.setActive(false);
 
+            role.reset(player);
+
             if (oldRoleBuild.getID() != 0) {
                 this.getRepository().updateData(oldRoleBuild, BuildProperty.ACTIVE);
             }
@@ -153,6 +156,8 @@ public class BuildManager extends SpigotManager<Champions> implements IBuildMana
         }
 
         roleBuild.setActive(true);
+
+        role.reset(player);
 
         if (roleBuild.getID() != 0) {
             this.getRepository().updateData(roleBuild, BuildProperty.ACTIVE);

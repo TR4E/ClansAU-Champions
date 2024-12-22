@@ -1,5 +1,6 @@
 package me.trae.champions.build.menus.build.buttons;
 
+import me.trae.api.champions.role.Role;
 import me.trae.champions.build.data.RoleBuild;
 import me.trae.champions.build.menus.build.BuildCustomizationMenu;
 import me.trae.champions.build.menus.build.buttons.interfaces.IBuildButton;
@@ -42,9 +43,13 @@ public abstract class BuildDeleteButton extends Button<BuildCustomizationMenu> i
             return;
         }
 
+        final Role role = this.getMenu().getRole();
+
         if (roleBuild.isActive()) {
-            this.getMenu().setUpdatedRole(this.getMenu().getRole());
+            this.getMenu().setUpdatedRole(role);
         }
+
+        role.reset(player);
 
         this.getMenu().getManager().removeBuild(roleBuild);
         this.getMenu().getManager().getRepository().deleteData(roleBuild);

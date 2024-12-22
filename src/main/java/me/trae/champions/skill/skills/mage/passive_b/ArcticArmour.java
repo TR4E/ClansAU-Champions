@@ -1,6 +1,7 @@
 package me.trae.champions.skill.skills.mage.passive_b;
 
 import me.trae.api.champions.skill.events.SkillFriendlyFireEvent;
+import me.trae.api.champions.skill.events.SkillLocationEvent;
 import me.trae.champions.role.types.Mage;
 import me.trae.champions.skill.data.types.ToggleUpdaterDropSkillData;
 import me.trae.champions.skill.types.ToggleUpdaterDropSkill;
@@ -101,6 +102,10 @@ public class ArcticArmour extends ToggleUpdaterDropSkill<Mage, ToggleUpdaterDrop
         new SoundCreator(Sound.AMBIENCE_RAIN, 0.3F, 0.0F).play(player.getLocation());
 
         for (final LivingEntity targetEntity : UtilEntity.getNearbyEntities(LivingEntity.class, player.getLocation(), this.getDistance(data.getLevel()))) {
+            if (UtilServer.getEvent(new SkillLocationEvent(this, targetEntity.getLocation())).isCancelled()) {
+                continue;
+            }
+
             if (targetEntity instanceof Player) {
                 final SkillFriendlyFireEvent friendlyFireEvent = new SkillFriendlyFireEvent(this, player, UtilJava.cast(Player.class, targetEntity));
                 UtilServer.callEvent(friendlyFireEvent);
@@ -119,12 +124,16 @@ public class ArcticArmour extends ToggleUpdaterDropSkill<Mage, ToggleUpdaterDrop
 
         final BlockRestoreManager blockRestoreManager = this.getInstance(Core.class).getManagerByClass(BlockRestoreManager.class);
 
-        for (final Block block : UtilBlock.getInRadius(player.getLocation(), this.getDistance(data.getLevel()))) {
+        for (final Block block : UtilBlock.getInRoundedRadius(player.getLocation(), this.getDistance(data.getLevel()), this.getDistance(data.getLevel()))) {
             if (block.getLocation().getY() > player.getLocation().getY()) {
                 continue;
             }
 
-            if (!(UtilBlock.airFoliage(block.getRelative(BlockFace.UP).getType()))) {
+            if (block.getType() != Material.AIR) {
+                continue;
+            }
+
+            if (UtilServer.getEvent(new SkillLocationEvent(this, block.getLocation())).isCancelled()) {
                 continue;
             }
 

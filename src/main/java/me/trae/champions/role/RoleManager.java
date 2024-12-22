@@ -119,7 +119,7 @@ public class RoleManager extends SpigotManager<Champions> implements IRoleManage
 
     @Override
     public void giveKit(final Player player, final Role role, boolean overpowered) {
-        final KitReceiveEvent event = new KitReceiveEvent(player, role);
+        final KitReceiveEvent event = new KitReceiveEvent(role, player);
         UtilServer.callEvent(event);
 
         overpowered = this.overpoweredKits || event.isOverpowered() || overpowered;

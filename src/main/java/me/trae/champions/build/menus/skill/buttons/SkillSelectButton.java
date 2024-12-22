@@ -78,7 +78,7 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
                 this.onLeftClickButton(player, role, roleBuild, skill, roleSkill);
                 break;
             case RIGHT:
-                this.onRightClickButton(player, role, roleBuild, roleSkill);
+                this.onRightClickButton(player, role, roleBuild, skill, roleSkill);
                 break;
         }
     }
@@ -101,8 +101,12 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
 
             roleSkill.setLevel(roleSkill.getLevel() + 1);
         } else {
-            roleBuild.addSkill(new RoleSkill(skill, 1));
+            final RoleSkill newRoleSkill = new RoleSkill(skill, 1);
+            roleBuild.addSkill(newRoleSkill);
         }
+
+        skill.reset(player);
+        skill.removeUser(player);
 
         if (!(this.getMenu().getManager().isBuildByID(player, role, roleBuild.getID()))) {
             this.getMenu().getManager().addBuild(roleBuild);
@@ -120,7 +124,7 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
         this.getMenu().build();
     }
 
-    private void onRightClickButton(final Player player, final Role role, final RoleBuild roleBuild, final RoleSkill roleSkill) {
+    private void onRightClickButton(final Player player, final Role role, final RoleBuild roleBuild, final Skill<?, ?> skill, final RoleSkill roleSkill) {
         if (roleSkill == null) {
             new SoundCreator(Sound.ITEM_BREAK).play(player);
             return;
@@ -128,13 +132,18 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
 
         if (roleSkill.getLevel() > 1) {
             roleSkill.setLevel(roleSkill.getLevel() - 1);
+            skill.reset(player);
+            skill.removeUser(player);
         } else {
             roleBuild.removeSkill(roleSkill);
+            skill.reset(player);
+            skill.removeUser(player);
         }
 
         if (roleBuild.getSkills().isEmpty()) {
             this.getMenu().getManager().removeBuild(roleBuild);
             this.getMenu().getManager().getRepository().deleteData(roleBuild);
+            role.reset(player);
         } else {
             this.getMenu().getManager().getRepository().updateData(roleBuild, BuildProperty.SKILLS);
         }
