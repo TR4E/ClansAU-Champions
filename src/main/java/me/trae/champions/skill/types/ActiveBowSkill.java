@@ -9,7 +9,6 @@ import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 

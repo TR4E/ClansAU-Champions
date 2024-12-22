@@ -2,7 +2,6 @@ package me.trae.champions.role.types;
 
 import me.trae.api.champions.role.Role;
 import me.trae.champions.role.RoleManager;
-import me.trae.champions.role.types.submodules.SpeedEffect;
 import me.trae.champions.skill.skills.knight.axe.BullsCharge;
 import me.trae.champions.skill.skills.knight.axe.HoldPosition;
 import me.trae.champions.skill.skills.knight.axe.PowerChop;

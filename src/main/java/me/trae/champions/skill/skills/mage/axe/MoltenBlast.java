@@ -11,7 +11,6 @@ import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.utility.*;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Bukkit;
-import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.LargeFireball;
 import org.bukkit.entity.LivingEntity;

@@ -9,7 +9,6 @@ import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.utility.*;
 import org.bukkit.Effect;
 import org.bukkit.Location;
-import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
