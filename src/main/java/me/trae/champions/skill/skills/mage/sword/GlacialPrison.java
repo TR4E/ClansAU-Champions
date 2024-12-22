@@ -145,7 +145,7 @@ public class GlacialPrison extends ActiveSkill<Mage, SkillData> implements Liste
 
             blockRestoreManager.addBlockRestore(blockRestore);
 
-            block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, this.getMaterial(), 1);
+            block.getWorld().playEffect(block.getLocation(), Effect.STEP_SOUND, this.getMaterial());
         }
     }
 

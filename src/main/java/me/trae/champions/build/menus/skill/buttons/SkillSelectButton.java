@@ -111,6 +111,7 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
         if (!(this.getMenu().getManager().isBuildByID(player, role, roleBuild.getID()))) {
             this.getMenu().getManager().addBuild(roleBuild);
             this.getMenu().getManager().getRepository().saveData(roleBuild);
+            role.reset(player);
         } else {
             this.getMenu().getManager().getRepository().updateData(roleBuild, BuildProperty.SKILLS);
         }
@@ -132,13 +133,12 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
 
         if (roleSkill.getLevel() > 1) {
             roleSkill.setLevel(roleSkill.getLevel() - 1);
-            skill.reset(player);
-            skill.removeUser(player);
         } else {
             roleBuild.removeSkill(roleSkill);
-            skill.reset(player);
-            skill.removeUser(player);
         }
+
+        skill.reset(player);
+        skill.removeUser(player);
 
         if (roleBuild.getSkills().isEmpty()) {
             this.getMenu().getManager().removeBuild(roleBuild);
