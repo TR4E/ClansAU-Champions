@@ -181,7 +181,7 @@ public class BuildManager extends SpigotManager<Champions> implements IBuildMana
 
     @Override
     public void openMenu(final Player player) {
-        UtilMenu.open(new RoleSelectionMenu(this.getInstanceByClass().getManagerByClass(RoleManager.class), player) {
+        UtilMenu.open(new RoleSelectionMenu(this.getInstance().getManagerByClass(RoleManager.class), player) {
             @Override
             public void onClick(final Player player, final Role role) {
                 UtilMenu.open(new BuildCustomizationMenu(BuildManager.this, player, role) {

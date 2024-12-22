@@ -87,7 +87,7 @@ public class SilencingArrow extends ActiveBowSkill<Assassin, BowSkillData> {
         if (damagee instanceof LivingEntity) {
             final LivingEntity damageeLivingEntity = UtilJava.cast(LivingEntity.class, damagee);
 
-            this.getInstanceByClass().getManagerByClass(EffectManager.class).getModuleByClass(Silenced.class).addUser(new EffectData(damageeLivingEntity, this.getDuration(data.getLevel())));
+            this.getInstance().getManagerByClass(EffectManager.class).getModuleByClass(Silenced.class).addUser(new EffectData(damageeLivingEntity, this.getDuration(data.getLevel())));
         }
     }
 

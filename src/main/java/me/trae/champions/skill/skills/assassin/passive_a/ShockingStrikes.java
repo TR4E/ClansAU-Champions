@@ -88,7 +88,7 @@ public class ShockingStrikes extends PassiveSkill<Assassin, SkillData> implement
 
         final long duration = this.getDuration(level);
 
-        this.getInstanceByClass().getManagerByClass(EffectManager.class).getModuleByClass(Shock.class).addUser(new EffectData(damagee, duration));
+        this.getInstance().getManagerByClass(EffectManager.class).getModuleByClass(Shock.class).addUser(new EffectData(damagee, duration));
 
         UtilEntity.givePotionEffect(damagee, PotionEffectType.SLOW, this.getAmplifier(level), duration);
 

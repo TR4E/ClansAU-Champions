@@ -51,7 +51,7 @@ public class SkillManager extends SpigotManager<Champions> implements ISkillMana
             return null;
         }
 
-        final Role role = this.getInstanceByClass().getManagerByClass(RoleManager.class).getPlayerRole(player);
+        final Role role = this.getInstance().getManagerByClass(RoleManager.class).getPlayerRole(player);
         if (role == null) {
             return null;
         }

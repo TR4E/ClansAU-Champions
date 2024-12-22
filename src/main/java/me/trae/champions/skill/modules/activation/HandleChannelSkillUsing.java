@@ -26,7 +26,7 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
 
     @Update(delay = 50L)
     public void onUpdater() {
-        for (final Role role : this.getInstanceByClass().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
+        for (final Role role : this.getInstance().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
             for (final ChannelSkill<?, ?> skill : role.getSkillsByClass(ChannelSkill.class)) {
                 skill.getUsers().values().removeIf(data -> {
                     final Player player = Bukkit.getPlayer(data.getUUID());

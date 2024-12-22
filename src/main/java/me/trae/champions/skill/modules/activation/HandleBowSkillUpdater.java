@@ -23,7 +23,7 @@ public class HandleBowSkillUpdater extends SpigotUpdater<Champions, SkillManager
 
     @Update(delay = 50L)
     public void onUpdater() {
-        for (final Role role : this.getInstanceByClass().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
+        for (final Role role : this.getInstance().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
             for (final Skill<?, ? extends BowSkillData> skill : role.getSkillsByClass(Skill.class)) {
                 if (!(skill instanceof IBowSkill<?>)) {
                     continue;

@@ -62,7 +62,7 @@ public class HandleSkillRechargeProgressBar extends SpigotListener<Champions, Sk
             return;
         }
 
-        final Role playerRole = this.getInstanceByClass().getManagerByClass(RoleManager.class).getPlayerRole(player);
+        final Role playerRole = this.getInstance().getManagerByClass(RoleManager.class).getPlayerRole(player);
         if (playerRole == null) {
             UtilAbility.removeActionBar(player, this.PRIORITY);
             return;

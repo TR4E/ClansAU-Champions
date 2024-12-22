@@ -25,7 +25,7 @@ public class HandleToggleUpdaterDropSkillUsing extends SpigotUpdater<Champions, 
 
     @Update(delay = 50L)
     public void onUpdater() {
-        for (final Role role : this.getInstanceByClass().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
+        for (final Role role : this.getInstance().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
             for (final ToggleUpdaterDropSkill<?, ?> skill : role.getSkillsByClass(ToggleUpdaterDropSkill.class)) {
                 skill.getUsers().values().removeIf(data -> {
                     final Player player = Bukkit.getPlayer(data.getUUID());

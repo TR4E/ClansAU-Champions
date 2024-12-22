@@ -114,7 +114,7 @@ public class Concussion extends ActiveSkill<Assassin, SkillData> implements List
 
         final Player damagee = event.getDamageeByClass(Player.class);
 
-        this.getInstanceByClass().getManagerByClass(EffectManager.class).getModuleByClass(ConcussionEffect.class).addUser(new EffectData(damagee, this.getAmplifier(data.getLevel()), this.getDuration(data.getLevel())));
+        this.getInstance().getManagerByClass(EffectManager.class).getModuleByClass(ConcussionEffect.class).addUser(new EffectData(damagee, this.getAmplifier(data.getLevel()), this.getDuration(data.getLevel())));
 
         event.setReason(this.getDisplayName(data.getLevel()), this.getDuration(data.getLevel()));
 

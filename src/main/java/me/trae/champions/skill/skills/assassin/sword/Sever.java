@@ -114,7 +114,7 @@ public class Sever extends ActiveSkill<Assassin, SkillData> implements Listener 
 
         final LivingEntity damagee = event.getDamageeByClass(LivingEntity.class);
 
-        this.getInstanceByClass().getManagerByClass(EffectManager.class).getModuleByClass(Bleed.class).addUser(new EffectData(damagee, this.getDuration(data.getLevel())) {
+        this.getInstance().getManagerByClass(EffectManager.class).getModuleByClass(Bleed.class).addUser(new EffectData(damagee, this.getDuration(data.getLevel())) {
             @Override
             public LivingEntity getCause() {
                 return damager;

@@ -47,7 +47,7 @@ public abstract class GlobalAbility<T extends GlobalSkill<?>> extends SpigotModu
                 return false;
             }
 
-            if (this.getInstanceByClass().getManagerByClass(EffectManager.class).getModuleByClass(Silenced.class).isUserByEntity(player)) {
+            if (this.getInstance().getManagerByClass(EffectManager.class).getModuleByClass(Silenced.class).isUserByEntity(player)) {
                 UtilMessage.simpleMessage(player, "Skill", "You cannot use <green><var></green> while silenced.", Collections.singletonList(this.getName()));
                 return false;
             }

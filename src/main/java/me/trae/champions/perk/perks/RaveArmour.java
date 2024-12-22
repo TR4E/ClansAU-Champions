@@ -40,8 +40,8 @@ public class RaveArmour extends Perk<Champions, PerkManager> implements Updater 
 
     @Override
     public void onInitialize() {
-        this.ASSASSIN_ROLE = this.getInstanceByClass().getManagerByClass(RoleManager.class).getModuleByClass(Assassin.class);
-        this.PREFERENCE = this.getInstanceByClass().getManagerByClass(PreferenceManager.class).getModuleByClass(DisplayRaveArmour.class);
+        this.ASSASSIN_ROLE = this.getInstance().getManagerByClass(RoleManager.class).getModuleByClass(Assassin.class);
+        this.PREFERENCE = this.getInstance().getManagerByClass(PreferenceManager.class).getModuleByClass(DisplayRaveArmour.class);
     }
 
     private void handleCount() {

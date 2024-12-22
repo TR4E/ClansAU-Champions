@@ -35,7 +35,7 @@ public class HandleDisplayEquipMessageOnBuildMenuUpdate extends SpigotListener<C
 
         final Player player = event.getPlayer();
 
-        final Role playerRole = this.getInstanceByClass().getManagerByClass(RoleManager.class).getPlayerRole(player);
+        final Role playerRole = this.getInstance().getManagerByClass(RoleManager.class).getPlayerRole(player);
         if (playerRole == null) {
             return;
         }

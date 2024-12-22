@@ -29,7 +29,7 @@ public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
 
     @Update(delay = 200L)
     public void onUpdater() {
-        final BuildManager buildManager = this.getInstanceByClass().getManagerByClass(BuildManager.class);
+        final BuildManager buildManager = this.getInstance().getManagerByClass(BuildManager.class);
         final ClientManager clientManager = this.getInstanceByClass(Core.class).getManagerByClass(ClientManager.class);
 
         final List<Role> roleList = this.getManager().getModulesByClass(Role.class);
