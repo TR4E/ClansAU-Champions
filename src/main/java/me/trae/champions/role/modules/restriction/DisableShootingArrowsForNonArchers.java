@@ -35,7 +35,7 @@ public class DisableShootingArrowsForNonArchers extends SpigotListener<Champions
             return;
         }
 
-        if (this.getInstance(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(player).isAdministrating()) {
+        if (this.getInstanceByClass(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(player).isAdministrating()) {
             return;
         }
 

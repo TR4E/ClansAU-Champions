@@ -42,17 +42,17 @@ public abstract class GlobalAbility<T extends GlobalSkill<?>> extends SpigotModu
             return false;
         }
 
-        if (!(this.getInstance(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(player).isAdministrating())) {
+        if (!(this.getInstanceByClass(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(player).isAdministrating())) {
             if (UtilServer.getEvent(new SkillPreActivateEvent(skill, player)).isCancelled()) {
                 return false;
             }
 
-            if (this.getInstance().getManagerByClass(EffectManager.class).getModuleByClass(Silenced.class).isUserByEntity(player)) {
+            if (this.getInstanceByClass().getManagerByClass(EffectManager.class).getModuleByClass(Silenced.class).isUserByEntity(player)) {
                 UtilMessage.simpleMessage(player, "Skill", "You cannot use <green><var></green> while silenced.", Collections.singletonList(this.getName()));
                 return false;
             }
 
-            final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
+            final RechargeManager rechargeManager = this.getInstanceByClass(Core.class).getManagerByClass(RechargeManager.class);
 
             if (this.hasRecharge(level)) {
                 if (rechargeManager.isCooling(player, skill.getName(), false)) {
@@ -61,7 +61,7 @@ public abstract class GlobalAbility<T extends GlobalSkill<?>> extends SpigotModu
             }
 
             if (this.hasEnergy(level)) {
-                if (!(this.getInstance(Core.class).getManagerByClass(EnergyManager.class).use(player, skill.getName(), this.getEnergy(level), true))) {
+                if (!(this.getInstanceByClass(Core.class).getManagerByClass(EnergyManager.class).use(player, skill.getName(), this.getEnergy(level), true))) {
                     return false;
                 }
             }

@@ -41,7 +41,7 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
 
         final ItemStack itemStack = event.getItemStack();
 
-        if (!(this.getInstance(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof ChampionsPvPWeapon)) {
+        if (!(this.getInstanceByClass(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof ChampionsPvPWeapon)) {
             return;
         }
 
@@ -105,7 +105,7 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
         }
 
         if (!(skill instanceof SelfManagedAbilityComponent)) {
-            final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
+            final RechargeManager rechargeManager = this.getInstanceByClass(Core.class).getManagerByClass(RechargeManager.class);
 
             final RechargeSkillComponent rechargeSkillComponent = UtilJava.cast(RechargeSkillComponent.class, skill);
 
@@ -122,7 +122,7 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
             final EnergySkillComponent energySkillComponent = UtilJava.cast(EnergySkillComponent.class, skill);
 
             if (energySkillComponent.hasEnergy(level)) {
-                final EnergyManager energyManager = this.getInstance(Core.class).getManagerByClass(EnergyManager.class);
+                final EnergyManager energyManager = this.getInstanceByClass(Core.class).getManagerByClass(EnergyManager.class);
 
                 if (!(energyManager.use(player, skill.getName(), energySkillComponent.getEnergy(level), true))) {
                     return false;

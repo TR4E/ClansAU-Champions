@@ -105,7 +105,7 @@ public class Immolate extends ToggleUpdaterDropSkill<Mage, ToggleUpdaterDropSkil
     public void onUsing(final Player player, final ToggleUpdaterDropSkillData data) {
         final Throwable throwable = new Throwable(this.getDisplayName(data.getLevel()), new ItemStack(this.getMaterial()), player, this.getDuration(data.getLevel()), player.getLocation(), new Vector((Math.random() - 0.5D) / 3.0D, Math.random() / 3.0D, (Math.random() - 0.5D) / 3.0D));
 
-        this.getInstance(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
+        this.getInstanceByClass(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
 
         new SoundCreator(Sound.FIZZ, 0.3F, 0.0F).play(player.getLocation());
 

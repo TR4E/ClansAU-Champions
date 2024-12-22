@@ -21,6 +21,6 @@ public abstract class GlobalSkill<T extends GlobalAbility<?>> extends Skill<Role
 
     @Override
     public T getAbility() {
-        return this.getInstance().getManagerByClass(SkillManager.class).getModuleByClass(this.getClassOfAbility());
+        return this.getInstanceByClass().getManagerByClass(SkillManager.class).getModuleByClass(this.getClassOfAbility());
     }
 }

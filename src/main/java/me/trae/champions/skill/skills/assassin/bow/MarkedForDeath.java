@@ -88,7 +88,7 @@ public class MarkedForDeath extends ActiveBowSkill<Assassin, BowSkillData> {
             UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit a <var> with <green><var></green>.", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel())));
         }
 
-        this.getInstance().getManagerByClass(EffectManager.class).getModuleByClass(Vulnerable.class).addUser(new EffectData(damageeLivingEntity, this.getAmplifier(data.getLevel()), duration));
+        this.getInstanceByClass().getManagerByClass(EffectManager.class).getModuleByClass(Vulnerable.class).addUser(new EffectData(damageeLivingEntity, this.getAmplifier(data.getLevel()), duration));
 
         event.setReason(this.getDisplayName(data.getLevel()), duration);
     }

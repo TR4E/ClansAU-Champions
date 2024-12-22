@@ -100,7 +100,7 @@ public class GravityBomb extends ActiveCustomItem<Champions, WeaponManager, Weap
             }
         };
 
-        this.getInstance(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
+        this.getInstanceByClass(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
 
         UtilMessage.simpleMessage(player, "Item", "You threw a <var>.", Collections.singletonList(this.getDisplayName()));
     }

@@ -44,7 +44,7 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
     public Stampede(final Brute module) {
         super(module, PassiveSkillType.PASSIVE_B);
 
-        this.GAMER_MANAGER = this.getInstance(Core.class).getManagerByClass(GamerManager.class);
+        this.GAMER_MANAGER = this.getInstanceByClass(Core.class).getManagerByClass(GamerManager.class);
     }
 
     @Override

@@ -78,7 +78,7 @@ public class NullBlade extends PassiveSkill<Mage, SkillData> implements Listener
 
         final Player damagee = event.getDamageeByClass(Player.class);
 
-        final EnergyManager energyManager = this.getInstance(Core.class).getManagerByClass(EnergyManager.class);
+        final EnergyManager energyManager = this.getInstanceByClass(Core.class).getManagerByClass(EnergyManager.class);
 
         final float energySucked = this.getEnergySucked(level);
 

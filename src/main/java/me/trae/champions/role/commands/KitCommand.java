@@ -40,7 +40,7 @@ public class KitCommand extends Command<Champions, RoleManager> implements AnyCo
 
             final Player player = UtilJava.cast(Player.class, sender);
 
-            final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
+            final RechargeManager rechargeManager = this.getInstanceByClass(Core.class).getManagerByClass(RechargeManager.class);
 
             if (rechargeManager.isCooling(player, "Kit Command", true)) {
                 return;
@@ -51,7 +51,7 @@ public class KitCommand extends Command<Champions, RoleManager> implements AnyCo
                 public void onClick(final Player player, final Role role) {
                     player.closeInventory();
 
-                    final Client client = this.getManager().getInstance(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(player);
+                    final Client client = this.getManager().getInstanceByClass(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(player);
 
                     this.getManager().giveKit(player, role, client.isAdministrating());
 
@@ -77,7 +77,7 @@ public class KitCommand extends Command<Champions, RoleManager> implements AnyCo
 
             final Player player = UtilJava.cast(Player.class, sender);
 
-            final Client client = this.getManager().getInstance(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(player);
+            final Client client = this.getManager().getInstanceByClass(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(player);
 
             this.getManager().giveKit(player, role, client.isAdministrating());
 
@@ -96,7 +96,7 @@ public class KitCommand extends Command<Champions, RoleManager> implements AnyCo
                 return;
             }
 
-            final Client targetClient = this.getManager().getInstance(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(targetPlayer);
+            final Client targetClient = this.getManager().getInstanceByClass(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(targetPlayer);
 
             this.getManager().giveKit(targetPlayer, role, targetClient.isAdministrating());
 

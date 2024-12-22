@@ -122,7 +122,7 @@ public class ArcticArmour extends ToggleUpdaterDropSkill<Mage, ToggleUpdaterDrop
             UtilEntity.givePotionEffect(targetEntity, PotionEffectType.SLOW, this.getSlownessAmplifier(data.getLevel()), this.slownessDuration);
         }
 
-        final BlockRestoreManager blockRestoreManager = this.getInstance(Core.class).getManagerByClass(BlockRestoreManager.class);
+        final BlockRestoreManager blockRestoreManager = this.getInstanceByClass(Core.class).getManagerByClass(BlockRestoreManager.class);
 
         for (final Block block : UtilBlock.getInRoundedRadius(player.getLocation(), this.getDistance(data.getLevel()), this.getDistance(data.getLevel()))) {
             if (block.getLocation().getY() > player.getLocation().getY()) {

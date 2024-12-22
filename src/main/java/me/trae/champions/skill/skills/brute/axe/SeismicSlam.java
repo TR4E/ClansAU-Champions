@@ -110,7 +110,7 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
         UtilServer.runTaskLater(Champions.class, false, 15L, () -> {
             player.setVelocity(new Vector(0.0D, -1.0D, 0.0D));
 
-            this.getInstance(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(NoFall.class).addUser(new EffectData(player) {
+            this.getInstanceByClass(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(NoFall.class).addUser(new EffectData(player) {
                 @Override
                 public boolean isRemoveOnAction() {
                     return true;

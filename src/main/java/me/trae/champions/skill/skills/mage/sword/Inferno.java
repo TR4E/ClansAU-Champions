@@ -95,7 +95,7 @@ public class Inferno extends ChannelSkill<Mage, ChannelSkillData> implements Lis
     public void onUsing(final Player player, final ChannelSkillData data) {
         final Throwable throwable = new Throwable(this.getDisplayName(data.getLevel()), new ItemStack(this.getMaterial()), player, this.getDuration(data.getLevel()), player.getEyeLocation(), player.getEyeLocation().getDirection().add(new Vector(UtilMath.getRandomNumber(Double.class, -0.2D, 0.2D), UtilMath.getRandomNumber(Double.class, -0.2D, 0.3D), UtilMath.getRandomNumber(Double.class, -0.2D, 0.2D))));
 
-        this.getInstance(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
+        this.getInstanceByClass(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
 
         new SoundCreator(Sound.GHAST_FIREBALL, 0.1F, 1.0F).play(player.getLocation());
     }

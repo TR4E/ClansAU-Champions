@@ -26,7 +26,7 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
 
     @Update(delay = 50L)
     public void onUpdater() {
-        for (final Role role : this.getInstance().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
+        for (final Role role : this.getInstanceByClass().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
             for (final ChannelSkill<?, ?> skill : role.getSkillsByClass(ChannelSkill.class)) {
                 skill.getUsers().values().removeIf(data -> {
                     final Player player = Bukkit.getPlayer(data.getUUID());
@@ -58,7 +58,7 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
             return false;
         }
 
-        final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
+        final RechargeManager rechargeManager = this.getInstanceByClass(Core.class).getManagerByClass(RechargeManager.class);
 
         if (!(player.isBlocking())) {
             if (skill instanceof ToggleSkill<?> && skill.isUsingByPlayer(player)) {
@@ -85,7 +85,7 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
             return false;
         }
 
-        final EnergyManager energyManager = this.getInstance(Core.class).getManagerByClass(EnergyManager.class);
+        final EnergyManager energyManager = this.getInstanceByClass(Core.class).getManagerByClass(EnergyManager.class);
 
         if (!(skill.isUsingByPlayer(player))) {
             if (skill.hasEnergyNeeded(level)) {

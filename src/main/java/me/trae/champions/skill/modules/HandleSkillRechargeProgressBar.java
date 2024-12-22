@@ -56,13 +56,13 @@ public class HandleSkillRechargeProgressBar extends SpigotListener<Champions, Sk
             return;
         }
 
-        final Weapon<?, ?, ?> weapon = this.getInstance(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack);
+        final Weapon<?, ?, ?> weapon = this.getInstanceByClass(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack);
         if (weapon != null && !(weapon.isChampionsWeapon())) {
             UtilAbility.removeActionBar(player, this.PRIORITY);
             return;
         }
 
-        final Role playerRole = this.getInstance().getManagerByClass(RoleManager.class).getPlayerRole(player);
+        final Role playerRole = this.getInstanceByClass().getManagerByClass(RoleManager.class).getPlayerRole(player);
         if (playerRole == null) {
             UtilAbility.removeActionBar(player, this.PRIORITY);
             return;

@@ -101,7 +101,7 @@ public class GlacialPrison extends ActiveSkill<Mage, SkillData> implements Liste
 
         final Throwable throwable = new Throwable(this.getName(), new ItemStack(this.getMaterial()), player, duration, player.getEyeLocation(), player.getEyeLocation().getDirection().multiply(this.itemVelocity));
 
-        this.getInstance(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
+        this.getInstanceByClass(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
 
         this.addUser(new SkillData(player, level, duration));
 
@@ -125,7 +125,7 @@ public class GlacialPrison extends ActiveSkill<Mage, SkillData> implements Liste
 
         event.setCancelled(true);
 
-        final BlockRestoreManager blockRestoreManager = this.getInstance(Core.class).getManagerByClass(BlockRestoreManager.class);
+        final BlockRestoreManager blockRestoreManager = this.getInstanceByClass(Core.class).getManagerByClass(BlockRestoreManager.class);
 
         for (final Block block : UtilBlock.getSphere(event.getLocation(), this.getDistance(data.getLevel()), true)) {
             if (!(UtilBlock.airFoliage(block.getType()))) {

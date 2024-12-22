@@ -84,7 +84,7 @@ public class ThrowingWeb extends ActiveCustomItem<Champions, WeaponManager, Weap
     public void onActivate(final Player player, final ActionType actionType) {
         final Throwable throwable = new Throwable(this.getAbilityName(), this.getItemStack(), player, this.duration, player.getEyeLocation(), player.getEyeLocation().getDirection().multiply(this.itemVelocity));
 
-        this.getInstance(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
+        this.getInstanceByClass(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
 
         UtilMessage.simpleMessage(player, "Item", "You threw a <var>.", Collections.singletonList(this.getDisplayName()));
     }
@@ -129,7 +129,7 @@ public class ThrowingWeb extends ActiveCustomItem<Champions, WeaponManager, Weap
             return;
         }
 
-        final BlockRestoreManager blockRestoreManager = this.getInstance(Core.class).getManagerByClass(BlockRestoreManager.class);
+        final BlockRestoreManager blockRestoreManager = this.getInstanceByClass(Core.class).getManagerByClass(BlockRestoreManager.class);
 
         for (final Block block : this.getBlocks(location)) {
             if (UtilServer.getEvent(new WeaponLocationEvent(this, block.getLocation())).isCancelled()) {

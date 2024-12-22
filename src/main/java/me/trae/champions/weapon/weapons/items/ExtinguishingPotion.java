@@ -114,7 +114,7 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
     private void onLeftClick(final Player player) {
         final Throwable throwable = new Throwable(this.getAbilityName(ActionType.LEFT_CLICK), this.getItemStack(), player, this.duration, player.getEyeLocation(), player.getEyeLocation().getDirection().multiply(this.itemVelocity));
 
-        this.getInstance(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
+        this.getInstanceByClass(Core.class).getManagerByClass(ThrowableManager.class).addThrowable(throwable);
 
         UtilMessage.simpleMessage(player, this.getName(), "You used <var>.", Collections.singletonList(this.getDisplayAbilityName(ActionType.LEFT_CLICK)));
     }

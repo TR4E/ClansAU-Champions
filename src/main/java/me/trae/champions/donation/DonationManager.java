@@ -17,6 +17,6 @@ public class DonationManager extends AbstractDonationManager<Champions, Donation
 
     @Override
     public PerkManager getPerkManager() {
-        return this.getInstance(Champions.class).getManagerByClass(PerkManager.class);
+        return this.getInstanceByClass(Champions.class).getManagerByClass(PerkManager.class);
     }
 }

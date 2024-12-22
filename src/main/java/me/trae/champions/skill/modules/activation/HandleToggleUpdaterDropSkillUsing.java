@@ -25,7 +25,7 @@ public class HandleToggleUpdaterDropSkillUsing extends SpigotUpdater<Champions, 
 
     @Update(delay = 50L)
     public void onUpdater() {
-        for (final Role role : this.getInstance().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
+        for (final Role role : this.getInstanceByClass().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
             for (final ToggleUpdaterDropSkill<?, ?> skill : role.getSkillsByClass(ToggleUpdaterDropSkill.class)) {
                 skill.getUsers().values().removeIf(data -> {
                     final Player player = Bukkit.getPlayer(data.getUUID());
@@ -49,7 +49,7 @@ public class HandleToggleUpdaterDropSkillUsing extends SpigotUpdater<Champions, 
     }
 
     private boolean canActivateSkill(final Player player, final ToggleUpdaterDropSkill<?, ?> skill) {
-        if (!(this.getInstance(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(player.getEquipment().getItemInHand()) instanceof PassiveActivatorWeapon)) {
+        if (!(this.getInstanceByClass(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(player.getEquipment().getItemInHand()) instanceof PassiveActivatorWeapon)) {
             return false;
         }
 
@@ -62,7 +62,7 @@ public class HandleToggleUpdaterDropSkillUsing extends SpigotUpdater<Champions, 
             return false;
         }
 
-        final EnergyManager energyManager = this.getInstance(Core.class).getManagerByClass(EnergyManager.class);
+        final EnergyManager energyManager = this.getInstanceByClass(Core.class).getManagerByClass(EnergyManager.class);
 
         if (!(skill.isUsingByPlayer(player))) {
             if (skill.hasEnergyNeeded(level)) {
@@ -75,7 +75,7 @@ public class HandleToggleUpdaterDropSkillUsing extends SpigotUpdater<Champions, 
         if (skill.hasEnergyUsing(level)) {
             if (!(energyManager.use(player, skill.getName(), skill.getEnergyUsing(level), true))) {
                 if (skill.hasRecharge(level)) {
-                    final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
+                    final RechargeManager rechargeManager = this.getInstanceByClass(Core.class).getManagerByClass(RechargeManager.class);
 
                     if (!(rechargeManager.add(player, skill.getName(), skill.getRecharge(level), true))) {
                         return false;

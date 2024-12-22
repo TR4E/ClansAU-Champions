@@ -102,7 +102,7 @@ public class SmokeBomb extends DropSkill<Assassin, SkillData> implements Listene
 
         this.addUser(new SkillData(player, level, duration));
 
-        this.getInstance(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(Invisibility.class).addUser(new EffectData(player, duration));
+        this.getInstanceByClass(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(Invisibility.class).addUser(new EffectData(player, duration));
 
         for (int i = 0; i < 3; i++) {
             new SoundCreator(Sound.FIZZ, 2.0F, 0.5F).play(player.getLocation());
@@ -139,7 +139,7 @@ public class SmokeBomb extends DropSkill<Assassin, SkillData> implements Listene
             return;
         }
 
-        final Invisibility effect = this.getInstance(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(Invisibility.class);
+        final Invisibility effect = this.getInstanceByClass(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(Invisibility.class);
         if (effect.isUserByEntity(player)) {
             effect.removeUser(player);
         }

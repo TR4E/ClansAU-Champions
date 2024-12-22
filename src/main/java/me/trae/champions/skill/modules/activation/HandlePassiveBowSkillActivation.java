@@ -44,7 +44,7 @@ public class HandlePassiveBowSkillActivation extends SpigotListener<Champions, S
 
         final ItemStack itemStack = event.getBow();
 
-        if (!(this.getInstance(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof ChampionsPvPWeapon)) {
+        if (!(this.getInstanceByClass(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof ChampionsPvPWeapon)) {
             return;
         }
 

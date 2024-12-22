@@ -101,7 +101,7 @@ public class SwimAbility extends GlobalAbility<Swim> implements Listener {
         final double yMax = this.yMax;
         final boolean groundBoost = this.groundBoost;
 
-        if (this.getInstance(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(player).isAdministrating()) {
+        if (this.getInstanceByClass(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(player).isAdministrating()) {
             strength += 0.2D;
             yAdd += 0.2D;
         }

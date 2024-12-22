@@ -85,8 +85,8 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
             return;
         }
 
-        final RechargeManager rechargeManager = this.getInstance(Core.class).getManagerByClass(RechargeManager.class);
-        final EnergyManager energyManager = this.getInstance(Core.class).getManagerByClass(EnergyManager.class);
+        final RechargeManager rechargeManager = this.getInstanceByClass(Core.class).getManagerByClass(RechargeManager.class);
+        final EnergyManager energyManager = this.getInstanceByClass(Core.class).getManagerByClass(EnergyManager.class);
 
         if (this.hasRecharge(level)) {
             if (rechargeManager.isCooling(player, this.getName(), true)) {

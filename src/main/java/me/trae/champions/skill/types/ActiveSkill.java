@@ -27,7 +27,7 @@ public abstract class ActiveSkill<R extends Role, D extends SkillData> extends S
             return false;
         }
 
-        if (this.getInstance().getManagerByClass(EffectManager.class).getModuleByClass(Silenced.class).isUserByEntity(player)) {
+        if (this.getInstanceByClass().getManagerByClass(EffectManager.class).getModuleByClass(Silenced.class).isUserByEntity(player)) {
             UtilMessage.simpleMessage(player, "Skill", "You cannot use <green><var></green> while silenced.", Collections.singletonList(this.getName()));
             return false;
         }

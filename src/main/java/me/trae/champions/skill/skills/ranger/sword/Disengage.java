@@ -147,7 +147,7 @@ public class Disengage extends ActiveSkill<Ranger, SkillData> implements Listene
 
         UtilEntity.givePotionEffect(damager, PotionEffectType.SLOW, this.slownessAmplifier, this.getSlownessDuration(data.getLevel()));
 
-        this.getInstance(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(NoFall.class).addUser(new EffectData(damagee, 3000L) {
+        this.getInstanceByClass(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(NoFall.class).addUser(new EffectData(damagee, 3000L) {
             @Override
             public boolean isRemoveOnAction() {
                 return true;

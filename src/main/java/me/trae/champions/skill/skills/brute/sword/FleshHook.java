@@ -107,7 +107,7 @@ public class FleshHook extends ChannelSkill<Brute, FleshHookData> implements Tog
 
         final double velocity = base + (data.getCharges() / 20.0D) * (0.25D * base);
 
-        final ThrowableManager throwableManager = this.getInstance(Core.class).getManagerByClass(ThrowableManager.class);
+        final ThrowableManager throwableManager = this.getInstanceByClass(Core.class).getManagerByClass(ThrowableManager.class);
 
         for (int i = -20; i <= 20; i += 5) {
             playerLocationCloned.setYaw(playerLocation.getYaw() + i);
@@ -168,7 +168,7 @@ public class FleshHook extends ChannelSkill<Brute, FleshHookData> implements Tog
 
         final LivingEntity targetEntity = event.getTarget();
 
-        if (throwable.isCollided(targetEntity) || this.getInstance(Core.class).getManagerByClass(ThrowableManager.class).getThrowableMap().values().stream().filter(t -> t.getName().startsWith(this.getName()) && t.getThrowerPlayer().equals(throwerPlayer)).anyMatch(t -> t.isCollided(targetEntity))) {
+        if (throwable.isCollided(targetEntity) || this.getInstanceByClass(Core.class).getManagerByClass(ThrowableManager.class).getThrowableMap().values().stream().filter(t -> t.getName().startsWith(this.getName()) && t.getThrowerPlayer().equals(throwerPlayer)).anyMatch(t -> t.isCollided(targetEntity))) {
             return;
         }
 

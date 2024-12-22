@@ -40,7 +40,7 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
     public Swordsmanship(final Knight module) {
         super(module, PassiveSkillType.PASSIVE_B);
 
-        this.GAMER_MANAGER = this.getInstance(Core.class).getManagerByClass(GamerManager.class);
+        this.GAMER_MANAGER = this.getInstanceByClass(Core.class).getManagerByClass(GamerManager.class);
     }
 
     @Override

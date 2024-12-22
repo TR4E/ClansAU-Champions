@@ -86,7 +86,7 @@ public class RopedArrow extends ActiveBowSkill<Ranger, BowSkillData> {
             return;
         }
 
-        this.getInstance(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(NoFall.class).addUser(new EffectData(player) {
+        this.getInstanceByClass(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(NoFall.class).addUser(new EffectData(player) {
             @Override
             public boolean isRemoveOnAction() {
                 return true;
