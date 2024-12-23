@@ -103,11 +103,6 @@ public class LightningOrb extends ActiveSkill<Mage, SkillData> implements Listen
     }
 
     @Override
-    public int getDefaultLevel() {
-        return 2;
-    }
-
-    @Override
     public int getMaxLevel() {
         return 3;
     }
