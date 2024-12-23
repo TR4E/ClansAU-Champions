@@ -4,6 +4,7 @@ import me.trae.api.champions.role.Role;
 import me.trae.api.champions.skill.Skill;
 import me.trae.champions.Champions;
 import me.trae.champions.build.commands.BuildCommand;
+import me.trae.champions.build.commands.CheckBuildCommand;
 import me.trae.champions.build.data.RoleBuild;
 import me.trae.champions.build.data.RoleSkill;
 import me.trae.champions.build.enums.BuildProperty;
@@ -34,6 +35,7 @@ public class BuildManager extends SpigotManager<Champions> implements IBuildMana
     public void registerModules() {
         // Commands
         addModule(new BuildCommand(this));
+        addModule(new CheckBuildCommand(this));
 
         // Data Modules
         addModule(new HandleLoadBuildDataOnPlayerJoin(this));

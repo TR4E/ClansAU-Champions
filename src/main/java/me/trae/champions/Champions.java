@@ -8,6 +8,7 @@ import me.trae.champions.perk.PerkManager;
 import me.trae.champions.preference.PreferenceManager;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
+import me.trae.champions.tip.TipManager;
 import me.trae.champions.weapon.WeaponManager;
 import me.trae.champions.world.WorldManager;
 import me.trae.core.blood.BloodManager;
@@ -30,6 +31,7 @@ public class Champions extends MiniPlugin {
         addManager(new PreferenceManager(this));
         addManager(new RoleManager(this));
         addManager(new SkillManager(this));
+        addManager(new TipManager(this));
         addManager(new WeaponManager(this));
         addManager(new WorldManager(this));
     }
