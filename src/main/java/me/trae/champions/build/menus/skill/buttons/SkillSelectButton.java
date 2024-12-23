@@ -8,6 +8,7 @@ import me.trae.champions.build.enums.BuildProperty;
 import me.trae.champions.build.menus.skill.SkillEditMenu;
 import me.trae.champions.build.menus.skill.buttons.interfaces.ISkillSelectButton;
 import me.trae.core.menu.Button;
+import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilString;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
@@ -53,11 +54,35 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
 
         final List<String> lore = new ArrayList<>(Arrays.asList(this.getSkill().getDescription(level)));
 
-        for (int i = 0; i < 2; i++) {
+        final String strikeLine = UtilMessage.strikeLine(lore);
+
+        if (!(lore.isEmpty())) {
             lore.add(" ");
+
+            lore.add(strikeLine);
         }
 
         lore.add(UtilString.pair("<yellow>Skill Token Cost", String.format("<white>%s", this.getSkill().getTokenCost())));
+        lore.add(UtilString.pair("<yellow>Skill Max Level", String.format("<white>%s", this.getSkill().getMaxLevel())));
+
+        lore.add(" ");
+
+        if (this.getSkill().getMaxLevel() == level) {
+            lore.add("<gold><bold>You have reached the max skill level!");
+        } else if (this.isSkillTypeEquippedByOtherSkill()) {
+            lore.add("<gold><bold>You already have a skill of this type selected!");
+        } else {
+            final int skillPoints = this.getMenu().getManager().getSkillPoints(this.getMenu().getRole(), this.getMenu().getRoleBuild());
+            if (skillPoints <= 0) {
+                lore.add("<gold><bold>You have no skill points left!");
+            } else if (this.getRoleSkill() != null) {
+                lore.add("<green><bold>Left-Click to increase the skill level!");
+                lore.add("<red><bold>Right-Click to decrease the skill level!");
+            } else {
+                lore.add("<green><bold>Left-Click to equip the skill!");
+            }
+        }
+
 
         return lore.toArray(new String[0]);
     }
@@ -89,7 +114,7 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
             return;
         }
 
-        if (roleSkill == null && roleBuild.getSkills().values().stream().filter(value -> value.getType().equals(skill.getType())).anyMatch(value -> value.getLevel() > 0)) {
+        if (this.isSkillTypeEquippedByOtherSkill()) {
             return;
         }
 
@@ -126,6 +151,10 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
     }
 
     private void onRightClickButton(final Player player, final Role role, final RoleBuild roleBuild, final Skill<?, ?> skill, final RoleSkill roleSkill) {
+        if (this.isSkillTypeEquippedByOtherSkill()) {
+            return;
+        }
+
         if (roleSkill == null) {
             new SoundCreator(Sound.ITEM_BREAK).play(player);
             return;
@@ -153,5 +182,25 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
         new SoundCreator(Sound.ORB_PICKUP, 2.0F, 2.0F).play(player);
 
         this.getMenu().build();
+    }
+
+    private boolean isSkillTypeEquippedByOtherSkill() {
+        for (final RoleSkill roleSkill : this.getMenu().getRoleBuild().getSkills().values()) {
+            if (this.getRoleSkill() != null && this.getRoleSkill().equals(roleSkill)) {
+                continue;
+            }
+
+            if (!(roleSkill.getType().equals(this.getSkill().getType()))) {
+                continue;
+            }
+
+            if (roleSkill.getLevel() <= 0) {
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

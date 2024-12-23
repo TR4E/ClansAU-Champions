@@ -23,20 +23,23 @@ import java.util.List;
 
 public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
 
+    private final ClientManager CLIENT_MANAGER;
+    private final BuildManager BUILD_MANAGER;
+    private final List<Role> ROLE_LIST;
+
     public HandleRoleEquip(final RoleManager manager) {
         super(manager);
+
+        this.CLIENT_MANAGER = this.getInstanceByClass(Core.class).getManagerByClass(ClientManager.class);
+        this.BUILD_MANAGER = this.getInstance().getManagerByClass(BuildManager.class);
+        this.ROLE_LIST = this.getManager().getModulesByClass(Role.class);
     }
 
     @Update(delay = 200L)
     public void onUpdater() {
-        final BuildManager buildManager = this.getInstance().getManagerByClass(BuildManager.class);
-        final ClientManager clientManager = this.getInstanceByClass(Core.class).getManagerByClass(ClientManager.class);
-
-        final List<Role> roleList = this.getManager().getModulesByClass(Role.class);
-
         for (final Player player : UtilServer.getOnlinePlayers()) {
-            if (!(buildManager.getBuilds().containsKey(player.getUniqueId()))) {
-                final Client client = clientManager.getClientByPlayer(player);
+            if (!(this.BUILD_MANAGER.getBuilds().containsKey(player.getUniqueId()))) {
+                final Client client = this.CLIENT_MANAGER.getClientByPlayer(player);
                 if (client != null && !(UtilTime.elapsed(client.getLastJoined(), 400L))) {
                     continue;
                 }
@@ -44,7 +47,7 @@ public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
 
             Role playerRole = null;
 
-            for (final Role role : roleList) {
+            for (final Role role : this.ROLE_LIST) {
                 if (!(role.isEnabled())) {
                     continue;
                 }

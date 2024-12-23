@@ -6,6 +6,7 @@ import me.trae.core.Core;
 import me.trae.core.client.ClientManager;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.framework.types.frame.SpigotListener;
+import me.trae.core.item.ItemBuilder;
 import me.trae.core.item.events.ItemUpdateEvent;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -62,10 +63,17 @@ public class HandleClassCustomizationTable extends SpigotListener<Champions, Bui
 
     @EventHandler
     public void onItemUpdate(final ItemUpdateEvent event) {
-        if (event.getBuilder().getItemStack().getType() != this.getMaterial()) {
+        final ItemBuilder builder = event.getBuilder();
+
+        if (builder.getItemStack().getType() != this.getMaterial()) {
             return;
         }
 
-        event.getBuilder().setDisplayName("Class Customization");
+        builder.setDisplayName("Class Customization");
+
+        builder.setLore(new String[]{
+                "Manage multiple builds",
+                "and tweak skill abilities."
+        });
     }
 }
