@@ -11,6 +11,5 @@ public class GuideManager extends AbstractGuideManager<Champions> {
 
     @Override
     public void registerModules() {
-
     }
 }
