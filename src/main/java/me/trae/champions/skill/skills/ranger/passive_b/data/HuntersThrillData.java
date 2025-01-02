@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 public class HuntersThrillData extends BowSkillData implements IHuntersThrill {
 
     private int charges;
-    private long lastHit;
+    private long lastHit = -1L;
 
     public HuntersThrillData(final Player player, final int level) {
         super(player, level);
