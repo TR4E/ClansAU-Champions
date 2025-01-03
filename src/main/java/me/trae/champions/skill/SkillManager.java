@@ -13,6 +13,7 @@ import me.trae.champions.skill.modules.HandleSkillDataExpirations;
 import me.trae.champions.skill.modules.HandleSkillRechargeProgressBar;
 import me.trae.champions.skill.modules.activation.*;
 import me.trae.champions.skill.modules.friendlyfire.DisableSkillFriendlyFireWhileAdministrating;
+import me.trae.champions.skill.modules.friendlyfire.DisableSkillFriendlyFireWhileVanished;
 import me.trae.champions.skill.skills.global.modules.SwimAbility;
 import me.trae.core.framework.SpigotManager;
 import me.trae.core.utility.UtilJava;
@@ -35,8 +36,11 @@ public class SkillManager extends SpigotManager<Champions> implements ISkillMana
         addModule(new HandlePassiveBowSkillActivation(this));
         addModule(new HandleToggleUpdaterDropSkillUsing(this));
 
-        // Modules
+        // Friendly Fire Modules
         addModule(new DisableSkillFriendlyFireWhileAdministrating(this));
+        addModule(new DisableSkillFriendlyFireWhileVanished(this));
+
+        // Modules
         addModule(new HandleBoosterWeaponOnSkillLevel(this));
         addModule(new HandleSkillDataExpirations(this));
         addModule(new HandleSkillRechargeProgressBar(this));
