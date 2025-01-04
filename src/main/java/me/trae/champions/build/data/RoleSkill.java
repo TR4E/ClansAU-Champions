@@ -50,7 +50,7 @@ public class RoleSkill implements IRoleSkill {
 
     @Override
     public String getDisplayName() {
-        return String.format("%s %s", this.getName(), this.getLevel());
+        return UtilString.format("%s %s", this.getName(), this.getLevel());
     }
 
     @Override
