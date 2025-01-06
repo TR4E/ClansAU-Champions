@@ -96,7 +96,7 @@ public class Sharpshooter extends PassiveBowSkill<Ranger, SharpshooterData> impl
     @Update(delay = 250L)
     public void onUpdater() {
         this.getUsers().values().removeIf(data -> {
-            if (data.getLastHit() == 0L || !(UtilTime.elapsed(data.getLastHit(), this.lastHitExpiration))) {
+            if (!(UtilTime.elapsed(data.getLastHit(), this.lastHitExpiration))) {
                 return false;
             }
 

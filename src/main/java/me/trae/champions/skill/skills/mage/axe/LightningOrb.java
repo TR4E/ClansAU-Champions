@@ -179,7 +179,7 @@ public class LightningOrb extends ActiveSkill<Mage, SkillData> implements Listen
             UtilMessage.simpleMessage(throwerPlayer, this.getModule().getName(), "You hit <var> with <green><var></green>.", Arrays.asList(friendlyFireEvent.getTargetName(), this.getDisplayName(data.getLevel())));
             UtilMessage.simpleMessage(targetEntity, this.getModule().getName(), "<var> hit you with <green><var></green>.", Arrays.asList(friendlyFireEvent.getPlayerName(), this.getDisplayName(data.getLevel())));
         } else {
-            UtilMessage.simpleMessage(throwerPlayer, this.getModule().getName(), "You hit a <var> with <green><var></green>.", Arrays.asList(targetEntity.getName(), this.getDisplayName(data.getLevel())));
+            UtilMessage.simpleMessage(throwerPlayer, this.getModule().getName(), "You hit a <yellow><var></yellow> with <green><var></green>.", Arrays.asList(targetEntity.getName(), this.getDisplayName(data.getLevel())));
         }
 
         this.getInstance().getManagerByClass(EffectManager.class).getModuleByClass(Shock.class).addUser(new EffectData(targetEntity, this.shockDuration));

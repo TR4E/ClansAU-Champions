@@ -40,7 +40,7 @@ public class HuntersThrill extends PassiveBowSkill<Ranger, HuntersThrillData> im
     }
 
     private int getMaxCharges(final int level) {
-        return this.maxCharges + level;
+        return this.maxCharges + (level - 1);
     }
 
     private long getDuration(final int level) {
@@ -65,6 +65,11 @@ public class HuntersThrill extends PassiveBowSkill<Ranger, HuntersThrillData> im
     @Override
     public int getMaxLevel() {
         return 3;
+    }
+
+    @Override
+    public boolean resetDataOnShoot() {
+        return false;
     }
 
     @Override

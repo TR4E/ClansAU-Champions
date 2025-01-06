@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 public class SharpshooterData extends BowSkillData implements ISharpshooterData {
 
     private int charges;
-    private long lastHit;
+    private long lastHit = -1L;
 
     public SharpshooterData(final Player player, final int level) {
         super(player, level);
