@@ -11,12 +11,15 @@ import me.trae.champions.skill.skills.ranger.bow.RopedArrow;
 import me.trae.champions.skill.skills.ranger.passive_a.Longshot;
 import me.trae.champions.skill.skills.ranger.passive_a.Precision;
 import me.trae.champions.skill.skills.ranger.passive_a.Sharpshooter;
+import me.trae.champions.skill.skills.ranger.passive_a.VitalitySpores;
 import me.trae.champions.skill.skills.ranger.passive_b.Entangle;
 import me.trae.champions.skill.skills.ranger.passive_b.HuntersThrill;
 import me.trae.champions.skill.skills.ranger.sword.Disengage;
+import me.trae.champions.skill.skills.ranger.sword.WolfsPounce;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Wolf;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +34,7 @@ public class Ranger extends Role implements Archer {
     public void registerSubModules() {
         // Sword Skills
         addSubModule(new Disengage(this));
+        addSubModule(new WolfsPounce(this));
 
         // Axe Skills
         addSubModule(new Agility(this));
@@ -45,6 +49,7 @@ public class Ranger extends Role implements Archer {
         addSubModule(new Longshot(this));
         addSubModule(new Precision(this));
         addSubModule(new Sharpshooter(this));
+        addSubModule(new VitalitySpores(this));
 
         // Passive B Skills
         addSubModule(new Entangle(this));
