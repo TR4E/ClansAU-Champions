@@ -10,10 +10,13 @@ import me.trae.core.energy.EnergyManager;
 import me.trae.core.recharge.RechargeManager;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.updater.interfaces.Updater;
-import me.trae.core.utility.*;
+import me.trae.core.utility.UtilBlock;
+import me.trae.core.utility.UtilMessage;
+import me.trae.core.utility.UtilString;
+import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.components.SelfManagedAbilityComponent;
 import me.trae.core.utility.objects.SoundCreator;
-import me.trae.core.utility.particle.ParticleEffect;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.block.BlockFace;
@@ -77,11 +80,6 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
             return;
         }
 
-        if (data.getCharges() == 0) {
-            UtilMessage.simpleMessage(player, this.getName(), "You have no charges left.");
-            return;
-        }
-
         final RechargeManager rechargeManager = this.getInstanceByClass(Core.class).getManagerByClass(RechargeManager.class);
         final EnergyManager energyManager = this.getInstanceByClass(Core.class).getManagerByClass(EnergyManager.class);
 
@@ -97,6 +95,8 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
 
         double curRange = 0.0D;
 
+        Location lastLocation = player.getLocation();
+
         while (curRange <= this.getMaxRange(data.getLevel())) {
             final Location newTarget = player.getLocation().add(new Vector(0.0D, 0.2D, 0.0D)).add(player.getLocation().getDirection().multiply(curRange));
 
@@ -105,7 +105,12 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
             }
 
             curRange += 0.2D;
-            ParticleEffect.FIREWORKS_SPARK.display(0.0F, 0.5F, 0.0F, 1.0F, 1, newTarget, 128.0F);
+
+            if (!(lastLocation.equals(newTarget))) {
+                lastLocation.getWorld().playEffect(lastLocation, Effect.FIREWORKS_SPARK, 4);
+            }
+
+            lastLocation = newTarget;
         }
 
         curRange -= 0.4D;
@@ -122,7 +127,6 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
         new SoundCreator(Sound.WITHER_SHOOT, 0.4F, 1.2F).play(player.getLocation());
         new SoundCreator(Sound.SILVERFISH_KILL, 1.0F, 1.6F).play(player.getLocation());
 
-
         data.setCharges(Math.max(0, data.getCharges() - 1));
 
         this.displayCharges(player, data);
@@ -134,6 +138,20 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
         if (data.getCharges() == 0) {
             rechargeManager.add(player, this.getName(), this.getRecharge(level), true);
         }
+    }
+
+    @Override
+    public boolean canActivate(final Player player) {
+        if (!(super.canActivate(player))) {
+            return false;
+        }
+
+        if (!(this.isUserByPlayer(player)) || this.getUserByPlayer(player).getCharges() == 0) {
+            UtilMessage.simpleMessage(player, this.getName(), "You have no charges left.");
+            return false;
+        }
+
+        return true;
     }
 
     private void displayCharges(final Player player, final FlashData data) {

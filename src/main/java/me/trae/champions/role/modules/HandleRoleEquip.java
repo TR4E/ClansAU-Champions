@@ -12,7 +12,9 @@ import me.trae.core.client.Client;
 import me.trae.core.client.ClientManager;
 import me.trae.core.framework.types.frame.SpigotUpdater;
 import me.trae.core.updater.annotations.Update;
+import me.trae.core.utility.UtilLogger;
 import me.trae.core.utility.UtilServer;
+import me.trae.core.utility.UtilString;
 import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.enums.ArmourSlotType;
 import org.bukkit.Bukkit;
@@ -90,6 +92,10 @@ public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
         UtilRole.equipRoleEffect(role, player, false);
 
         UtilServer.callEvent(new RoleChangeEvent(role, player));
+
+        if (role != null) {
+            UtilLogger.log(Champions.class, "Roles", "Equipped", UtilString.format("%s equipped %s", player.getName(), role.getName()));
+        }
     }
 
     @Override

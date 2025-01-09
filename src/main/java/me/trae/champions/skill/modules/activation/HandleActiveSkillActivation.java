@@ -17,8 +17,10 @@ import me.trae.core.Core;
 import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.types.frame.SpigotListener;
 import me.trae.core.recharge.RechargeManager;
+import me.trae.core.utility.UtilLogger;
 import me.trae.core.utility.UtilJava;
 import me.trae.core.utility.UtilServer;
+import me.trae.core.utility.UtilString;
 import me.trae.core.utility.components.SelfManagedAbilityComponent;
 import me.trae.core.weapon.WeaponManager;
 import me.trae.core.world.events.PlayerItemInteractEvent;
@@ -80,6 +82,8 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
         }
 
         skill.onActivate(player, level);
+
+        UtilLogger.log(Champions.class, "Skills", "Activations", UtilString.format("%s used %s", player.getName(), skill.getDisplayName(level)));
     }
 
     private boolean canActivateSkill(final Player player, final ActiveSkill<?, ?> skill) {
