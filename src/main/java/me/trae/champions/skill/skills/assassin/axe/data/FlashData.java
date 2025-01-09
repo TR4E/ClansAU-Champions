@@ -11,6 +11,8 @@ public class FlashData extends SkillData implements IFlashData {
 
     public FlashData(final Player player, final int level) {
         super(player, level);
+
+        this.lastUpdated = System.currentTimeMillis();
     }
 
     @Override

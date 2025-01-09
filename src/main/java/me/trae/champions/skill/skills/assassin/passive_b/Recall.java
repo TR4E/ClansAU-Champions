@@ -108,6 +108,10 @@ public class Recall extends DropSkill<Assassin, RecallData> implements Updater {
 
             final RecallData data = this.getUserByPlayer(player);
 
+            if (data.getLevel() != level) {
+                data.setLevel(level);
+            }
+
             if (!(UtilTime.elapsed(data.getLastUpdated(), this.getDuration(data.getLevel())))) {
                 continue;
             }

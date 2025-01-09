@@ -9,4 +9,6 @@ public interface ISkillData extends GetSystemTimeComponent, GetDurationComponent
     UUID getUUID();
 
     int getLevel();
+
+    void setLevel(final int level);
 }

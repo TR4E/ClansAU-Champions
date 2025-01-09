@@ -8,7 +8,8 @@ import java.util.UUID;
 public class SkillData implements ISkillData {
 
     private final UUID uuid;
-    private final int level;
+
+    private int level;
 
     private long systemTime, duration;
 
@@ -31,6 +32,11 @@ public class SkillData implements ISkillData {
     @Override
     public int getLevel() {
         return this.level;
+    }
+
+    @Override
+    public void setLevel(final int level) {
+        this.level = level;
     }
 
     @Override

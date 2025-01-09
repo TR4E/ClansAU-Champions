@@ -81,6 +81,10 @@ public class HolyLight extends PassiveSkill<Mage, SkillData> implements Updater 
 
             final SkillData data = this.getUserByPlayer(player);
 
+            if (data.getLevel() != level) {
+                data.setLevel(level);
+            }
+
             this.giveEffect(player, data.getLevel(), Integer.MAX_VALUE);
 
             for (final Player targetPlayer : UtilEntity.getNearbyEntities(Player.class, player.getLocation(), this.getDistance(data.getLevel()))) {

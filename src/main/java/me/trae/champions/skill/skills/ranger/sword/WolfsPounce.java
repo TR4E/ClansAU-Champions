@@ -17,7 +17,6 @@ import me.trae.core.updater.interfaces.Updater;
 import me.trae.core.utility.*;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -118,8 +117,7 @@ public class WolfsPounce extends ChannelSkill<Ranger, WolfsPounceData> implement
             new SoundCreator(Sound.CLICK, 0.4F, 1.0F + (0.5F * data.getCharges())).play(player.getLocation());
         }
 
-//        UtilTitle.sendActionBar(player, String.format("<gray>Charges: <yellow>%s", data.getCharges() + "%"));
-        UtilTitle.sendActionBar(player, UtilMath.getProgressBar((this.maxCharges - data.getCharges()) * 100L, this.maxCharges * 100L, ((double) this.maxCharges / this.incrementedCharges), '▌', '▌', ChatColor.GREEN, ChatColor.RED));
+        UtilMessage.simpleMessage(player, this.getName(), UtilString.pair("Charges", UtilString.format("<yellow>%s", data.getCharges())));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -199,7 +197,7 @@ public class WolfsPounce extends ChannelSkill<Ranger, WolfsPounceData> implement
 
     @Override
     public float getEnergy(final int level) {
-        return 0.0F;
+        return this.energy;
     }
 
     @Override
@@ -214,6 +212,6 @@ public class WolfsPounce extends ChannelSkill<Ranger, WolfsPounceData> implement
 
     @Override
     public long getRecharge(final int level) {
-        return 0L;
+        return this.recharge;
     }
 }

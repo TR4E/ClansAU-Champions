@@ -201,6 +201,10 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
 
             final StampedeData data = this.getUserByPlayer(player);
 
+            if (data.getLevel() != level) {
+                data.setLevel(level);
+            }
+
             if (data.getAmplifier() >= this.getMaxAmplifier(level)) {
                 continue;
             }

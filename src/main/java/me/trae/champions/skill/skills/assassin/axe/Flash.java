@@ -10,10 +10,7 @@ import me.trae.core.energy.EnergyManager;
 import me.trae.core.recharge.RechargeManager;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.updater.interfaces.Updater;
-import me.trae.core.utility.UtilBlock;
-import me.trae.core.utility.UtilMessage;
-import me.trae.core.utility.UtilString;
-import me.trae.core.utility.UtilTime;
+import me.trae.core.utility.*;
 import me.trae.core.utility.components.SelfManagedAbilityComponent;
 import me.trae.core.utility.objects.SoundCreator;
 import me.trae.core.utility.particle.ParticleEffect;
@@ -140,7 +137,7 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
     }
 
     private void displayCharges(final Player player, final FlashData data) {
-        UtilMessage.simpleMessage(player, this.getModule().getName(), UtilString.pair(UtilString.format("%s Charges", this.getName()), UtilString.format("<yellow>%s", data.getCharges())));
+        UtilMessage.simpleMessage(player, this.getName(), UtilString.pair("Charges", UtilString.format("<yellow>%s", data.getCharges())));
     }
 
     @Update(delay = 50L)
@@ -157,7 +154,11 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
 
             final FlashData data = this.getUserByPlayer(player);
 
-            if (data.getCharges() >= this.getMaxCharges(level)) {
+            if (data.getLevel() != level) {
+                data.setLevel(level);
+            }
+
+            if (data.getCharges() >= this.getMaxCharges(data.getLevel())) {
                 continue;
             }
 
