@@ -35,6 +35,10 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
                     }
 
                     if (!(this.canActivateSkill(player, skill))) {
+                        if (!(player.isBlocking()) && skill instanceof ToggleSkill<?> && UtilJava.cast(ToggleSkill.class, skill).isActive(player, data)) {
+                            return false;
+                        }
+
                         skill.reset(player);
                         return true;
                     }

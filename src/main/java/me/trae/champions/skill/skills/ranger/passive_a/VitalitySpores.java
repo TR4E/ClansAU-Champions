@@ -25,9 +25,6 @@ public class VitalitySpores extends PassiveSkill<Ranger, SkillData> implements U
     @ConfigInject(type = Integer.class, path = "Regeneration-Amplifier", defaultValue = "1")
     private int regenerationAmplifier;
 
-    @ConfigInject(type = Long.class, path = "Regeneration-Duration", defaultValue = "6_000")
-    private long regenerationDuration;
-
     public VitalitySpores(final Ranger module) {
         super(module, PassiveSkillType.PASSIVE_A);
 
@@ -48,7 +45,7 @@ public class VitalitySpores extends PassiveSkill<Ranger, SkillData> implements U
         return new String[]{
                 String.format("After <green>%s</green> of not taking damage,", UtilTime.getTime(this.getDuration(level))),
                 "forest spores surround you, giving",
-                String.format("you Regeneration %s for %s", this.regenerationAmplifier, UtilTime.getTime(this.regenerationDuration)),
+                String.format("you Regeneration %s", this.regenerationAmplifier),
                 "",
                 "This remains until you take damage."
         };
@@ -75,7 +72,7 @@ public class VitalitySpores extends PassiveSkill<Ranger, SkillData> implements U
                 continue;
             }
 
-            UtilEntity.givePotionEffect(player, PotionEffectType.REGENERATION, this.regenerationAmplifier, this.regenerationDuration);
+            UtilEntity.givePotionEffect(player, PotionEffectType.REGENERATION, this.regenerationAmplifier, Integer.MAX_VALUE);
         }
     }
 }

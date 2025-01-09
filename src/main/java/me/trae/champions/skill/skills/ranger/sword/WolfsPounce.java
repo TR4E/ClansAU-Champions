@@ -7,12 +7,17 @@ import me.trae.champions.role.types.Ranger;
 import me.trae.champions.skill.skills.ranger.sword.data.WolfsPounceData;
 import me.trae.champions.skill.types.ChannelSkill;
 import me.trae.champions.skill.types.models.ToggleSkill;
+import me.trae.core.Core;
 import me.trae.core.config.annotations.ConfigInject;
+import me.trae.core.effect.EffectManager;
+import me.trae.core.effect.data.EffectData;
+import me.trae.core.effect.types.NoFall;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.updater.interfaces.Updater;
 import me.trae.core.utility.*;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -38,7 +43,7 @@ public class WolfsPounce extends ChannelSkill<Ranger, WolfsPounceData> implement
     @ConfigInject(type = Integer.class, path = "Max-Charges", defaultValue = "100")
     private int maxCharges;
 
-    @ConfigInject(type = Integer.class, path = "Incremented-Charges", defaultValue = "10")
+    @ConfigInject(type = Integer.class, path = "Incremented-Charges", defaultValue = "25")
     private int incrementedCharges;
 
     public WolfsPounce(final Ranger module) {
@@ -55,6 +60,15 @@ public class WolfsPounce extends ChannelSkill<Ranger, WolfsPounceData> implement
         return new String[0];
     }
 
+    private double formatCharges(final int charges) {
+        return charges * 0.01D;
+    }
+
+    @Override
+    public boolean isActive(final Player player, final WolfsPounceData data) {
+        return data.isPounced();
+    }
+
     @Override
     public void onActivate(final Player player, final int level) {
         this.addUser(new WolfsPounceData(player, level));
@@ -62,31 +76,50 @@ public class WolfsPounce extends ChannelSkill<Ranger, WolfsPounceData> implement
 
     @Override
     public void onDeActivate(final Player player, final WolfsPounceData data) {
-        new SoundCreator(Sound.WOLF_BARK, 1.0F, 0.8F + 1.2F * data.getCharges()).play(player.getLocation());
+        if (data.isPounced()) {
+            return;
+        }
 
-        UtilVelocity.velocity(player, 0.4D + 1.4D * data.getCharges(), 0.2D, 0.3D + 0.8D * data.getCharges(), true);
+        data.setPounced(true);
+
+        final double formattedCharges = this.formatCharges(data.getCharges());
+
+        new SoundCreator(Sound.WOLF_BARK, 1.0F, 0.8F + 1.2F * (float) formattedCharges).play(player.getLocation());
+
+        UtilVelocity.velocity(player, 0.4D + 1.4D * formattedCharges, 0.2D, 0.3D + 0.8D * formattedCharges, true);
+
+        this.getInstanceByClass(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(NoFall.class).addUser(new EffectData(player) {
+            @Override
+            public boolean isRemoveOnAction() {
+                return true;
+            }
+        });
+
+        UtilTitle.sendActionBar(player, "<green>Pounced!");
 
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You used <green><var></green>.", Collections.singletonList(this.getDisplayName(data.getLevel())));
     }
 
     @Override
     public void onUsing(final Player player, final WolfsPounceData data) {
-        if (!(UtilTime.elapsed(data.getLastUpdated(), 400L))) {
+        if (data.isPounced()) {
             return;
         }
 
-        if (data.getCharges() >= this.maxCharges) {
-            data.setPounced(true);
-            return;
+        if (data.getCharges() < this.maxCharges) {
+            if (!(UtilTime.elapsed(data.getLastUpdated(), 400L))) {
+                return;
+            }
+
+            data.setCharges(data.getCharges() + this.incrementedCharges);
+
+            data.updateLastUpdated();
+
+            new SoundCreator(Sound.CLICK, 0.4F, 1.0F + (0.5F * data.getCharges())).play(player.getLocation());
         }
 
-        data.setCharges(data.getCharges() + this.incrementedCharges);
-
-        data.updateLastUpdated();
-
-        new SoundCreator(Sound.CLICK, 0.4F, 1.0F + (0.5F * data.getCharges())).play(player.getLocation());
-
-        UtilMessage.simpleMessage(player, this.getName(), UtilString.pair("Charges", UtilString.format("<yellow>+%s", data.getCharges())));
+//        UtilTitle.sendActionBar(player, String.format("<gray>Charges: <yellow>%s", data.getCharges() + "%"));
+        UtilTitle.sendActionBar(player, UtilMath.getProgressBar((this.maxCharges - data.getCharges()) * 100L, this.maxCharges * 100L, ((double) this.maxCharges / this.incrementedCharges), '▌', '▌', ChatColor.GREEN, ChatColor.RED));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -149,7 +182,7 @@ public class WolfsPounce extends ChannelSkill<Ranger, WolfsPounceData> implement
                     UtilMessage.simpleMessage(player, this.getModule().getName(), "You hit a <yellow><var></yellow> with <green><var></green>.", Arrays.asList(targetEntity.getName(), this.getDisplayName(data.getLevel())));
                 }
 
-                final double damage = 6.0D * (data.getCharges() * 0.01D);
+                final double damage = 6.0D * this.formatCharges(data.getCharges());
 
                 new SoundCreator(Sound.WOLF_BARK, 0.5F, 0.5F).play(player.getLocation());
 
@@ -160,7 +193,7 @@ public class WolfsPounce extends ChannelSkill<Ranger, WolfsPounceData> implement
                 return true;
             }
 
-            return UtilTime.elapsed(data.getSystemTime(), 10_000L);
+            return UtilTime.elapsed(data.getSystemTime(), 3_000L);
         });
     }
 

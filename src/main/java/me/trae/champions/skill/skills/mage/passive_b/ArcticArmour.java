@@ -139,6 +139,11 @@ public class ArcticArmour extends ToggleUpdaterDropSkill<Mage, ToggleUpdaterDrop
 
             final Block relativeDownBlock = block.getRelative(BlockFace.DOWN);
 
+            final BlockRestore oldBlockRestore = blockRestoreManager.getBlockRestoreByLocation(relativeDownBlock.getLocation());
+            if (oldBlockRestore != null && !(oldBlockRestore.getName().equals(this.getName()))) {
+                continue;
+            }
+
             final boolean isValidForIce = relativeDownBlock.getType() == Material.ICE || Arrays.asList(Material.STATIONARY_WATER, Material.WATER).contains(relativeDownBlock.getType());
 
             if (isValidForIce) {
