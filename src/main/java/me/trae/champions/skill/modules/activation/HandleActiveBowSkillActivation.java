@@ -10,6 +10,8 @@ import me.trae.champions.weapon.types.ChampionsPvPWeapon;
 import me.trae.core.Core;
 import me.trae.core.framework.types.frame.SpigotListener;
 import me.trae.core.utility.UtilJava;
+import me.trae.core.utility.UtilLogger;
+import me.trae.core.utility.UtilString;
 import me.trae.core.weapon.WeaponManager;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -69,6 +71,8 @@ public class HandleActiveBowSkillActivation extends SpigotListener<Champions, Sk
         data.setArrow(UtilJava.cast(Arrow.class, event.getProjectile()));
 
         skill.onFire(player, UtilJava.matchlessObjectCast(skill.getClassOfData(), data));
+
+        UtilLogger.log(Champions.class, "Skills", "Activations", UtilString.format("%s fired %s", player.getName(), skill.getDisplayName(data.getLevel())));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
