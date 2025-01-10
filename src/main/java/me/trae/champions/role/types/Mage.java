@@ -4,7 +4,7 @@ import me.trae.api.champions.role.Role;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.skills.mage.axe.DefensiveAura;
 import me.trae.champions.skill.skills.mage.axe.LightningOrb;
-import me.trae.champions.skill.skills.mage.axe.MoltenBlast;
+import me.trae.champions.skill.skills.mage.axe.FireBlast;
 import me.trae.champions.skill.skills.mage.passive_a.MagmaBlade;
 import me.trae.champions.skill.skills.mage.passive_a.MoltenShield;
 import me.trae.champions.skill.skills.mage.passive_a.NullBlade;
@@ -12,7 +12,7 @@ import me.trae.champions.skill.skills.mage.passive_b.ArcticArmour;
 import me.trae.champions.skill.skills.mage.passive_b.HolyLight;
 import me.trae.champions.skill.skills.mage.passive_b.Immolate;
 import me.trae.champions.skill.skills.mage.sword.Cyclone;
-import me.trae.champions.skill.skills.mage.sword.GlacialPrison;
+import me.trae.champions.skill.skills.mage.sword.IcePrison;
 import me.trae.champions.skill.skills.mage.sword.Inferno;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
@@ -31,13 +31,13 @@ public class Mage extends Role {
     public void registerSubModules() {
         // Sword Skills
         addSubModule(new Cyclone(this));
-        addSubModule(new GlacialPrison(this));
+        addSubModule(new IcePrison(this));
         addSubModule(new Inferno(this));
 
         // Axe Skills
         addSubModule(new DefensiveAura(this));
         addSubModule(new LightningOrb(this));
-        addSubModule(new MoltenBlast(this));
+        addSubModule(new FireBlast(this));
 
         // Passive A Skills
         addSubModule(new MagmaBlade(this));

@@ -26,7 +26,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
 
-public class GlacialPrison extends ActiveSkill<Mage, SkillData> implements Listener {
+public class IcePrison extends ActiveSkill<Mage, SkillData> implements Listener {
 
     @ConfigInject(type = Float.class, path = "Energy", defaultValue = "40.0")
     private float energy;
@@ -46,7 +46,7 @@ public class GlacialPrison extends ActiveSkill<Mage, SkillData> implements Liste
     @ConfigInject(type = String.class, path = "Material", defaultValue = "ICE")
     private String material;
 
-    public GlacialPrison(final Mage module) {
+    public IcePrison(final Mage module) {
         super(module, ActiveSkillType.SWORD);
     }
 

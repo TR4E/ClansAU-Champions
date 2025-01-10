@@ -24,7 +24,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class MoltenBlast extends ActiveSkill<Mage, MoltenBlastData> implements Listener {
+public class FireBlast extends ActiveSkill<Mage, MoltenBlastData> implements Listener {
 
     @ConfigInject(type = Float.class, path = "Energy", defaultValue = "50.0")
     private float energy;
@@ -56,7 +56,7 @@ public class MoltenBlast extends ActiveSkill<Mage, MoltenBlastData> implements L
     @ConfigInject(type = Boolean.class, path = "Friendly-Fire", defaultValue = "false")
     private boolean friendlyFire;
 
-    public MoltenBlast(final Mage module) {
+    public FireBlast(final Mage module) {
         super(module, ActiveSkillType.AXE);
     }
 
