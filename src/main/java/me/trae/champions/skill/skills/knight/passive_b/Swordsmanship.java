@@ -151,7 +151,7 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
 
     @Update(delay = 250L)
     public void onUpdater() {
-        for (final Player player : this.getModule().getUsers()) {
+        for (final Player player : this.getModule().getPlayers()) {
             if (!(this.canActivate(player))) {
                 this.removeUser(player);
                 continue;

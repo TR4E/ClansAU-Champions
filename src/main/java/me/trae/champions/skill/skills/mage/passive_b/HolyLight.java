@@ -69,7 +69,7 @@ public class HolyLight extends PassiveSkill<Mage, SkillData> implements Updater 
 
     @Update(delay = 250L)
     public void onUpdater() {
-        for (final Player player : this.getModule().getUsers()) {
+        for (final Player player : this.getModule().getPlayers()) {
             final int level = this.getLevel(player);
             if (level == 0) {
                 continue;

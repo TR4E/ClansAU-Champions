@@ -60,7 +60,7 @@ public class RaveArmour extends Perk<Champions, PerkManager> implements Updater 
             return;
         }
 
-        for (final Player player : this.ASSASSIN_ROLE.getUsers()) {
+        for (final Player player : this.ASSASSIN_ROLE.getPlayers()) {
             if (!(this.isUserByPlayer(player))) {
                 continue;
             }

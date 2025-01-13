@@ -20,7 +20,7 @@ public class SpeedEffect extends SpigotSubUpdater<Champions, Role> {
 
     @Update(delay = 250L)
     public void onUpdater() {
-        for (final Player player : this.getModule().getUsers()) {
+        for (final Player player : this.getModule().getPlayers()) {
             if (UtilEntity.hasPotionEffect(player, PotionEffectType.SLOW)) {
                 UtilEntity.removePotionEffect(player, PotionEffectType.SPEED);
                 continue;

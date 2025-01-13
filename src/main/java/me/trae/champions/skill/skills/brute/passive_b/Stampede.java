@@ -170,7 +170,7 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
 
     @Update(delay = 250L)
     public void onUpdater() {
-        for (final Player player : this.getModule().getUsers()) {
+        for (final Player player : this.getModule().getPlayers()) {
             if (!(this.canActivate(player))) {
                 this.reset(player);
                 this.removeUser(player);

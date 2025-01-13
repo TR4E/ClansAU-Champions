@@ -160,7 +160,7 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
 
     @Update(delay = 50L)
     public void onUpdater() {
-        for (final Player player : this.getModule().getUsers()) {
+        for (final Player player : this.getModule().getPlayers()) {
             final int level = this.getLevel(player);
             if (level == 0) {
                 continue;
