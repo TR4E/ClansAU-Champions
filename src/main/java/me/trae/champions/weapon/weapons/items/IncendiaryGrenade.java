@@ -5,6 +5,8 @@ import me.trae.champions.Champions;
 import me.trae.champions.weapon.WeaponManager;
 import me.trae.core.Core;
 import me.trae.core.config.annotations.ConfigInject;
+import me.trae.core.effect.EffectManager;
+import me.trae.core.effect.types.FireResistance;
 import me.trae.core.throwable.Throwable;
 import me.trae.core.throwable.ThrowableManager;
 import me.trae.core.throwable.events.ThrowableCollideEntityEvent;
@@ -151,6 +153,10 @@ public class IncendiaryGrenade extends ActiveCustomItem<Champions, WeaponManager
         final Player throwerPlayer = event.getThrowable().getThrowerPlayer();
 
         final LivingEntity targetEntity = event.getTarget();
+
+        if (this.getInstanceByClass(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(FireResistance.class).isUserByEntity(targetEntity)) {
+            return;
+        }
 
         if (targetEntity instanceof Player) {
             final WeaponFriendlyFireEvent friendlyFireEvent = new WeaponFriendlyFireEvent(this, throwerPlayer, event.getTargetByClass(Player.class));

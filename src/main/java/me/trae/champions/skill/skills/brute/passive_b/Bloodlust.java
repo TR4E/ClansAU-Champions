@@ -8,7 +8,10 @@ import me.trae.champions.skill.skills.brute.passive_b.data.BloodlustData;
 import me.trae.champions.skill.types.PassiveSkill;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
-import me.trae.core.utility.*;
+import me.trae.core.utility.UtilEntity;
+import me.trae.core.utility.UtilMath;
+import me.trae.core.utility.UtilMessage;
+import me.trae.core.utility.UtilServer;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -61,9 +64,9 @@ public class Bloodlust extends PassiveSkill<Brute, BloodlustData> implements Lis
         return new String[]{
                 "When an enemy dies within 15 blocks,",
                 "you go into a Bloodlust, receiving",
-                String.format("Speed %s and Strength %s for <green>%s</green>.", this.getAmplifierPerIncrease(), this.getAmplifierPerIncrease(), UtilTime.getTime(this.getDuration(level))),
+                String.format("Speed %s and Strength %s for %s.", this.getValueString(Integer.class, this.getAmplifierPerIncrease()), this.getValueString(Integer.class, this.getAmplifierPerIncrease()), this.getValueString(Long.class, this::getEffectDuration, level)),
                 "",
-                String.format("Bloodlust can stack up to <green>%s</green>", this.getMaxAmplifier(level)),
+                String.format("Bloodlust can stack up to %s", this.getValueString(Integer.class, this::getMaxAmplifier, level)),
                 "boosting the level of Speed and Strength."
         };
     }

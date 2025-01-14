@@ -68,7 +68,7 @@ public class BattleTaunt extends ChannelSkill<Brute, ChannelSkillData> {
         return new String[]{
                 "Hold Block with a Sword to Channel.",
                 "",
-                String.format("While channelling, any enemies within <green>%s</green> blocks", this.getDistance(level)),
+                String.format("While channelling, any enemies within %s blocks", this.getValueString(Integer.class, this::getDistance, level)),
                 "are slowly pulled in towards you.",
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),

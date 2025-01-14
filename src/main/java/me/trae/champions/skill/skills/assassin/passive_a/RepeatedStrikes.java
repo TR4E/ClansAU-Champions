@@ -6,7 +6,6 @@ import me.trae.champions.skill.skills.assassin.passive_a.data.RepeatedStrikesDat
 import me.trae.champions.skill.types.PassiveSkill;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
-import me.trae.core.utility.UtilTime;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,9 +44,9 @@ public class RepeatedStrikes extends PassiveSkill<Assassin, RepeatedStrikesData>
                 "Each time you attack, your damage",
                 "increases by 1.",
                 "",
-                String.format("You can get up to <green>%s</green> bonus damage.", this.getMaxDamage(level)),
+                String.format("You can get up to %s bonus damage.", this.getValueString(Double.class, this::getMaxDamage, level)),
                 "",
-                String.format("Not attacking for %s clears", UtilTime.getTime(this.getDuration(level))),
+                String.format("Not attacking for %s clears", this.getValueString(Long.class, this::getDuration, level)),
                 "your bonus damage"
         };
     }

@@ -10,7 +10,6 @@ import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.utility.UtilEntity;
 import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilString;
-import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -54,8 +53,8 @@ public class HoldPosition extends ActiveSkill<Knight, SkillData> implements List
     public String[] getDescription(final int level) {
         return new String[]{
                 "Hold your position, gaining",
-                String.format("Resistance %s, Slowness %s, and no", this.resistanceAmplifier, this.slownessAmplifier),
-                String.format("knockback for <green>%s</green>", UtilTime.getTime(this.getDuration(level))),
+                String.format("Resistance %s, Slowness %s, and no", this.getValueString(Integer.class, this.resistanceAmplifier), this.getValueString(Integer.class, this.slownessAmplifier)),
+                String.format("knockback for %s", this.getValueString(Long.class, this::getDuration, level)),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))

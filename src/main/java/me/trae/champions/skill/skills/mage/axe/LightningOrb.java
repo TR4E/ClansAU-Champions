@@ -15,7 +15,10 @@ import me.trae.core.effect.data.EffectData;
 import me.trae.core.throwable.Throwable;
 import me.trae.core.throwable.ThrowableManager;
 import me.trae.core.throwable.events.ThrowableCollideEntityEvent;
-import me.trae.core.utility.*;
+import me.trae.core.utility.UtilEntity;
+import me.trae.core.utility.UtilMessage;
+import me.trae.core.utility.UtilServer;
+import me.trae.core.utility.UtilString;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -94,8 +97,8 @@ public class LightningOrb extends ActiveSkill<Mage, SkillData> implements Listen
                 "Right-Click with a Sword to Activate.",
                 "",
                 "Launches a lightning orb. Directly hitting a player",
-                String.format("will strike them within <green>%s</green> blocks", this.getDistance(level)),
-                String.format("with lightning, giving them Slowness %s for %s", this.getSlownessAmplifier(level), UtilTime.getTime(this.getSlownessDuration(level))),
+                String.format("will strike them within %s blocks", this.getValueString(Integer.class, this::getDistance, level)),
+                String.format("with lightning, giving them Slowness %s for %s", this.getValueString(Integer.class, this::getSlownessAmplifier, level), this.getValueString(Long.class, this::getSlownessDuration, level)),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))

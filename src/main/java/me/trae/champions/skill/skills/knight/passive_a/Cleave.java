@@ -52,7 +52,7 @@ public class Cleave extends PassiveSkill<Knight, SkillData> implements Listener 
     public String[] getDescription(final int level) {
         return new String[]{
                 "Your attacks hit all opponents",
-                String.format("within <green>%s</green> blocks of your target.", this.getDistance(level)),
+                String.format("within %s blocks of your target.", this.getValueString(Integer.class, this::getDistance, level)),
                 "",
                 "Only applies to Axes."
         };

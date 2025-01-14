@@ -11,7 +11,6 @@ import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.utility.UtilEntity;
 import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilString;
-import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.objects.SoundCreator;
 import me.trae.core.weapon.events.WeaponActivateEvent;
 import org.bukkit.Sound;
@@ -59,7 +58,7 @@ public class Agility extends ActiveSkill<Ranger, SkillData> implements Listener 
                 "Right-Click with an Axe to Activate.",
                 "",
                 "Sprint with great agility, gaining",
-                String.format("Speed <green>%s</green> for <green>%s</green>.", this.getAmplifier(level), UtilTime.getTime(this.getDuration(level))),
+                String.format("Speed %s for %s.", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
                 "You are immune to melee attacks while sprinting.",
                 "Agility ends if you interact.",
                 "",

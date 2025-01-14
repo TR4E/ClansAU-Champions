@@ -75,10 +75,10 @@ public class ArcticArmour extends ToggleUpdaterDropSkill<Mage, ToggleUpdaterDrop
                 "Drop Sword/Axe to Toggle.",
                 "",
                 "Create a freezing area around you",
-                String.format("in a <green>%s</green> block radius.", this.getDistance(level)),
+                String.format("in a %s block radius.", this.getValueString(Integer.class, this::getDistance, level)),
                 "",
-                String.format("Allies inside this area receive Resistance %s,", this.getResistanceAmplifier(level)),
-                String.format("while enemies receive Slowness %s.", this.getSlownessAmplifier(level)),
+                String.format("Allies inside this area receive Resistance %s,", this.getValueString(Integer.class, this::getResistanceAmplifier, level)),
+                String.format("while enemies receive Slowness %s.", this.getValueString(Integer.class, this::getSlownessAmplifier, level)),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyUsingString(level)))

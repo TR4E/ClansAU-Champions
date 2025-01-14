@@ -55,7 +55,7 @@ public class HuntersThrill extends PassiveBowSkill<Ranger, HuntersThrillData> im
     public String[] getDescription(final int level) {
         return new String[]{
                 "For each consecutive hit,",
-                String.format("within <green>%s</green> of each other,", UtilTime.getTime(this.getDuration(level))),
+                String.format("within %s of each other,", this.getValueString(Long.class, this::getDuration, level)),
                 "you gain increased movement speed.",
                 "",
                 String.format("You can store a maximum of <green>%s</green> charges.", this.getMaxCharges(level)),

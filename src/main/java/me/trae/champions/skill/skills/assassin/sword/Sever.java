@@ -11,7 +11,6 @@ import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.effect.data.EffectData;
 import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilString;
-import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -53,7 +52,7 @@ public class Sever extends ActiveSkill<Assassin, SkillData> implements Listener 
         return new String[]{
                 "Right-Click with a Sword to Activate.",
                 "",
-                String.format("Your next hit applies a <green>%s</green> bleed,", UtilTime.getTime(this.getDuration(level))),
+                String.format("Your next hit applies a %s bleed,", this.getValueString(Long.class, this::getDuration, level)),
                 "dealing 1 heart per second.",
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),

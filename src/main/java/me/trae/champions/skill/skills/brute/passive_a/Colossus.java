@@ -31,7 +31,7 @@ public class Colossus extends PassiveSkill<Brute, SkillData> implements Listener
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("You take <green>%s</green> reduced knockback.", this.getKnockback(level) + "%")
+                String.format("You take %s reduced knockback.", this.getValueString(Integer.class, this::getKnockback, level) + "%")
         };
     }
 

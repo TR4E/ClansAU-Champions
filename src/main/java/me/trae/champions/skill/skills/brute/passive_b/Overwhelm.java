@@ -36,10 +36,10 @@ public class Overwhelm extends PassiveSkill<Brute, SkillData> implements Listene
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("You deal %s bonus damage for every", this.bonusDamage),
-                String.format("%s more health you have than your opponent.", this.baseHealth),
+                String.format("You deal %s bonus damage for every", this.getValueString(Double.class, this.bonusDamage)),
+                String.format("%s more health you have than your opponent.", this.getValueString(Double.class, this.baseHealth)),
                 "",
-                String.format("You can deal a maximum of <green>%s</green> bonus damage.", this.getMaxDamage(level))
+                String.format("You can deal a maximum of %s bonus damage.", this.getValueString(Double.class, this::getMaxDamage, level))
         };
     }
 

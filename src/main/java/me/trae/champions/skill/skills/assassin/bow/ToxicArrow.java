@@ -5,7 +5,10 @@ import me.trae.champions.role.types.Assassin;
 import me.trae.champions.skill.types.ActiveBowSkill;
 import me.trae.champions.skill.types.data.BowSkillData;
 import me.trae.core.config.annotations.ConfigInject;
-import me.trae.core.utility.*;
+import me.trae.core.utility.UtilEntity;
+import me.trae.core.utility.UtilJava;
+import me.trae.core.utility.UtilMessage;
+import me.trae.core.utility.UtilString;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -50,7 +53,7 @@ public class ToxicArrow extends ActiveBowSkill<Assassin, BowSkillData> {
                 "Left-Click with a Bow to Prepare",
                 "",
                 "Your next arrow will give your",
-                String.format("target confusion for <green>%s</green>.", UtilTime.getTime(this.getDuration(level))),
+                String.format("target confusion for %s.", this.getValueString(Long.class, this::getDuration, level)),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))

@@ -55,7 +55,7 @@ public class Recall extends DropSkill<Assassin, RecallData> implements Updater {
 
     @Override
     public String[] getDescription(final int level) {
-        final String durationString = UtilTime.getTime(this.getDuration(level));
+        final String durationString = this.getValueString(Long.class, this::getDuration, level);
 
         return new String[]{
                 "Drop Sword/Axe to Activate.",

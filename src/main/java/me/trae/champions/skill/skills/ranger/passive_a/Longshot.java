@@ -37,7 +37,7 @@ public class Longshot extends PassiveBowSkill<Ranger, BowSkillData> {
                 "Shoot an arrow that gains additional",
                 "damage the further the target hit is.",
                 "",
-                String.format("Caps out at <green>%s</green> damage.", this.getMaxDamage(level)),
+                String.format("Caps out at %s damage.", this.getValueString(Double.class, this::getMaxDamage, level)),
         };
     }
 

@@ -8,6 +8,8 @@ import me.trae.champions.skill.data.types.ChannelSkillData;
 import me.trae.champions.skill.types.ChannelSkill;
 import me.trae.core.Core;
 import me.trae.core.config.annotations.ConfigInject;
+import me.trae.core.effect.EffectManager;
+import me.trae.core.effect.types.FireResistance;
 import me.trae.core.throwable.Throwable;
 import me.trae.core.throwable.ThrowableManager;
 import me.trae.core.throwable.events.ThrowableCollideEntityEvent;
@@ -114,13 +116,17 @@ public class Inferno extends ChannelSkill<Mage, ChannelSkillData> implements Lis
 
         final Player throwerPlayer = throwable.getThrowerPlayer();
 
-        final LivingEntity target = event.getTarget();
+        final LivingEntity targetEntity = event.getTarget();
 
-        if (UtilServer.getEvent(new SkillLocationEvent(this, target.getLocation())).isCancelled()) {
+        if (this.getInstanceByClass(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(FireResistance.class).isUserByEntity(targetEntity)) {
             return;
         }
 
-        if (target instanceof Player) {
+        if (UtilServer.getEvent(new SkillLocationEvent(this, targetEntity.getLocation())).isCancelled()) {
+            return;
+        }
+
+        if (targetEntity instanceof Player) {
             final SkillFriendlyFireEvent friendlyFireEvent = new SkillFriendlyFireEvent(this, throwerPlayer, event.getTargetByClass(Player.class));
             UtilServer.callEvent(friendlyFireEvent);
             if (friendlyFireEvent.isCancelled()) {
@@ -128,7 +134,7 @@ public class Inferno extends ChannelSkill<Mage, ChannelSkillData> implements Lis
             }
 
             if (!(this.friendlyFire)) {
-                if (target == throwerPlayer) {
+                if (targetEntity == throwerPlayer) {
                     return;
                 }
 
@@ -138,15 +144,15 @@ public class Inferno extends ChannelSkill<Mage, ChannelSkillData> implements Lis
             }
         }
 
-        if (throwable.isCollided(target)) {
+        if (throwable.isCollided(targetEntity)) {
             return;
         }
 
-        UtilDamage.damage(target, throwerPlayer, EntityDamageEvent.DamageCause.CUSTOM, 1.0D, throwable.getName(), 1000L);
+        UtilDamage.damage(targetEntity, throwerPlayer, EntityDamageEvent.DamageCause.CUSTOM, 1.0D, throwable.getName(), 1000L);
 
-        target.setFireTicks((int) (this.fireDuration / 50L));
+        targetEntity.setFireTicks((int) (this.fireDuration / 50L));
 
-        throwable.addCollided(target, 500L);
+        throwable.addCollided(targetEntity, 500L);
     }
 
     @Override

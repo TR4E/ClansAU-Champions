@@ -37,7 +37,7 @@ public class NullBlade extends PassiveSkill<Mage, SkillData> implements Listener
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("Your sword sucks <green>%s</green> energy from", this.getEnergySucked(level)),
+                String.format("Your sword sucks %s energy from", this.getValueString(Float.class, this::getEnergySucked, level)),
                 "opponents with every attack."
         };
     }

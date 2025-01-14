@@ -10,7 +10,6 @@ import me.trae.champions.skill.types.enums.PassiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.effect.data.EffectData;
 import me.trae.core.utility.UtilEntity;
-import me.trae.core.utility.UtilTime;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,8 +43,8 @@ public class ShockingStrikes extends PassiveSkill<Assassin, SkillData> implement
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("Your attacks shock targets for <green>%s</green>,", UtilTime.getTime(this.getDuration(level))),
-                String.format("giving them Slowness %s and Screen-Shake.", this.getAmplifier(level))
+                String.format("Your attacks shock targets for %s,", this.getValueString(Long.class, this::getDuration, level)),
+                String.format("giving them Slowness %s and Screen-Shake.", this.getValueString(Integer.class, this::getAmplifier, level))
         };
     }
 

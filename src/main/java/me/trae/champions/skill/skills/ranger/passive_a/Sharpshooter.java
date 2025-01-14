@@ -46,9 +46,9 @@ public class Sharpshooter extends PassiveBowSkill<Ranger, SharpshooterData> impl
     public String[] getDescription(final int level) {
         return new String[]{
                 "For each consecutive hit,",
-                String.format("<green>%s</green> additional damage per charge", this.getDamage(level)),
+                String.format("%s additional damage per charge", this.getValueString(Double.class, this::getDamage, level)),
                 "",
-                String.format("You can store a maximum of <green>%s</green> charges.", this.getMaxCharges(level)),
+                String.format("You can store a maximum of %s charges.", this.getValueString(Integer.class, this::getMaxCharges, level)),
         };
     }
 

@@ -32,8 +32,8 @@ public class Resistance extends PassiveSkill<Brute, SkillData> implements Listen
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("You take <green>%s</green> less damage", this.getPercentage(level) + "%"),
-                String.format("but you deal <green>%s</green> less as well.", this.getPercentage(level) + "%")
+                String.format("You take %s less damage", this.getValueString(Integer.class, this::getPercentage, level) + "%"),
+                String.format("but you deal %s less as well.", this.getValueString(Integer.class, this::getPercentage, level) + "%")
         };
     }
 

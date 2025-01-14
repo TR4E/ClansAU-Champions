@@ -9,7 +9,6 @@ import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.utility.UtilEntity;
 import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilString;
-import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -57,7 +56,7 @@ public class WolfsFury extends ActiveSkill<Ranger, SkillData> implements Listene
                 "Right-Click with an Axe to Activate.",
                 "",
                 "Summon the power of the wolf, gaining",
-                String.format("Strength %s for %s, and giving", this.getAmplifier(level), UtilTime.getTime(this.getDuration(level))),
+                String.format("Strength %s for %s, and giving", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
                 "no knockback on your attacks.",
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),

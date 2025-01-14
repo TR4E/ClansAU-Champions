@@ -10,7 +10,6 @@ import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.updater.interfaces.Updater;
 import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilString;
-import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -56,7 +55,7 @@ public class Riposte extends ActiveSkill<Knight, RiposteData> implements Listene
                 "Right-Click with a Sword to Activate.",
                 "",
                 "Become invulnerable to all",
-                String.format("melee damage for <green>%s</green> when countered", UtilTime.getTime(this.getInvulnerableDuration(level))),
+                String.format("melee damage for %s when countered", this.getValueString(Long.class, this::getInvulnerableDuration, level)),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))

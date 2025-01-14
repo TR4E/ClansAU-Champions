@@ -111,10 +111,12 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
     private void onLeftClickButton(final Player player, final Role role, final RoleBuild roleBuild, final Skill<?, ?> skill, final RoleSkill roleSkill) {
         final int skillPoints = this.getMenu().getManager().getSkillPoints(role, roleBuild);
         if (skillPoints <= 0 || skillPoints < skill.getTokenCost()) {
+            new SoundCreator(Sound.ITEM_BREAK, 1.0F, 2.0F).play(player);
             return;
         }
 
         if (this.isSkillTypeEquippedByOtherSkill()) {
+            new SoundCreator(Sound.ITEM_BREAK, 1.0F, 2.0F).play(player);
             return;
         }
 
@@ -152,6 +154,7 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
 
     private void onRightClickButton(final Player player, final Role role, final RoleBuild roleBuild, final Skill<?, ?> skill, final RoleSkill roleSkill) {
         if (this.isSkillTypeEquippedByOtherSkill()) {
+            new SoundCreator(Sound.ITEM_BREAK).play(player);
             return;
         }
 

@@ -10,7 +10,10 @@ import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.effect.EffectManager;
 import me.trae.core.effect.data.EffectData;
 import me.trae.core.effect.types.NoFall;
-import me.trae.core.utility.*;
+import me.trae.core.utility.UtilEntity;
+import me.trae.core.utility.UtilMessage;
+import me.trae.core.utility.UtilString;
+import me.trae.core.utility.UtilVelocity;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -74,12 +77,12 @@ public class Disengage extends ActiveSkill<Ranger, SkillData> implements Listene
         return new String[]{
                 "Right-Click with a Sword to Activate.",
                 "",
-                String.format("If you are attacked within <green>%s</green>", UtilTime.getTime(this.prepareDuration)),
+                String.format("If you are attacked within %s", this.getValueString(Long.class, this.prepareDuration)),
                 "you successfully disengage.",
                 "",
                 "If successful, you leap backwards",
-                String.format("and your attacker receives Slowness <green>%s</green>", this.slownessAmplifier),
-                String.format("for <green>%s</green>.", UtilTime.getTime(this.getSlownessDuration(level))),
+                String.format("and your attacker receives Slowness %s", this.getValueString(Integer.class, this.slownessAmplifier)),
+                String.format("for %s.", this.getValueString(Long.class, this::getSlownessDuration, level)),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))

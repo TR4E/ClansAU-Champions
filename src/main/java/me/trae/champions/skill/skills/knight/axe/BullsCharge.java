@@ -10,7 +10,6 @@ import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.utility.UtilEntity;
 import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilString;
-import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Effect;
 import org.bukkit.Material;
@@ -60,7 +59,7 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
                 "Right-Click with an Axe to Activate.",
                 "",
                 "Enter a rage, gaining massive movement speed",
-                String.format("and slowing anything you hit for <green>%s</green>.", UtilTime.getTime(this.getDuration(level))),
+                String.format("and slowing anything you hit for %s.", this.getValueString(Long.class, this::getDuration, level)),
                 "",
                 "While charging, you take no knockback.",
                 "",

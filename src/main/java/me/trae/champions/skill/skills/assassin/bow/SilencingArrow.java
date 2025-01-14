@@ -11,7 +11,6 @@ import me.trae.core.effect.data.EffectData;
 import me.trae.core.utility.UtilJava;
 import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilString;
-import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.particle.ParticleEffect;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -50,7 +49,7 @@ public class SilencingArrow extends ActiveBowSkill<Assassin, BowSkillData> {
                 "Left-Click with a Bow to Prepare.",
                 "",
                 "Your next arrow will silence your",
-                String.format("target for <green>%s</green>.", UtilTime.getTime(this.getDuration(level))),
+                String.format("target for %s.", this.getValueString(Long.class, this::getDuration, level)),
                 "Making them unable to use any active skills.",
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),

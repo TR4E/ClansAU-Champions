@@ -6,7 +6,10 @@ import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.types.ActiveSkill;
 import me.trae.champions.skill.types.enums.ActiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
-import me.trae.core.utility.*;
+import me.trae.core.utility.UtilEntity;
+import me.trae.core.utility.UtilMessage;
+import me.trae.core.utility.UtilServer;
+import me.trae.core.utility.UtilString;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -58,8 +61,8 @@ public class SpiritOfTheBear extends ActiveSkill<Brute, SkillData> {
                 "Right-Click with an Axe to Activate.",
                 "",
                 "Call upon the Spirit of the Bear",
-                String.format("granting all allies within <green>%s</green> blocks", this.getDistance(level)),
-                String.format("Resistance %s for %s.", this.getAmplifier(level), UtilTime.getTime(this.getDuration(level))),
+                String.format("granting all allies within %s blocks", this.getValueString(Integer.class, this::getDistance, level)),
+                String.format("Resistance %s for %s.", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))

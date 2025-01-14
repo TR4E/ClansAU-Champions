@@ -11,7 +11,6 @@ import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.effect.data.EffectData;
 import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilString;
-import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -59,7 +58,7 @@ public class Concussion extends ActiveSkill<Assassin, SkillData> implements List
         return new String[]{
                 "Right-Click with an Axe to Activate.",
                 "",
-                String.format("Your next hit blinds the target for <green>%s</green>.", UtilTime.getTime(this.getDuration(level))),
+                String.format("Your next hit blinds the target for %s.", this.getValueString(Long.class, this::getDuration, level)),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))

@@ -7,7 +7,10 @@ import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.types.ActiveSkill;
 import me.trae.champions.skill.types.enums.ActiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
-import me.trae.core.utility.*;
+import me.trae.core.utility.UtilEntity;
+import me.trae.core.utility.UtilMessage;
+import me.trae.core.utility.UtilServer;
+import me.trae.core.utility.UtilString;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -65,8 +68,8 @@ public class UnifiedMight extends ActiveSkill<Brute, SkillData> implements Liste
         return new String[]{
                 "Right-Click with an Axe to Activate.",
                 "",
-                String.format("Grant all allies within <green>%s</green> blocks", this.getDistance(level)),
-                String.format("Strength %s for <green>%s</green>.", this.getAmplifier(level), UtilTime.getTime(this.getDuration(level))),
+                String.format("Grant all allies within %s blocks", this.getValueString(Integer.class, this::getDistance, level)),
+                String.format("Strength %s for %s.", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
                 this.buffSelf ? "" : "\nThis does not give you the buff.\n",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))

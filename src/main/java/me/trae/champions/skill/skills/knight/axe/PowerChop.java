@@ -9,7 +9,6 @@ import me.trae.champions.skill.types.enums.ActiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilString;
-import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -51,10 +50,10 @@ public class PowerChop extends ActiveSkill<Knight, SkillData> implements Listene
                 "Right-Click with an Axe to Activate.",
                 "",
                 "Put more strength into your next axe attack,",
-                String.format("causing it to deal <green>%s</green> bonus damage.", this.getDamage(level)),
+                String.format("causing it to deal %s bonus damage.", this.getValueString(Double.class, this::getDamage, level)),
                 "",
                 "Attack must be made within",
-                String.format("%s of being used.", UtilTime.getTime(this.prepareDuration)),
+                String.format("%s of being used.", this.getValueString(Long.class, this.prepareDuration)),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))

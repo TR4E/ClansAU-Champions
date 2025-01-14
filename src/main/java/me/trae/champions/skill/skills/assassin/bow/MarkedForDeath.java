@@ -11,7 +11,6 @@ import me.trae.core.effect.data.EffectData;
 import me.trae.core.utility.UtilJava;
 import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilString;
-import me.trae.core.utility.UtilTime;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -55,7 +54,7 @@ public class MarkedForDeath extends ActiveBowSkill<Assassin, BowSkillData> {
                 "Left-Click with a Bow to Prepare.",
                 "",
                 "Your next arrow will mark players for death,",
-                String.format("giving them Vulnerability %s for <green>%s</green>", this.getAmplifier(level), UtilTime.getTime(this.getDuration(level))),
+                String.format("giving them Vulnerability %s for %s", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
                 "Causing them to take 50% additional damage",
                 "from all targets.",
                 "",

@@ -23,8 +23,8 @@ public class Cyclone extends ActiveSkill<Mage, SkillData> {
     @ConfigInject(type = Long.class, path = "Recharge", defaultValue = "12_000")
     private long recharge;
 
-    @ConfigInject(type = Double.class, path = "Distance", defaultValue = "7")
-    private double distance;
+    @ConfigInject(type = Integer.class, path = "Distance", defaultValue = "7")
+    private int distance;
 
     @ConfigInject(type = Double.class, path = "Player-Vector-Y", defaultValue = "2.0")
     private double playerVectorY;
@@ -56,7 +56,7 @@ public class Cyclone extends ActiveSkill<Mage, SkillData> {
         return SkillData.class;
     }
 
-    private double getDistance(final int level) {
+    private int getDistance(final int level) {
         return this.distance + level;
     }
 
@@ -66,7 +66,7 @@ public class Cyclone extends ActiveSkill<Mage, SkillData> {
                 "Right-Click with a Sword to Activate.",
                 "",
                 "Pulls all enemies within",
-                String.format("<green>%s</green> blocks, towards you", this.getDistance(level)),
+                String.format("%s blocks, towards you", this.getValueString(Integer.class, this::getDistance, level)),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))

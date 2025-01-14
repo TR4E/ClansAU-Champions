@@ -31,7 +31,7 @@ public class MagmaBlade extends PassiveSkill<Mage, SkillData> implements Listene
     public String[] getDescription(final int level) {
         return new String[]{
                 "Your sword scorches opponents,",
-                String.format("dealing an additional <green>%s</green> damage", this.getDamage(level)),
+                String.format("dealing an additional %s damage", this.getValueString(Double.class, this::getDamage, level)),
                 "to those who are on fire."
         };
     }

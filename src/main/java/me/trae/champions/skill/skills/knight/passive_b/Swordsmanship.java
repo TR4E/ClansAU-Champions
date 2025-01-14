@@ -56,9 +56,9 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
     public String[] getDescription(final int level) {
         return new String[]{
                 "Prepare a powerful sword attack,",
-                String.format("you gain 1 charge every %s.", UtilTime.getTime(this.chargeDuration)),
+                String.format("you gain 1 charge every %s.", this.getValueString(Long.class, this.chargeDuration)),
                 "",
-                String.format("You can store a maximum of <green>%s</green> charges.", this.getMaxCharges(level)),
+                String.format("You can store a maximum of %s charges.", this.getValueString(Integer.class, this::getMaxCharges, level)),
                 "",
                 "When you attack, your damage is",
                 "increased by the number of your charges",

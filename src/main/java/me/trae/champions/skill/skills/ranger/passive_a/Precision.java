@@ -31,7 +31,7 @@ public class Precision extends PassiveBowSkill<Ranger, BowSkillData> implements 
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("Your arrows deal <green>%s</green> bonus damage on hit.", this.getDamage(level))
+                String.format("Your arrows deal %s bonus damage on hit.", this.getValueString(Double.class, this::getDamage, level))
         };
     }
 

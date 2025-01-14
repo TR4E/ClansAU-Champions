@@ -26,8 +26,8 @@ public class Blink extends ActiveSkill<Assassin, BlinkData> implements ToggleSki
     @ConfigInject(type = Long.class, path = "De-Blink-Duration", defaultValue = "5_000")
     private long deBlinkDuration;
 
-    @ConfigInject(type = Double.class, path = "Max-Range", defaultValue = "16.0")
-    private double maxRange;
+    @ConfigInject(type = Integer.class, path = "Max-Range", defaultValue = "16")
+    private int maxRange;
 
     public Blink(final Assassin module) {
         super(module, ActiveSkillType.AXE);
@@ -42,7 +42,7 @@ public class Blink extends ActiveSkill<Assassin, BlinkData> implements ToggleSki
         return this.deBlinkDuration;
     }
 
-    private double getMaxRange(final int level) {
+    private int getMaxRange(final int level) {
         return this.maxRange;
     }
 
@@ -51,9 +51,9 @@ public class Blink extends ActiveSkill<Assassin, BlinkData> implements ToggleSki
         return new String[]{
                 "Right-Click with an Axe to Activate.",
                 "",
-                String.format("Instantly teleport forwards %s blocks.", this.getMaxRange(level)),
+                String.format("Instantly teleport forwards %s blocks.", this.getValueString(Integer.class, this::getMaxRange, level)),
                 "",
-                String.format("Using again within %s De-Blinks,", UtilTime.getTime(this.getDeBlinkDuration(level))),
+                String.format("Using again within %s De-Blinks,", this.getValueString(Long.class, this::getDeBlinkDuration, level)),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))

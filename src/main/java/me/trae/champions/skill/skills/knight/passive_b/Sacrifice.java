@@ -26,15 +26,17 @@ public class Sacrifice extends PassiveSkill<Knight, SkillData> implements Listen
         return SkillData.class;
     }
 
-    private double getPercentage(final int level) {
+    private int getPercentage(final int level) {
         return this.basePercentage * level;
     }
 
     @Override
     public String[] getDescription(final int level) {
+        final String percentageString = this.getValueString(Integer.class, this::getPercentage, level);
+
         return new String[]{
-                String.format("Deal an extra <green>%s</green> melee damage,", this.getPercentage(level) + "%"),
-                String.format("but you now also take <green>%s</green> extra damage from melee attacks.", this.getPercentage(level) + "%")
+                String.format("Deal an extra %s melee damage,", percentageString + "%"),
+                String.format("but you now also take %s extra damage from melee attacks.", percentageString + "%")
         };
     }
 

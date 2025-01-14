@@ -8,7 +8,6 @@ import me.trae.champions.skill.types.PassiveSkill;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.utility.UtilEntity;
-import me.trae.core.utility.UtilTime;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,8 +17,8 @@ import org.bukkit.potion.PotionEffectType;
 
 public class CripplingBlow extends PassiveSkill<Brute, SkillData> implements Listener {
 
-    @ConfigInject(type = Integer.class, path = "Slowness-Amplifier", defaultValue = "1")
-    private int slownessAmplifier;
+    @ConfigInject(type = Integer.class, path = "Amplifier", defaultValue = "1")
+    private int amplifier;
 
     public CripplingBlow(final Brute module) {
         super(module, PassiveSkillType.PASSIVE_A);
@@ -30,11 +29,11 @@ public class CripplingBlow extends PassiveSkill<Brute, SkillData> implements Lis
         return SkillData.class;
     }
 
-    private int getSlownessAmplifier(final int level) {
-        return this.slownessAmplifier;
+    private int getAmplifier(final int level) {
+        return this.amplifier;
     }
 
-    private long getSlownessDuration(final int level) {
+    private long getDuration(final int level) {
         return (1 + (level / 2)) * 1000L;
     }
 
@@ -42,7 +41,7 @@ public class CripplingBlow extends PassiveSkill<Brute, SkillData> implements Lis
     public String[] getDescription(final int level) {
         return new String[]{
                 "Your powerful axe blows give",
-                String.format("your opponents Slow %s for <green>%s</green>.", this.getSlownessAmplifier(level), UtilTime.getTime(this.getSlownessDuration(level))),
+                String.format("your opponents Slow %s for %s.", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
                 "as well as no knockback"
         };
     }
@@ -78,7 +77,7 @@ public class CripplingBlow extends PassiveSkill<Brute, SkillData> implements Lis
 
         final LivingEntity damagee = event.getDamageeByClass(LivingEntity.class);
 
-        UtilEntity.givePotionEffect(damagee, PotionEffectType.SLOW, this.getSlownessAmplifier(level), this.getSlownessDuration(level));
+        UtilEntity.givePotionEffect(damagee, PotionEffectType.SLOW, this.getAmplifier(level), this.getDuration(level));
 
         event.setKnockback(0.0D);
 

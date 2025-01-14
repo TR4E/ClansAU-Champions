@@ -65,8 +65,8 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
         return new String[]{
                 "You slowly build up speed as you",
                 "sprint. You gain a level of Speed",
-                String.format("for every %s,", UtilTime.getTime(this.getDuration(level))),
-                String.format("up to max of Speed <green>%s</green>.", this.getMaxAmplifier(level)),
+                String.format("for every %s,", this.getValueString(Long.class, this::getDuration, level)),
+                String.format("up to max of Speed %s.", this.getValueString(Integer.class, this::getMaxAmplifier, level)),
                 "",
                 "Attacking during stampede deals",
                 String.format("%s bonus damage per speed level", this.damageMultiplier)

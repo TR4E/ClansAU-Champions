@@ -2,7 +2,7 @@ package me.trae.champions.skill.skills.mage.axe.data.interfaces;
 
 import org.bukkit.entity.LargeFireball;
 
-public interface IMoltenBlastData {
+public interface IFireBlastData {
 
     LargeFireball getFireBall();
 

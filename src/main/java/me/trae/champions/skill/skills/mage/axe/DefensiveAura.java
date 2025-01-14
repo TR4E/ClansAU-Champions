@@ -52,8 +52,8 @@ public class DefensiveAura extends ActiveSkill<Mage, SkillData> {
         return new String[]{
                 "Right-Click with an Axe to Activate.",
                 "",
-                String.format("Gives you and all allies within <green>%s</green> blocks", this.getDistance(level)),
-                String.format("<green>%s</green> bonus hearts.", this.getAmplifier(level)),
+                String.format("Gives you and all allies within %s blocks", this.getValueString(Integer.class, this::getDistance, level)),
+                String.format("%s bonus hearts.", this.getValueString(Integer.class, this::getAmplifier, level)),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))

@@ -44,7 +44,7 @@ public class HolyLight extends PassiveSkill<Mage, SkillData> implements Updater 
         return new String[]{
                 "Create an aura that gives",
                 "yourself and all allies within",
-                String.format("<green>%s</green> blocks, Regeneration <green>%s</green>.", this.getDistance(level), this.getAmplifier(level)),
+                String.format("%s blocks, Regeneration %s.", this.getValueString(Integer.class, this::getDistance, level), this.getValueString(Integer.class, this::getAmplifier, level)),
         };
     }
 

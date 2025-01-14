@@ -32,7 +32,7 @@ public class Thorns extends PassiveSkill<Knight, ThornsData> implements Listener
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("Enemies take <green>%s</green> damage", this.getDamage(level)),
+                String.format("Enemies take %s damage", this.getValueString(Double.class, this::getDamage, level)),
                 "when they hit you using a melee attack."
         };
     }

@@ -37,6 +37,9 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
     @ConfigInject(type = Double.class, path = "Max-Range", defaultValue = "8.0")
     private double maxRange;
 
+    @ConfigInject(type = Integer.class, path = "Max-Charges", defaultValue = "5")
+    private int maxCharges;
+
     public Flash(final Assassin module) {
         super(module, ActiveSkillType.AXE);
     }
@@ -55,7 +58,7 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
     }
 
     private int getMaxCharges(final int level) {
-        return level;
+        return this.maxCharges;
     }
 
     @Override
@@ -63,10 +66,10 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
         return new String[]{
                 "Right-Click with an Axe to Activate.",
                 "",
-                String.format("Instantly teleport forwards %s blocks.", this.getMaxRange(level)),
+                String.format("Instantly teleport forwards %s blocks.", this.getValueString(Double.class, this::getMaxRange, level)),
                 "",
-                String.format("Store up to <green>%s</green> charges.", this.getMaxCharges(level)),
-                String.format("One charge per <green>%s</green>.", UtilTime.getTime(this.getLastUpdatedDuration(level))),
+                String.format("Store up to %s charges.", this.getValueString(Integer.class, this::getMaxCharges, level)),
+                String.format("One charge per %s.", this.getValueString(Long.class, this::getLastUpdatedDuration, level)),
                 "",
                 UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
                 UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
@@ -176,7 +179,7 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
                 data.setLevel(level);
             }
 
-            if (data.getCharges() >= this.getMaxCharges(data.getLevel())) {
+            if (data.getCharges() >= this.maxCharges) {
                 continue;
             }
 

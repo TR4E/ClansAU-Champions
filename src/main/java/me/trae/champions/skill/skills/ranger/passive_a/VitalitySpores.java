@@ -43,9 +43,9 @@ public class VitalitySpores extends PassiveSkill<Ranger, SkillData> implements U
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("After <green>%s</green> of not taking damage,", UtilTime.getTime(this.getDuration(level))),
+                String.format("After %s of not taking damage,", this.getValueString(Long.class, this::getDuration, level)),
                 "forest spores surround you, giving",
-                String.format("you Regeneration %s", this.regenerationAmplifier),
+                String.format("you Regeneration %s", this.getValueString(Integer.class, this.regenerationAmplifier)),
                 "",
                 "This remains until you take damage."
         };

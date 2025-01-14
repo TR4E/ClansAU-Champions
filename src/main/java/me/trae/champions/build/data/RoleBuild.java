@@ -129,10 +129,12 @@ public class RoleBuild implements IRoleBuild, DataContainer<BuildProperty> {
             if (this.isRoleSkillByType(skillType)) {
                 final RoleSkill roleSkill = this.getRoleSkillByType(skillType);
 
-                if (role.getSubModuleByName(roleSkill.getName()).isEnabled()) {
-                    skillName = roleSkill.getDisplayName();
-                } else {
-                    skillName = UtilString.format("%s (<red>System Disabled</red>)", roleSkill.getDisplayName());
+                if (role.isSubModuleByName(roleSkill.getName())) {
+                    if (role.getSubModuleByName(roleSkill.getName()).isEnabled()) {
+                        skillName = roleSkill.getDisplayName();
+                    } else {
+                        skillName = UtilString.format("%s (<red>System Disabled</red>)", roleSkill.getDisplayName());
+                    }
                 }
             }
 
