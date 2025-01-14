@@ -42,7 +42,7 @@ public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
         for (final Player player : UtilServer.getOnlinePlayers()) {
             if (!(this.BUILD_MANAGER.getBuilds().containsKey(player.getUniqueId()))) {
                 final Client client = this.CLIENT_MANAGER.getClientByPlayer(player);
-                if (client != null && !(UtilTime.elapsed(client.getLastJoined(), 400L))) {
+                if (client != null && !(UtilTime.elapsed(client.getLastJoined(), 700L))) {
                     continue;
                 }
             }
