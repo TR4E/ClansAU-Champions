@@ -10,7 +10,9 @@ import me.trae.champions.skill.types.enums.ActiveSkillType;
 import me.trae.core.Core;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.effect.EffectManager;
+import me.trae.core.effect.data.EffectData;
 import me.trae.core.effect.types.FireResistance;
+import me.trae.core.effect.types.NoFall;
 import me.trae.core.utility.*;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Bukkit;
@@ -100,6 +102,13 @@ public class FireBlast extends ActiveSkill<Mage, FireBlastData> implements Liste
         data.setFireBall(fireball);
 
         this.addUser(data);
+
+        this.getInstanceByClass(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(NoFall.class).addUser(new EffectData(player, 5000L) {
+            @Override
+            public boolean isRemoveOnAction() {
+                return true;
+            }
+        });
 
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You used <green><var></green>.", Collections.singletonList(this.getDisplayName(level)));
     }
