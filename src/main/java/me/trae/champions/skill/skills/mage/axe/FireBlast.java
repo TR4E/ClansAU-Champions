@@ -176,6 +176,12 @@ public class FireBlast extends ActiveSkill<Mage, FireBlastData> implements Liste
 
                 if (!(this.friendlyFire)) {
                     if (player == targetPlayer || !(friendlyFireEvent.isVulnerable())) {
+                        this.getInstanceByClass(Core.class).getManagerByClass(EffectManager.class).getModuleByClass(NoFall.class).addUser(new EffectData(targetEntity, 5000L) {
+                            @Override
+                            public boolean isRemoveOnAction() {
+                                return true;
+                            }
+                        });
                         targetEntity.setVelocity(targetEntity.getLocation().toVector().subtract(fireball.getLocation().toVector()).normalize().multiply(2.0D).setY(0.75D));
                     }
 
