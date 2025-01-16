@@ -7,13 +7,13 @@ import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.skills.knight.passive_b.data.SwordsmanshipData;
 import me.trae.champions.skill.types.PassiveSkill;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
-import me.trae.core.Core;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.gamer.Gamer;
 import me.trae.core.gamer.GamerManager;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.updater.interfaces.Updater;
 import me.trae.core.utility.*;
+import me.trae.core.utility.injectors.annotations.Inject;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -26,7 +26,8 @@ import java.util.Arrays;
 
 public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> implements Listener, Updater {
 
-    private final GamerManager GAMER_MANAGER;
+    @Inject
+    private GamerManager gamerManager;
 
     @ConfigInject(type = Long.class, path = "Charge-Duration", defaultValue = "3_000")
     private long chargeDuration;
@@ -39,8 +40,6 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
 
     public Swordsmanship(final Knight module) {
         super(module, PassiveSkillType.PASSIVE_B);
-
-        this.GAMER_MANAGER = this.getInstanceByClass(Core.class).getManagerByClass(GamerManager.class);
     }
 
     @Override
@@ -163,7 +162,7 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
                 continue;
             }
 
-            final Gamer gamer = this.GAMER_MANAGER.getGamerByPlayer(player);
+            final Gamer gamer = this.gamerManager.getGamerByPlayer(player);
             if (gamer == null) {
                 continue;
             }

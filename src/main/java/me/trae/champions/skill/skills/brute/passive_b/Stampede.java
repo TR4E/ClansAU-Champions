@@ -6,13 +6,13 @@ import me.trae.champions.role.types.Brute;
 import me.trae.champions.skill.skills.brute.passive_b.data.StampedeData;
 import me.trae.champions.skill.types.PassiveSkill;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
-import me.trae.core.Core;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.gamer.Gamer;
 import me.trae.core.gamer.GamerManager;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.updater.interfaces.Updater;
 import me.trae.core.utility.*;
+import me.trae.core.utility.injectors.annotations.Inject;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -27,7 +27,8 @@ import java.util.Arrays;
 
 public class Stampede extends PassiveSkill<Brute, StampedeData> implements Listener, Updater {
 
-    private final GamerManager GAMER_MANAGER;
+    @Inject
+    private GamerManager gamerManager;
 
     @ConfigInject(type = Long.class, path = "Duration", defaultValue = "5_000")
     private long duration;
@@ -43,8 +44,6 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
 
     public Stampede(final Brute module) {
         super(module, PassiveSkillType.PASSIVE_B);
-
-        this.GAMER_MANAGER = this.getInstanceByClass(Core.class).getManagerByClass(GamerManager.class);
     }
 
     @Override
@@ -184,7 +183,7 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
                 continue;
             }
 
-            final Gamer gamer = this.GAMER_MANAGER.getGamerByPlayer(player);
+            final Gamer gamer = this.gamerManager.getGamerByPlayer(player);
             if (gamer == null) {
                 this.reset(player);
                 this.removeUser(player);

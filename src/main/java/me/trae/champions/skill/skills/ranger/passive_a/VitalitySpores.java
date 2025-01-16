@@ -4,7 +4,6 @@ import me.trae.champions.role.types.Ranger;
 import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.types.PassiveSkill;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
-import me.trae.core.Core;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.gamer.Gamer;
 import me.trae.core.gamer.GamerManager;
@@ -12,12 +11,14 @@ import me.trae.core.updater.annotations.Update;
 import me.trae.core.updater.interfaces.Updater;
 import me.trae.core.utility.UtilEntity;
 import me.trae.core.utility.UtilTime;
+import me.trae.core.utility.injectors.annotations.Inject;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
 public class VitalitySpores extends PassiveSkill<Ranger, SkillData> implements Updater {
 
-    private final GamerManager GAMER_MANAGER;
+    @Inject
+    private GamerManager gamerManager;
 
     @ConfigInject(type = Long.class, path = "Duration", defaultValue = "5_000")
     private long duration;
@@ -27,8 +28,6 @@ public class VitalitySpores extends PassiveSkill<Ranger, SkillData> implements U
 
     public VitalitySpores(final Ranger module) {
         super(module, PassiveSkillType.PASSIVE_A);
-
-        this.GAMER_MANAGER = this.getInstanceByClass(Core.class).getManagerByClass(GamerManager.class);
     }
 
     @Override
@@ -59,7 +58,7 @@ public class VitalitySpores extends PassiveSkill<Ranger, SkillData> implements U
                 continue;
             }
 
-            final Gamer gamer = this.GAMER_MANAGER.getGamerByPlayer(player);
+            final Gamer gamer = this.gamerManager.getGamerByPlayer(player);
 
             if (!(UtilTime.elapsed(gamer.getLastDamaged(), this.getDuration(level)))) {
                 if (UtilEntity.hasPotionEffect(player, PotionEffectType.REGENERATION)) {

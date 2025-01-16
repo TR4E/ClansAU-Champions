@@ -105,17 +105,19 @@ public class WolfsPounce extends ChannelSkill<Ranger, WolfsPounceData> implement
             return;
         }
 
-        if (data.getCharges() < this.maxCharges) {
-            if (!(UtilTime.elapsed(data.getLastUpdated(), 400L))) {
-                return;
-            }
-
-            data.setCharges(data.getCharges() + this.incrementedCharges);
-
-            data.updateLastUpdated();
-
-            new SoundCreator(Sound.CLICK, 0.4F, 1.0F + (0.5F * data.getCharges())).play(player.getLocation());
+        if (data.getCharges() >= this.maxCharges) {
+            return;
         }
+        
+        if (!(UtilTime.elapsed(data.getLastUpdated(), 400L))) {
+            return;
+        }
+
+        data.setCharges(data.getCharges() + this.incrementedCharges);
+
+        data.updateLastUpdated();
+
+        new SoundCreator(Sound.CLICK, 0.4F, 1.0F + (0.5F * data.getCharges())).play(player.getLocation());
 
         UtilMessage.simpleMessage(player, this.getName(), UtilString.pair("Charges", UtilString.format("<yellow>%s", data.getCharges())));
     }

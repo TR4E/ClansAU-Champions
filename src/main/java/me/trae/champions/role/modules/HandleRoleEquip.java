@@ -7,7 +7,6 @@ import me.trae.champions.Champions;
 import me.trae.champions.build.BuildManager;
 import me.trae.champions.role.RoleManager;
 import me.trae.champions.utility.UtilRole;
-import me.trae.core.Core;
 import me.trae.core.client.Client;
 import me.trae.core.client.ClientManager;
 import me.trae.core.framework.types.frame.SpigotUpdater;
@@ -17,6 +16,7 @@ import me.trae.core.utility.UtilServer;
 import me.trae.core.utility.UtilString;
 import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.enums.ArmourSlotType;
+import me.trae.core.utility.injectors.annotations.Inject;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -25,23 +25,25 @@ import java.util.List;
 
 public class HandleRoleEquip extends SpigotUpdater<Champions, RoleManager> {
 
-    private final ClientManager CLIENT_MANAGER;
-    private final BuildManager BUILD_MANAGER;
     private final List<Role> ROLE_LIST;
+
+    @Inject
+    private ClientManager clientManager;
+
+    @Inject
+    private BuildManager buildManager;
 
     public HandleRoleEquip(final RoleManager manager) {
         super(manager);
 
-        this.CLIENT_MANAGER = this.getInstanceByClass(Core.class).getManagerByClass(ClientManager.class);
-        this.BUILD_MANAGER = this.getInstance().getManagerByClass(BuildManager.class);
         this.ROLE_LIST = this.getManager().getModulesByClass(Role.class);
     }
 
     @Update(delay = 200L)
     public void onUpdater() {
         for (final Player player : UtilServer.getOnlinePlayers()) {
-            if (!(this.BUILD_MANAGER.getBuilds().containsKey(player.getUniqueId()))) {
-                final Client client = this.CLIENT_MANAGER.getClientByPlayer(player);
+            if (!(this.buildManager.getBuilds().containsKey(player.getUniqueId()))) {
+                final Client client = this.clientManager.getClientByPlayer(player);
                 if (client != null && !(UtilTime.elapsed(client.getLastJoined(), 700L))) {
                     continue;
                 }
