@@ -2,15 +2,14 @@ package me.trae.champions.perk.perks;
 
 import me.trae.champions.Champions;
 import me.trae.champions.perk.PerkManager;
-import me.trae.champions.preference.PreferenceManager;
 import me.trae.champions.preference.types.DisplayRaveArmour;
-import me.trae.champions.role.RoleManager;
 import me.trae.champions.role.types.Assassin;
 import me.trae.core.perk.Perk;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.updater.interfaces.Updater;
 import me.trae.core.utility.UtilJava;
 import me.trae.core.utility.enums.ArmourMaterialType;
+import me.trae.core.utility.injectors.annotations.Inject;
 import org.bukkit.DyeColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
@@ -21,8 +20,11 @@ import java.util.Arrays;
 
 public class RaveArmour extends Perk<Champions, PerkManager> implements Updater {
 
-    private Assassin ASSASSIN_ROLE;
-    private DisplayRaveArmour PREFERENCE;
+    @Inject
+    private Assassin assassin;
+
+    @Inject
+    private DisplayRaveArmour preference;
 
     private int count;
 
@@ -38,12 +40,6 @@ public class RaveArmour extends Perk<Champions, PerkManager> implements Updater 
         };
     }
 
-    @Override
-    public void onInitialize() {
-        this.ASSASSIN_ROLE = this.getInstance().getManagerByClass(RoleManager.class).getModuleByClass(Assassin.class);
-        this.PREFERENCE = this.getInstance().getManagerByClass(PreferenceManager.class).getModuleByClass(DisplayRaveArmour.class);
-    }
-
     private void handleCount() {
         this.count++;
 
@@ -56,11 +52,16 @@ public class RaveArmour extends Perk<Champions, PerkManager> implements Updater 
     public void onUpdater() {
         this.handleCount();
 
-        if (this.ASSASSIN_ROLE == null || this.PREFERENCE == null) {
+        if (this.assassin == null || this.preference == null) {
             return;
         }
 
-        for (final Player player : this.ASSASSIN_ROLE.getPlayers()) {
+
+        if (!(this.assassin.isEnabled())) {
+            return;
+        }
+
+        for (final Player player : this.assassin.getPlayers()) {
             if (!(this.isUserByPlayer(player))) {
                 continue;
             }
@@ -69,7 +70,7 @@ public class RaveArmour extends Perk<Champions, PerkManager> implements Updater 
                 continue;
             }
 
-            if (!(this.PREFERENCE.getUserByPlayer(player).getValue())) {
+            if (!(this.preference.getUserByPlayer(player).getValue())) {
                 continue;
             }
 
