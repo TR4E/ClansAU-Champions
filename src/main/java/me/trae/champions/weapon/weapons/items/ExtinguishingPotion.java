@@ -145,7 +145,14 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
 
         final Location location = event.getLocation();
 
-        if (UtilServer.getEvent(new WeaponLocationEvent(this, location)).isCancelled()) {
+        final WeaponLocationEvent weaponLocationEvent = new WeaponLocationEvent(this, location) {
+            @Override
+            public String getObjectDataSingleton() {
+                return "Block Effect";
+            }
+        };
+
+        if (UtilServer.getEvent(weaponLocationEvent).isCancelled()) {
             return;
         }
 
@@ -154,7 +161,14 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
                 continue;
             }
 
-            if (UtilServer.getEvent(new WeaponLocationEvent(this, block.getLocation())).isCancelled()) {
+            final WeaponLocationEvent weaponLocationEvent2 = new WeaponLocationEvent(this, block.getLocation()) {
+                @Override
+                public String getObjectDataSingleton() {
+                    return "Block Effect";
+                }
+            };
+
+            if (UtilServer.getEvent(weaponLocationEvent2).isCancelled()) {
                 continue;
             }
 
