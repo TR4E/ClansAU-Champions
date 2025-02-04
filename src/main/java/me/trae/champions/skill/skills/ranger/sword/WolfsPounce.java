@@ -80,6 +80,7 @@ public class WolfsPounce extends ChannelSkill<Ranger, WolfsPounceData> implement
         }
 
         data.setPounced(true);
+        data.setUsing(false);
 
         final double formattedCharges = this.formatCharges(data.getCharges());
 
