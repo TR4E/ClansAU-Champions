@@ -53,11 +53,11 @@ public class HoldPosition extends ActiveSkill<Knight, SkillData> implements List
     public String[] getDescription(final int level) {
         return new String[]{
                 "Hold your position, gaining",
-                String.format("Resistance %s, Slowness %s, and no", this.getValueString(Integer.class, this.resistanceAmplifier), this.getValueString(Integer.class, this.slownessAmplifier)),
-                String.format("knockback for %s", this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("Resistance %s, Slowness %s, and no", this.getValueString(Integer.class, this.resistanceAmplifier), this.getValueString(Integer.class, this.slownessAmplifier)),
+                UtilString.format("knockback for %s", this.getValueString(Long.class, this::getDuration, level)),
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

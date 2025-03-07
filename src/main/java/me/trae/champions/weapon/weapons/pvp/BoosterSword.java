@@ -24,7 +24,7 @@ public class BoosterSword extends ChampionsPvPWeapon implements BoosterWeapon, P
         return new String[]{
                 "Increases Sword Skill Level by 1.",
                 "",
-                UtilString.pair("<gray>Damage", String.format("<green>%s", this.getDamage()))
+                UtilString.pair("<gray>Damage", UtilString.format("<green>%s", this.getDamage()))
         };
     }
 

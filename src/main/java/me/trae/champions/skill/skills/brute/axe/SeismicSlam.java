@@ -82,8 +82,8 @@ public class SeismicSlam extends ActiveSkill<Brute, SeismicSlamData> implements 
                 "Jump and slam the ground, knocking up all opponents",
                 "within a small radius.",
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

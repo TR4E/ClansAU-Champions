@@ -66,13 +66,13 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
         return new String[]{
                 "Right-Click with an Axe to Activate.",
                 "",
-                String.format("Instantly teleport forwards %s blocks.", this.getValueString(Double.class, this::getMaxRange, level)),
+                UtilString.format("Instantly teleport forwards %s blocks.", this.getValueString(Double.class, this::getMaxRange, level)),
                 "",
-                String.format("Store up to %s charges.", this.getValueString(Integer.class, this::getMaxCharges, level)),
-                String.format("One charge per %s.", this.getValueString(Long.class, this::getLastUpdatedDuration, level)),
+                UtilString.format("Store up to %s charges.", this.getValueString(Integer.class, this::getMaxCharges, level)),
+                UtilString.format("One charge per %s.", this.getValueString(Long.class, this::getLastUpdatedDuration, level)),
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

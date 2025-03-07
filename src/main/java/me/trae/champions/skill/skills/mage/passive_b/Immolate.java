@@ -83,13 +83,13 @@ public class Immolate extends ToggleUpdaterDropSkill<Mage, ToggleUpdaterDropSkil
                 "Drop Sword/Axe to Toggle.",
                 "",
                 "Igniting yourself in flaming fury.",
-                String.format("You receive Speed %s and Fire Resistance %s", effectAmplifierString, effectAmplifierString),
+                UtilString.format("You receive Speed %s and Fire Resistance %s", effectAmplifierString, effectAmplifierString),
                 "",
                 "You leave a trail of fire, which",
                 "burns players that go near it.",
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyUsingString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyUsingString(level)))
         };
     }
 

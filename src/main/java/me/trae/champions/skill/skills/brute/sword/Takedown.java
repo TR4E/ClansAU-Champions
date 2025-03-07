@@ -78,13 +78,13 @@ public class Takedown extends ActiveSkill<Brute, SkillData> implements Updater {
                 "",
                 "Hurl yourself towards an opponent.",
                 "If you collide with them, you both",
-                String.format("take damage and receive Slow %s", this.getValueString(Integer.class, this::getSlownessAmplifier, level)),
-                String.format("for %s.", this.getValueString(Long.class, this::getSlownessDuration, level)),
+                UtilString.format("take damage and receive Slow %s", this.getValueString(Integer.class, this::getSlownessAmplifier, level)),
+                UtilString.format("for %s.", this.getValueString(Long.class, this::getSlownessDuration, level)),
                 "",
                 "Cannot be used while grounded.",
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

@@ -54,12 +54,12 @@ public class PinDown extends ActiveBowSkill<Ranger, PinDownData> {
         return new String[]{
                 "Left-Click with a Bow to Activate.",
                 "",
-                String.format("You will instantly fire %s arrow(s)", this.getValueString(Integer.class, this.arrowCount)),
-                String.format("which gives anybody hit Slowness %s", this.getValueString(Integer.class, this::getAmplifier, level)),
-                String.format("for %s.", this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("You will instantly fire %s arrow(s)", this.getValueString(Integer.class, this.arrowCount)),
+                UtilString.format("which gives anybody hit Slowness %s", this.getValueString(Integer.class, this::getAmplifier, level)),
+                UtilString.format("for %s.", this.getValueString(Long.class, this::getDuration, level)),
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

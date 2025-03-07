@@ -6,6 +6,7 @@ import me.trae.champions.role.types.Knight;
 import me.trae.champions.skill.skills.knight.passive_a.data.ThornsData;
 import me.trae.champions.skill.types.PassiveSkill;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
+import me.trae.core.utility.UtilString;
 import me.trae.core.utility.UtilTime;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -32,7 +33,7 @@ public class Thorns extends PassiveSkill<Knight, ThornsData> implements Listener
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("Enemies take %s damage", this.getValueString(Double.class, this::getDamage, level)),
+                UtilString.format("Enemies take %s damage", this.getValueString(Double.class, this::getDamage, level)),
                 "when they hit you using a melee attack."
         };
     }

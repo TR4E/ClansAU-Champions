@@ -59,12 +59,12 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
                 "Right-Click with an Axe to Activate.",
                 "",
                 "Enter a rage, gaining massive movement speed",
-                String.format("and slowing anything you hit for %s.", this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("and slowing anything you hit for %s.", this.getValueString(Long.class, this::getDuration, level)),
                 "",
                 "While charging, you take no knockback.",
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

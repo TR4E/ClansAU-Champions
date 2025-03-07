@@ -56,11 +56,11 @@ public class WolfsFury extends ActiveSkill<Ranger, SkillData> implements Listene
                 "Right-Click with an Axe to Activate.",
                 "",
                 "Summon the power of the wolf, gaining",
-                String.format("Strength %s for %s, and giving", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("Strength %s for %s, and giving", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
                 "no knockback on your attacks.",
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
 
         };
     }

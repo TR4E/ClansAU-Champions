@@ -6,6 +6,7 @@ import me.trae.champions.role.types.Brute;
 import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.types.PassiveSkill;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
+import me.trae.core.utility.UtilString;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -31,7 +32,7 @@ public class Colossus extends PassiveSkill<Brute, SkillData> implements Listener
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("You take %s reduced knockback.", this.getValueString(Integer.class, this::getKnockback, level) + "%")
+                UtilString.format("You take %s reduced knockback.", this.getValueString(Integer.class, this::getKnockback, level) + "%")
         };
     }
 

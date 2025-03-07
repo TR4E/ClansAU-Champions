@@ -23,7 +23,7 @@ public class PowerAxe extends ChampionsPvPWeapon implements PassiveActivatorWeap
         return new String[]{
                 "Increases Melee Damage by 1.",
                 "",
-                UtilString.pair("<gray>Damage", String.format("<green>%s", this.getDamage()))
+                UtilString.pair("<gray>Damage", UtilString.format("<green>%s", this.getDamage()))
         };
     }
 

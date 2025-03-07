@@ -42,10 +42,10 @@ public class IncendiaryShot extends ActiveBowSkill<Ranger, BowSkillData> {
                 "Left-Click with a Bow to Prepare.",
                 "",
                 "Shoot an ignited arrow",
-                String.format("burning anyone hit for %s.", this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("burning anyone hit for %s.", this.getValueString(Long.class, this::getDuration, level)),
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

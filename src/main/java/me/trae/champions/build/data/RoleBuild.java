@@ -113,7 +113,7 @@ public class RoleBuild implements IRoleBuild, DataContainer<BuildProperty> {
             return "Default Build";
         }
 
-        return String.format("Build #%s", this.getID());
+        return UtilString.format("Build #%s", this.getID());
     }
 
     @Override
@@ -138,7 +138,7 @@ public class RoleBuild implements IRoleBuild, DataContainer<BuildProperty> {
                 }
             }
 
-            list.add(UtilString.pair(String.format("<green>%s", typeName), String.format("<white>%s", skillName)));
+            list.add(UtilString.pair(UtilString.format("<green>%s", typeName), UtilString.format("<white>%s", skillName)));
         }
 
         return list;

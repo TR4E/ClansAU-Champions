@@ -7,6 +7,7 @@ import me.trae.champions.build.menus.build.buttons.interfaces.IBuildButton;
 import me.trae.champions.build.menus.skill.SkillEditMenu;
 import me.trae.core.menu.Button;
 import me.trae.core.utility.UtilMenu;
+import me.trae.core.utility.UtilString;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -22,7 +23,7 @@ public abstract class BuildEditButton extends Button<BuildCustomizationMenu> imp
 
     @Override
     public String getDisplayName() {
-        return String.format("<green><bold>Edit Custom Build #%s", this.getID());
+        return UtilString.format("<green><bold>Edit Custom Build #%s", this.getID());
     }
 
     @Override

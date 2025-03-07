@@ -35,7 +35,7 @@ public class HandleChampionsItemBuilderUpdate extends SpigotListener<Champions, 
                 continue;
             }
 
-            builder.setDisplayName(ChatColor.valueOf(this.displayNameChatColor) + String.format("%s %s", role.getName(), UtilString.clean(material.name().split("_")[1])));
+            builder.setDisplayName(ChatColor.valueOf(this.displayNameChatColor) + UtilString.format("%s %s", role.getName(), UtilString.clean(material.name().split("_")[1])));
             builder.setLore(new ArrayList<>(Arrays.asList(role.getDescription())));
 
             event.setUpdated(true);

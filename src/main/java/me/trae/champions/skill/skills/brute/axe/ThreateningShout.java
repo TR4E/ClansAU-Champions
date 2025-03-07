@@ -62,11 +62,11 @@ public class ThreateningShout extends ActiveSkill<Brute, SkillData> {
                 "Right-Click with an Axe to Activate.",
                 "",
                 "Release a roar, which frightens all enemies",
-                String.format("within %s blocks", this.getValueString(Integer.class, this::getDistance, level)),
-                String.format("and grants them Weakness %s for %s.", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("within %s blocks", this.getValueString(Integer.class, this::getDistance, level)),
+                UtilString.format("and grants them Weakness %s for %s.", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

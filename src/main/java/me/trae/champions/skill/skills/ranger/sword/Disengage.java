@@ -77,15 +77,15 @@ public class Disengage extends ActiveSkill<Ranger, SkillData> implements Listene
         return new String[]{
                 "Right-Click with a Sword to Activate.",
                 "",
-                String.format("If you are attacked within %s", this.getValueString(Long.class, this.prepareDuration)),
+                UtilString.format("If you are attacked within %s", this.getValueString(Long.class, this.prepareDuration)),
                 "you successfully disengage.",
                 "",
                 "If successful, you leap backwards",
-                String.format("and your attacker receives Slowness %s", this.getValueString(Integer.class, this.slownessAmplifier)),
-                String.format("for %s.", this.getValueString(Long.class, this::getSlownessDuration, level)),
+                UtilString.format("and your attacker receives Slowness %s", this.getValueString(Integer.class, this.slownessAmplifier)),
+                UtilString.format("for %s.", this.getValueString(Long.class, this::getSlownessDuration, level)),
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

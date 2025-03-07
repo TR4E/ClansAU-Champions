@@ -54,12 +54,12 @@ public class MarkedForDeath extends ActiveBowSkill<Assassin, BowSkillData> {
                 "Left-Click with a Bow to Prepare.",
                 "",
                 "Your next arrow will mark players for death,",
-                String.format("giving them Vulnerability %s for %s", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("giving them Vulnerability %s for %s", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
                 "Causing them to take 50% additional damage",
                 "from all targets.",
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

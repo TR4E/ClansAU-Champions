@@ -7,6 +7,7 @@ import me.trae.champions.skill.types.data.BowSkillData;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
 import me.trae.core.utility.UtilEntity;
 import me.trae.core.utility.UtilJava;
+import me.trae.core.utility.UtilString;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -34,8 +35,8 @@ public class Entangle extends PassiveBowSkill<Ranger, BowSkillData> {
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("Your arrows apply Slowness %s", this.getValueString(Integer.class, this::getAmplifier, level)),
-                String.format("to your opponent for %s.", this.getValueString(Long.class, this::getDuration, level))
+                UtilString.format("Your arrows apply Slowness %s", this.getValueString(Integer.class, this::getAmplifier, level)),
+                UtilString.format("to your opponent for %s.", this.getValueString(Long.class, this::getDuration, level))
         };
     }
 

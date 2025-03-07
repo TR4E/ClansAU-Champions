@@ -64,11 +64,11 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
         return new String[]{
                 "You slowly build up speed as you",
                 "sprint. You gain a level of Speed",
-                String.format("for every %s,", this.getValueString(Long.class, this::getDuration, level)),
-                String.format("up to max of Speed %s.", this.getValueString(Integer.class, this::getMaxAmplifier, level)),
+                UtilString.format("for every %s,", this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("up to max of Speed %s.", this.getValueString(Integer.class, this::getMaxAmplifier, level)),
                 "",
                 "Attacking during stampede deals",
-                String.format("%s bonus damage per speed level", this.damageMultiplier)
+                UtilString.format("%s bonus damage per speed level", this.damageMultiplier)
         };
     }
 
@@ -154,7 +154,7 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
 
         new SoundCreator(Sound.ZOMBIE_METAL, 1.0F, 1.5F).play(damagee.getLocation());
 
-        final String damageString = String.format("<white>+%s dmg", damage);
+        final String damageString = UtilString.format("<white>+%s dmg", damage);
 
         if (damagee instanceof Player) {
             UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit <var> with <green><var></green> (<var><reset>).", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel()), damageString));
@@ -220,7 +220,7 @@ public class Stampede extends PassiveSkill<Brute, StampedeData> implements Liste
 
             UtilEntity.givePotionEffect(player, PotionEffectType.SPEED, data.getAmplifier(), Integer.MAX_VALUE);
 
-            UtilMessage.simpleMessage(player, this.getName(), UtilString.pair("Speed", String.format("<yellow>%s", data.getAmplifier())));
+            UtilMessage.simpleMessage(player, this.getName(), UtilString.pair("Speed", UtilString.format("<yellow>%s", data.getAmplifier())));
         }
     }
 }

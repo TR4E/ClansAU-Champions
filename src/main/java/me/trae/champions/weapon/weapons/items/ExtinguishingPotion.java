@@ -81,7 +81,7 @@ public class ExtinguishingPotion extends ActiveCustomItem<Champions, WeaponManag
                 "",
                 UtilString.pair("<gray>Right-Click", "<yellow>Drink"),
                 "   Douses Self",
-                String.format("   Fire Resistance %s for %s", this.amplifier, UtilTime.getTime(this.duration))
+                UtilString.format("   Fire Resistance %s for %s", this.amplifier, UtilTime.getTime(this.duration))
         };
     }
 

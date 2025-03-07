@@ -9,6 +9,7 @@ import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.updater.interfaces.Updater;
 import me.trae.core.utility.UtilMessage;
+import me.trae.core.utility.UtilString;
 import me.trae.core.utility.UtilTime;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -46,9 +47,9 @@ public class Sharpshooter extends PassiveBowSkill<Ranger, SharpshooterData> impl
     public String[] getDescription(final int level) {
         return new String[]{
                 "For each consecutive hit,",
-                String.format("%s additional damage per charge", this.getValueString(Double.class, this::getDamage, level)),
+                UtilString.format("%s additional damage per charge", this.getValueString(Double.class, this::getDamage, level)),
                 "",
-                String.format("You can store a maximum of %s charges.", this.getValueString(Integer.class, this::getMaxCharges, level)),
+                UtilString.format("You can store a maximum of %s charges.", this.getValueString(Integer.class, this::getMaxCharges, level)),
         };
     }
 
@@ -87,7 +88,7 @@ public class Sharpshooter extends PassiveBowSkill<Ranger, SharpshooterData> impl
 
         event.setReason(this.getDisplayName(data.getLevel()), 1000L);
 
-        final String damageString = String.format("<white>+%s dmg</white>", damage);
+        final String damageString = UtilString.format("<white>+%s dmg</white>", damage);
 
         UtilMessage.simpleMessage(damager, this.getName(), "You hit <var> with Charge <green><var></green> (<var>).", Arrays.asList(event.getDamageeName(), String.valueOf(data.getCharges()), damageString));
         UtilMessage.simpleMessage(damagee, this.getName(), "<var> hit you with Charge <green><var></green> (<var>).", Arrays.asList(event.getDamagerName(), String.valueOf(data.getCharges()), damageString));

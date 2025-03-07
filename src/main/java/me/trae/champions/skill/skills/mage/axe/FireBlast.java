@@ -78,8 +78,8 @@ public class FireBlast extends ActiveSkill<Mage, FireBlastData> implements Liste
                 "Shoot a large fireball that deals",
                 "area of effect damage, and igniting any players hit.",
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

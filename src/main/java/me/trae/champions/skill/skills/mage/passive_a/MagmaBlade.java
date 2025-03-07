@@ -6,6 +6,7 @@ import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.PassiveSkill;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
+import me.trae.core.utility.UtilString;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,7 +32,7 @@ public class MagmaBlade extends PassiveSkill<Mage, SkillData> implements Listene
     public String[] getDescription(final int level) {
         return new String[]{
                 "Your sword scorches opponents,",
-                String.format("dealing an additional %s damage", this.getValueString(Double.class, this::getDamage, level)),
+                UtilString.format("dealing an additional %s damage", this.getValueString(Double.class, this::getDamage, level)),
                 "to those who are on fire."
         };
     }

@@ -3,6 +3,7 @@ package me.trae.champions.build.menus.skill.buttons;
 import me.trae.champions.build.menus.skill.SkillEditMenu;
 import me.trae.champions.build.menus.skill.buttons.interfaces.ISkillTypeButton;
 import me.trae.core.menu.Button;
+import me.trae.core.utility.UtilString;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -15,7 +16,7 @@ public abstract class SkillTypeButton extends Button<SkillEditMenu> implements I
 
     @Override
     public String getDisplayName() {
-        return String.format("<green><bold>%s Skills", this.getSkillType().getName());
+        return UtilString.format("<green><bold>%s Skills", this.getSkillType().getName());
     }
 
     @Override

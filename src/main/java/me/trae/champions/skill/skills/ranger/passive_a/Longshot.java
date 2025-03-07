@@ -8,6 +8,7 @@ import me.trae.champions.skill.types.data.BowSkillData;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.utility.UtilMath;
+import me.trae.core.utility.UtilString;
 import me.trae.core.utility.particle.ParticleEffect;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -37,7 +38,7 @@ public class Longshot extends PassiveBowSkill<Ranger, BowSkillData> {
                 "Shoot an arrow that gains additional",
                 "damage the further the target hit is.",
                 "",
-                String.format("Caps out at %s damage.", this.getValueString(Double.class, this::getMaxDamage, level)),
+                UtilString.format("Caps out at %s damage.", this.getValueString(Double.class, this::getMaxDamage, level)),
         };
     }
 
@@ -71,7 +72,7 @@ public class Longshot extends PassiveBowSkill<Ranger, BowSkillData> {
         event.setReason(new DamageReason(this.getDisplayName(data.getLevel()), 2_000L) {
             @Override
             public String getExtraName() {
-                return String.format(" <gray>from <green>%s</green> blocks", Math.round(length));
+                return UtilString.format(" <gray>from <green>%s</green> blocks", Math.round(length));
             }
         });
     }

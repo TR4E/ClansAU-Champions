@@ -69,10 +69,10 @@ public class IcePrison extends ActiveSkill<Mage, SkillData> implements Listener 
                 "Right-Click with a Sword to Activate.",
                 "",
                 "Launches an orb, trapping any players",
-                String.format("within %s blocks of it in a prison of ice for %s", this.getValueString(Integer.class, this::getDistance, level), this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("within %s blocks of it in a prison of ice for %s", this.getValueString(Integer.class, this::getDistance, level), this.getValueString(Long.class, this::getDuration, level)),
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

@@ -66,10 +66,10 @@ public class Cyclone extends ActiveSkill<Mage, SkillData> {
                 "Right-Click with a Sword to Activate.",
                 "",
                 "Pulls all enemies within",
-                String.format("%s blocks, towards you", this.getValueString(Integer.class, this::getDistance, level)),
+                UtilString.format("%s blocks, towards you", this.getValueString(Integer.class, this::getDistance, level)),
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

@@ -42,8 +42,8 @@ public class Leap extends ActiveSkill<Assassin, SkillData> implements SelfManage
                 "",
                 "You take a great Leap.",
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 
@@ -52,7 +52,7 @@ public class Leap extends ActiveSkill<Assassin, SkillData> implements SelfManage
         final String prefix = this.getModule().getName();
 
         final String leapAbilityName = this.getDisplayName(level);
-        final String wallKickAbilityName = String.format("Wall Kick %s", level);
+        final String wallKickAbilityName = UtilString.format("Wall Kick %s", level);
 
         final String leapCooldownName = this.getName();
         final String wallKickCooldownName = "Wall Kick";

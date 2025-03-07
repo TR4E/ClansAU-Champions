@@ -68,11 +68,11 @@ public class UnifiedMight extends ActiveSkill<Brute, SkillData> implements Liste
         return new String[]{
                 "Right-Click with an Axe to Activate.",
                 "",
-                String.format("Grant all allies within %s blocks", this.getValueString(Integer.class, this::getDistance, level)),
-                String.format("Strength %s for %s.", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("Grant all allies within %s blocks", this.getValueString(Integer.class, this::getDistance, level)),
+                UtilString.format("Strength %s for %s.", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
                 this.buffSelf ? "" : "\nThis does not give you the buff.\n",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

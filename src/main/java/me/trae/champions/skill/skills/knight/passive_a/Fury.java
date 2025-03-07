@@ -5,6 +5,7 @@ import me.trae.champions.role.types.Knight;
 import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.types.PassiveSkill;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
+import me.trae.core.utility.UtilString;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,7 +30,7 @@ public class Fury extends PassiveSkill<Knight, SkillData> implements Listener {
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("Your attacks deal a bonus %s damage", this.getValueString(Double.class, this::getDamage, level))
+                UtilString.format("Your attacks deal a bonus %s damage", this.getValueString(Double.class, this::getDamage, level))
         };
     }
 

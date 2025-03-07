@@ -6,6 +6,7 @@ import me.trae.champions.skill.types.PassiveBowSkill;
 import me.trae.champions.skill.types.data.BowSkillData;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
+import me.trae.core.utility.UtilString;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -31,7 +32,7 @@ public class Precision extends PassiveBowSkill<Ranger, BowSkillData> implements 
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("Your arrows deal %s bonus damage on hit.", this.getValueString(Double.class, this::getDamage, level))
+                UtilString.format("Your arrows deal %s bonus damage on hit.", this.getValueString(Double.class, this::getDamage, level))
         };
     }
 

@@ -55,10 +55,10 @@ public class HuntersThrill extends PassiveBowSkill<Ranger, HuntersThrillData> im
     public String[] getDescription(final int level) {
         return new String[]{
                 "For each consecutive hit,",
-                String.format("within %s of each other,", this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("within %s of each other,", this.getValueString(Long.class, this::getDuration, level)),
                 "you gain increased movement speed.",
                 "",
-                String.format("You can store a maximum of <green>%s</green> charges.", this.getMaxCharges(level)),
+                UtilString.format("You can store a maximum of <green>%s</green> charges.", this.getMaxCharges(level)),
         };
     }
 
@@ -102,7 +102,7 @@ public class HuntersThrill extends PassiveBowSkill<Ranger, HuntersThrillData> im
 
         UtilEntity.givePotionEffect(damager, PotionEffectType.SPEED, data.getCharges(), this.getDuration(data.getLevel()));
 
-        UtilMessage.simpleMessage(damager, this.getName(), UtilString.pair("Charges", String.format("<yellow>%s", data.getCharges())));
+        UtilMessage.simpleMessage(damager, this.getName(), UtilString.pair("Charges", UtilString.format("<yellow>%s", data.getCharges())));
     }
 
     @Update(delay = 250L)

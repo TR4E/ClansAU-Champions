@@ -6,6 +6,7 @@ import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.types.PassiveSkill;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
+import me.trae.core.utility.UtilString;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -35,8 +36,8 @@ public class Sacrifice extends PassiveSkill<Knight, SkillData> implements Listen
         final String percentageString = this.getValueString(Integer.class, this::getPercentage, level);
 
         return new String[]{
-                String.format("Deal an extra %s melee damage,", percentageString + "%"),
-                String.format("but you now also take %s extra damage from melee attacks.", percentageString + "%")
+                UtilString.format("Deal an extra %s melee damage,", percentageString + "%"),
+                UtilString.format("but you now also take %s extra damage from melee attacks.", percentageString + "%")
         };
     }
 

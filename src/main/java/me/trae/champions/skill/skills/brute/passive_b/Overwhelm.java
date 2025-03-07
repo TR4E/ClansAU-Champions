@@ -6,6 +6,7 @@ import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.types.PassiveSkill;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
+import me.trae.core.utility.UtilString;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,10 +37,10 @@ public class Overwhelm extends PassiveSkill<Brute, SkillData> implements Listene
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("You deal %s bonus damage for every", this.getValueString(Double.class, this.bonusDamage)),
-                String.format("%s more health you have than your opponent.", this.getValueString(Double.class, this.baseHealth)),
+                UtilString.format("You deal %s bonus damage for every", this.getValueString(Double.class, this.bonusDamage)),
+                UtilString.format("%s more health you have than your opponent.", this.getValueString(Double.class, this.baseHealth)),
                 "",
-                String.format("You can deal a maximum of %s bonus damage.", this.getValueString(Double.class, this::getMaxDamage, level))
+                UtilString.format("You can deal a maximum of %s bonus damage.", this.getValueString(Double.class, this::getMaxDamage, level))
         };
     }
 

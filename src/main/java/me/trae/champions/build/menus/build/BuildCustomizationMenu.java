@@ -12,6 +12,7 @@ import me.trae.champions.build.menus.build.buttons.BuildEquipButton;
 import me.trae.champions.build.menus.build.interfaces.IBuildMenu;
 import me.trae.core.menu.Menu;
 import me.trae.core.utility.UtilColor;
+import me.trae.core.utility.UtilString;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -25,7 +26,7 @@ public abstract class BuildCustomizationMenu extends Menu<Champions, BuildManage
     private Role updatedRole;
 
     public BuildCustomizationMenu(final BuildManager manager, final Player player, final Role role) {
-        super(manager, player, 45, UtilColor.bold(ChatColor.GREEN) + String.format("%s Class Editor", role.getName()));
+        super(manager, player, 45, UtilColor.bold(ChatColor.GREEN) + UtilString.format("%s Class Editor", role.getName()));
     }
 
     @Override

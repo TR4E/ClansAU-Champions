@@ -9,6 +9,7 @@ import me.trae.champions.skill.types.enums.PassiveSkillType;
 import me.trae.core.Core;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.energy.EnergyManager;
+import me.trae.core.utility.UtilString;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,7 +38,7 @@ public class NullBlade extends PassiveSkill<Mage, SkillData> implements Listener
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("Your sword sucks %s energy from", this.getValueString(Float.class, this::getEnergySucked, level)),
+                UtilString.format("Your sword sucks %s energy from", this.getValueString(Float.class, this::getEnergySucked, level)),
                 "opponents with every attack."
         };
     }

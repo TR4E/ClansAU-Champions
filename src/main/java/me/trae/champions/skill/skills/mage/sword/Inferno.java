@@ -78,8 +78,8 @@ public class Inferno extends ChannelSkill<Mage, ChannelSkillData> implements Lis
                 "You spray fire at high speed",
                 "igniting those it hits.",
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyUsingString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyUsingString(level)))
         };
     }
 

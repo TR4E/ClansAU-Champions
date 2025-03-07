@@ -62,11 +62,11 @@ public class SpiritOfTheWolf extends ActiveSkill<Brute, SkillData> {
                 "Right-Click with an Axe to Activate.",
                 "",
                 "Call upon the Spirit of the Wolf",
-                String.format("granting all allies within %s blocks", this.getValueString(Integer.class, this::getDistance, level)),
-                String.format("Speed %s for %s.", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("granting all allies within %s blocks", this.getValueString(Integer.class, this::getDistance, level)),
+                UtilString.format("Speed %s for %s.", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
 
         };
     }

@@ -2,6 +2,7 @@ package me.trae.champions.build.menus.build.buttons;
 
 import me.trae.champions.build.menus.build.BuildCustomizationMenu;
 import me.trae.core.menu.Button;
+import me.trae.core.utility.UtilString;
 import me.trae.core.utility.enums.ArmourSlotType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -17,7 +18,7 @@ public class BuildArmourButton extends Button<BuildCustomizationMenu> {
 
     @Override
     public String getDisplayName() {
-        return String.format("<green><bold>%s %s", this.getMenu().getRole().getName(), Objects.requireNonNull(ArmourSlotType.getByMaterial(this.getBuilder().getItemStack().getType())).getName());
+        return UtilString.format("<green><bold>%s %s", this.getMenu().getRole().getName(), Objects.requireNonNull(ArmourSlotType.getByMaterial(this.getBuilder().getItemStack().getType())).getName());
     }
 
     @Override

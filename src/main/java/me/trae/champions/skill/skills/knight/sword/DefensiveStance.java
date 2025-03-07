@@ -62,8 +62,8 @@ public class DefensiveStance extends ChannelSkill<Knight, ChannelSkillData> impl
                 "Players who attack you, receive damage",
                 "and get knocked back.",
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyUsingString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyUsingString(level)))
         };
     }
 

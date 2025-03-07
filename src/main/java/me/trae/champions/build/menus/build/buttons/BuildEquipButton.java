@@ -4,6 +4,7 @@ import me.trae.champions.build.data.RoleBuild;
 import me.trae.champions.build.menus.build.BuildCustomizationMenu;
 import me.trae.champions.build.menus.build.buttons.interfaces.IBuildButton;
 import me.trae.core.menu.Button;
+import me.trae.core.utility.UtilString;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -34,7 +35,7 @@ public abstract class BuildEquipButton extends Button<BuildCustomizationMenu> im
             if (roleBuild.getID() == 0) {
                 displayName = "<yellow><bold>Apply Default Build";
             } else {
-                displayName = String.format("<yellow><bold>Apply Custom Build #%s", roleBuild.getID());
+                displayName = UtilString.format("<yellow><bold>Apply Custom Build #%s", roleBuild.getID());
             }
         }
 

@@ -55,9 +55,9 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
     public String[] getDescription(final int level) {
         return new String[]{
                 "Prepare a powerful sword attack,",
-                String.format("you gain 1 charge every %s.", this.getValueString(Long.class, this.chargeDuration)),
+                UtilString.format("you gain 1 charge every %s.", this.getValueString(Long.class, this.chargeDuration)),
                 "",
-                String.format("You can store a maximum of %s charges.", this.getValueString(Integer.class, this::getMaxCharges, level)),
+                UtilString.format("You can store a maximum of %s charges.", this.getValueString(Integer.class, this::getMaxCharges, level)),
                 "",
                 "When you attack, your damage is",
                 "increased by the number of your charges",
@@ -136,7 +136,7 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
 
         new SoundCreator(Sound.ZOMBIE_METAL, 1.0F, 1.5F).play(damagee.getLocation());
 
-        final String damageString = String.format("<white>+%s dmg</white>", damage);
+        final String damageString = UtilString.format("<white>+%s dmg</white>", damage);
 
         if (damagee instanceof Player) {
             UtilMessage.simpleMessage(damager, this.getModule().getName(), "You hit <var> with <green><var></green> (<var>).", Arrays.asList(event.getDamageeName(), this.getDisplayName(data.getLevel()), damageString));
@@ -189,7 +189,7 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
 
             data.setCharges(data.getCharges() + 1);
 
-            UtilMessage.simpleMessage(player, this.getName(), UtilString.pair("Charges", String.format("<yellow>%s", data.getCharges())));
+            UtilMessage.simpleMessage(player, this.getName(), UtilString.pair("Charges", UtilString.format("<yellow>%s", data.getCharges())));
         }
     }
 }

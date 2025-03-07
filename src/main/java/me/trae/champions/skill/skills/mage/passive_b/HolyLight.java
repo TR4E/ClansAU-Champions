@@ -10,6 +10,7 @@ import me.trae.core.updater.annotations.Update;
 import me.trae.core.updater.interfaces.Updater;
 import me.trae.core.utility.UtilEntity;
 import me.trae.core.utility.UtilServer;
+import me.trae.core.utility.UtilString;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
@@ -44,7 +45,7 @@ public class HolyLight extends PassiveSkill<Mage, SkillData> implements Updater 
         return new String[]{
                 "Create an aura that gives",
                 "yourself and all allies within",
-                String.format("%s blocks, Regeneration %s.", this.getValueString(Integer.class, this::getDistance, level), this.getValueString(Integer.class, this::getAmplifier, level)),
+                UtilString.format("%s blocks, Regeneration %s.", this.getValueString(Integer.class, this::getDistance, level), this.getValueString(Integer.class, this::getAmplifier, level)),
         };
     }
 

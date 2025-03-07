@@ -77,12 +77,12 @@ public class SmokeBomb extends DropSkill<Assassin, SkillData> implements Listene
                 "Drop Sword/Axe to Activate.",
                 "",
                 "Instantly vanish before your foes for a ",
-                String.format("maximum of %s", this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("maximum of %s", this.getValueString(Long.class, this::getDuration, level)),
                 "hitting an enemy or using abilities",
                 "will make you reappear.",
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

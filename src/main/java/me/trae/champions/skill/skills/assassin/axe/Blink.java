@@ -51,12 +51,12 @@ public class Blink extends ActiveSkill<Assassin, BlinkData> implements ToggleSki
         return new String[]{
                 "Right-Click with an Axe to Activate.",
                 "",
-                String.format("Instantly teleport forwards %s blocks.", this.getValueString(Integer.class, this::getMaxRange, level)),
+                UtilString.format("Instantly teleport forwards %s blocks.", this.getValueString(Integer.class, this::getMaxRange, level)),
                 "",
-                String.format("Using again within %s De-Blinks,", this.getValueString(Long.class, this::getDeBlinkDuration, level)),
+                UtilString.format("Using again within %s De-Blinks,", this.getValueString(Long.class, this::getDeBlinkDuration, level)),
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

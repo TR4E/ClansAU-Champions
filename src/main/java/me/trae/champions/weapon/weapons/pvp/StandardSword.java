@@ -23,7 +23,7 @@ public class StandardSword extends ChampionsPvPWeapon implements PassiveActivato
         return new String[]{
                 "Just a Standard Sword.",
                 "",
-                UtilString.pair("<gray>Damage", String.format("<green>%s", this.getDamage()))
+                UtilString.pair("<gray>Damage", UtilString.format("<green>%s", this.getDamage()))
         };
     }
 

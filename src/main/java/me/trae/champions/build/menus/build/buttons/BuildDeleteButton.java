@@ -5,6 +5,7 @@ import me.trae.champions.build.data.RoleBuild;
 import me.trae.champions.build.menus.build.BuildCustomizationMenu;
 import me.trae.champions.build.menus.build.buttons.interfaces.IBuildButton;
 import me.trae.core.menu.Button;
+import me.trae.core.utility.UtilString;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -22,7 +23,7 @@ public abstract class BuildDeleteButton extends Button<BuildCustomizationMenu> i
 
     @Override
     public String getDisplayName() {
-        return String.format("<red><bold>Delete Custom Build #%s", this.getID());
+        return UtilString.format("<red><bold>Delete Custom Build #%s", this.getID());
     }
 
     @Override

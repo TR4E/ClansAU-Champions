@@ -6,6 +6,7 @@ import me.trae.champions.skill.data.SkillData;
 import me.trae.champions.skill.types.PassiveSkill;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
+import me.trae.core.utility.UtilString;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -32,8 +33,8 @@ public class Resistance extends PassiveSkill<Brute, SkillData> implements Listen
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("You take %s less damage", this.getValueString(Integer.class, this::getPercentage, level) + "%"),
-                String.format("but you deal %s less as well.", this.getValueString(Integer.class, this::getPercentage, level) + "%")
+                UtilString.format("You take %s less damage", this.getValueString(Integer.class, this::getPercentage, level) + "%"),
+                UtilString.format("but you deal %s less as well.", this.getValueString(Integer.class, this::getPercentage, level) + "%")
         };
     }
 

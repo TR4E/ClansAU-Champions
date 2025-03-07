@@ -40,9 +40,9 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
         String displayName = skill.getName();
 
         if (roleSkill != null) {
-            displayName = String.format("<green><bold>%s (%s/%s)", displayName, roleSkill.getLevel(), skill.getMaxLevel());
+            displayName = UtilString.format("<green><bold>%s (%s/%s)", displayName, roleSkill.getLevel(), skill.getMaxLevel());
         } else {
-            displayName = String.format("<red>%s", displayName);
+            displayName = UtilString.format("<red>%s", displayName);
         }
 
         return displayName;
@@ -62,8 +62,8 @@ public abstract class SkillSelectButton extends Button<SkillEditMenu> implements
             lore.add(strikeLine);
         }
 
-        lore.add(UtilString.pair("<yellow>Skill Token Cost", String.format("<white>%s", this.getSkill().getTokenCost())));
-        lore.add(UtilString.pair("<yellow>Skill Max Level", String.format("<white>%s", this.getSkill().getMaxLevel())));
+        lore.add(UtilString.pair("<yellow>Skill Token Cost", UtilString.format("<white>%s", this.getSkill().getTokenCost())));
+        lore.add(UtilString.pair("<yellow>Skill Max Level", UtilString.format("<white>%s", this.getSkill().getMaxLevel())));
 
         lore.add(" ");
 

@@ -23,7 +23,7 @@ public class StandardAxe extends ChampionsPvPWeapon implements PassiveActivatorW
         return new String[]{
                 "Just a Standard Axe.",
                 "",
-                UtilString.pair("<gray>Damage", String.format("<green>%s", this.getDamage()))
+                UtilString.pair("<gray>Damage", UtilString.format("<green>%s", this.getDamage()))
         };
     }
 

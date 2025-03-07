@@ -9,10 +9,7 @@ import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.PassiveSkill;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
-import me.trae.core.utility.UtilEntity;
-import me.trae.core.utility.UtilJava;
-import me.trae.core.utility.UtilMessage;
-import me.trae.core.utility.UtilServer;
+import me.trae.core.utility.*;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -52,7 +49,7 @@ public class Cleave extends PassiveSkill<Knight, SkillData> implements Listener 
     public String[] getDescription(final int level) {
         return new String[]{
                 "Your attacks hit all opponents",
-                String.format("within %s blocks of your target.", this.getValueString(Integer.class, this::getDistance, level)),
+                UtilString.format("within %s blocks of your target.", this.getValueString(Integer.class, this::getDistance, level)),
                 "",
                 "Only applies to Axes."
         };

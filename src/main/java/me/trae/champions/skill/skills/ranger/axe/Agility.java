@@ -58,12 +58,12 @@ public class Agility extends ActiveSkill<Ranger, SkillData> implements Listener 
                 "Right-Click with an Axe to Activate.",
                 "",
                 "Sprint with great agility, gaining",
-                String.format("Speed %s for %s.", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("Speed %s for %s.", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
                 "You are immune to melee attacks while sprinting.",
                 "Agility ends if you interact.",
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

@@ -55,10 +55,10 @@ public class Riposte extends ActiveSkill<Knight, RiposteData> implements Listene
                 "Right-Click with a Sword to Activate.",
                 "",
                 "Become invulnerable to all",
-                String.format("melee damage for %s when countered", this.getValueString(Long.class, this::getInvulnerableDuration, level)),
+                UtilString.format("melee damage for %s when countered", this.getValueString(Long.class, this::getInvulnerableDuration, level)),
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

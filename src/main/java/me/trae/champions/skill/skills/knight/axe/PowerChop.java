@@ -50,13 +50,13 @@ public class PowerChop extends ActiveSkill<Knight, SkillData> implements Listene
                 "Right-Click with an Axe to Activate.",
                 "",
                 "Put more strength into your next axe attack,",
-                String.format("causing it to deal %s bonus damage.", this.getValueString(Double.class, this::getDamage, level)),
+                UtilString.format("causing it to deal %s bonus damage.", this.getValueString(Double.class, this::getDamage, level)),
                 "",
                 "Attack must be made within",
-                String.format("%s of being used.", this.getValueString(Long.class, this.prepareDuration)),
+                UtilString.format("%s of being used.", this.getValueString(Long.class, this.prepareDuration)),
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

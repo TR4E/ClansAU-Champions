@@ -61,13 +61,13 @@ public class Recall extends DropSkill<Assassin, RecallData> implements Updater {
                 "Drop Sword/Axe to Activate.",
                 "",
                 "Teleports you back to where you",
-                String.format("were located %s ago.", durationString),
+                UtilString.format("were located %s ago.", durationString),
                 "",
                 "Increases health by 1/4 of the health",
-                String.format("you had %s ago.", durationString),
+                UtilString.format("you had %s ago.", durationString),
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

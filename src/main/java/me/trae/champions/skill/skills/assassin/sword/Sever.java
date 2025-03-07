@@ -52,11 +52,11 @@ public class Sever extends ActiveSkill<Assassin, SkillData> implements Listener 
         return new String[]{
                 "Right-Click with a Sword to Activate.",
                 "",
-                String.format("Your next hit applies a %s bleed,", this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("Your next hit applies a %s bleed,", this.getValueString(Long.class, this::getDuration, level)),
                 "dealing 1 heart per second.",
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

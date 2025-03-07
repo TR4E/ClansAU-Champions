@@ -49,11 +49,11 @@ public class SilencingArrow extends ActiveBowSkill<Assassin, BowSkillData> {
                 "Left-Click with a Bow to Prepare.",
                 "",
                 "Your next arrow will silence your",
-                String.format("target for %s.", this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("target for %s.", this.getValueString(Long.class, this::getDuration, level)),
                 "Making them unable to use any active skills.",
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

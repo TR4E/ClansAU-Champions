@@ -7,6 +7,7 @@ import me.trae.champions.role.menus.interfaces.IRoleSelectionMenu;
 import me.trae.core.menu.Button;
 import me.trae.core.menu.Menu;
 import me.trae.core.utility.UtilColor;
+import me.trae.core.utility.UtilString;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -28,7 +29,7 @@ public abstract class RoleSelectionMenu extends Menu<Champions, RoleManager> imp
                 addButton(new Button<RoleSelectionMenu>(this, slot, new ItemStack(material)) {
                     @Override
                     public String getDisplayName() {
-                        return UtilColor.bold(ChatColor.GREEN) + String.format("%s Class", role.getName());
+                        return UtilColor.bold(ChatColor.GREEN) + UtilString.format("%s Class", role.getName());
                     }
 
                     @Override

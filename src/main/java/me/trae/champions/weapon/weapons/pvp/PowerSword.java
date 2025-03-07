@@ -23,7 +23,7 @@ public class PowerSword extends ChampionsPvPWeapon implements PassiveActivatorWe
         return new String[]{
                 "Increases Melee Damage by 1.",
                 "",
-                UtilString.pair("<gray>Damage", String.format("<green>%s", this.getDamage()))
+                UtilString.pair("<gray>Damage", UtilString.format("<green>%s", this.getDamage()))
         };
     }
 

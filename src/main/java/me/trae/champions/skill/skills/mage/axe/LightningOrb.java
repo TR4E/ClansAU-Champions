@@ -97,11 +97,11 @@ public class LightningOrb extends ActiveSkill<Mage, SkillData> implements Listen
                 "Right-Click with a Sword to Activate.",
                 "",
                 "Launches a lightning orb. Directly hitting a player",
-                String.format("will strike them within %s blocks", this.getValueString(Integer.class, this::getDistance, level)),
-                String.format("with lightning, giving them Slowness %s for %s", this.getValueString(Integer.class, this::getSlownessAmplifier, level), this.getValueString(Long.class, this::getSlownessDuration, level)),
+                UtilString.format("will strike them within %s blocks", this.getValueString(Integer.class, this::getDistance, level)),
+                UtilString.format("with lightning, giving them Slowness %s for %s", this.getValueString(Integer.class, this::getSlownessAmplifier, level), this.getValueString(Long.class, this::getSlownessDuration, level)),
                 "",
-                UtilString.pair("<gray>Recharge", String.format("<green>%s", this.getRechargeString(level))),
-                UtilString.pair("<gray>Energy", String.format("<green>%s", this.getEnergyString(level)))
+                UtilString.pair("<gray>Recharge", UtilString.format("<green>%s", this.getRechargeString(level))),
+                UtilString.pair("<gray>Energy", UtilString.format("<green>%s", this.getEnergyString(level)))
         };
     }
 

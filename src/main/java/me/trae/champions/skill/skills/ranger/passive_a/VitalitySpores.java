@@ -10,6 +10,7 @@ import me.trae.core.gamer.GamerManager;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.updater.interfaces.Updater;
 import me.trae.core.utility.UtilEntity;
+import me.trae.core.utility.UtilString;
 import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.injectors.annotations.Inject;
 import org.bukkit.entity.Player;
@@ -42,9 +43,9 @@ public class VitalitySpores extends PassiveSkill<Ranger, SkillData> implements U
     @Override
     public String[] getDescription(final int level) {
         return new String[]{
-                String.format("After %s of not taking damage,", this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("After %s of not taking damage,", this.getValueString(Long.class, this::getDuration, level)),
                 "forest spores surround you, giving",
-                String.format("you Regeneration %s", this.getValueString(Integer.class, this.regenerationAmplifier)),
+                UtilString.format("you Regeneration %s", this.getValueString(Integer.class, this.regenerationAmplifier)),
                 "",
                 "This remains until you take damage."
         };

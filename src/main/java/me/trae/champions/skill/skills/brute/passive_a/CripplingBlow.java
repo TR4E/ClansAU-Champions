@@ -8,6 +8,7 @@ import me.trae.champions.skill.types.PassiveSkill;
 import me.trae.champions.skill.types.enums.PassiveSkillType;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.utility.UtilEntity;
+import me.trae.core.utility.UtilString;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,7 +42,7 @@ public class CripplingBlow extends PassiveSkill<Brute, SkillData> implements Lis
     public String[] getDescription(final int level) {
         return new String[]{
                 "Your powerful axe blows give",
-                String.format("your opponents Slow %s for %s.", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
+                UtilString.format("your opponents Slow %s for %s.", this.getValueString(Integer.class, this::getAmplifier, level), this.getValueString(Long.class, this::getDuration, level)),
                 "as well as no knockback"
         };
     }
