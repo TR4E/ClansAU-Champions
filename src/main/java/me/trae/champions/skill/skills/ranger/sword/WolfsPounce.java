@@ -109,7 +109,7 @@ public class WolfsPounce extends ChannelSkill<Ranger, WolfsPounceData> implement
         if (data.getCharges() >= this.maxCharges) {
             return;
         }
-        
+
         if (!(UtilTime.elapsed(data.getLastUpdated(), 400L))) {
             return;
         }
