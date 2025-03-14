@@ -19,6 +19,7 @@ import me.trae.core.recharge.RechargeManager;
 import me.trae.core.utility.*;
 import me.trae.core.utility.components.SelfManagedAbilityComponent;
 import me.trae.core.utility.injectors.annotations.Inject;
+import me.trae.core.utility.objects.InventoryTracker;
 import me.trae.core.weapon.WeaponManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,7 +54,7 @@ public class HandleDropSkillActivation extends SpigotListener<Champions, SkillMa
 
         final Player player = event.getPlayer();
 
-        if (UtilInventory.isInventoryTracker(player)) {
+        if (InventoryTracker.isInventoryTracker(player)) {
             return;
         }
 
