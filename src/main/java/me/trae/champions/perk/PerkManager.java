@@ -4,8 +4,12 @@ import me.trae.champions.Champions;
 import me.trae.champions.donation.DonationManager;
 import me.trae.champions.perk.perks.RaveArmour;
 import me.trae.core.perk.abstracts.AbstractPerkManager;
+import me.trae.core.utility.injectors.annotations.Inject;
 
 public class PerkManager extends AbstractPerkManager<Champions, DonationManager> {
+
+    @Inject
+    private DonationManager donationManager;
 
     public PerkManager(final Champions instance) {
         super(instance);
@@ -19,6 +23,6 @@ public class PerkManager extends AbstractPerkManager<Champions, DonationManager>
 
     @Override
     public DonationManager getDonationManager() {
-        return this.getInstanceByClass(Champions.class).getManagerByClass(DonationManager.class);
+        return this.donationManager;
     }
 }

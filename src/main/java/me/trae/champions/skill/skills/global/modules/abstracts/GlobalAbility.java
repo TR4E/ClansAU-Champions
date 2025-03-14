@@ -2,24 +2,35 @@ package me.trae.champions.skill.skills.global.modules.abstracts;
 
 import me.trae.api.champions.skill.events.SkillPreActivateEvent;
 import me.trae.champions.Champions;
-import me.trae.champions.effect.EffectManager;
 import me.trae.champions.effect.types.Silenced;
 import me.trae.champions.skill.SkillManager;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.skills.global.modules.abstracts.interfaces.IGlobalAbility;
 import me.trae.champions.skill.types.GlobalSkill;
-import me.trae.core.Core;
 import me.trae.core.client.ClientManager;
 import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.SpigotModule;
 import me.trae.core.recharge.RechargeManager;
 import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilServer;
+import me.trae.core.utility.injectors.annotations.Inject;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
 
 public abstract class GlobalAbility<T extends GlobalSkill<?>> extends SpigotModule<Champions, SkillManager> implements IGlobalAbility<T> {
+
+    @Inject
+    private ClientManager clientManager;
+
+    @Inject
+    private Silenced silencedEffect;
+
+    @Inject
+    private RechargeManager rechargeManager;
+
+    @Inject
+    private EnergyManager energyManager;
 
     public GlobalAbility(final SkillManager manager) {
         super(manager);
@@ -42,31 +53,29 @@ public abstract class GlobalAbility<T extends GlobalSkill<?>> extends SpigotModu
             return false;
         }
 
-        if (!(this.getInstanceByClass(Core.class).getManagerByClass(ClientManager.class).getClientByPlayer(player).isAdministrating())) {
+        if (!(this.clientManager.getClientByPlayer(player).isAdministrating())) {
             if (UtilServer.getEvent(new SkillPreActivateEvent(skill, player)).isCancelled()) {
                 return false;
             }
 
-            if (this.getInstance().getManagerByClass(EffectManager.class).getModuleByClass(Silenced.class).isUserByEntity(player)) {
+            if (this.silencedEffect.isUserByEntity(player)) {
                 UtilMessage.simpleMessage(player, "Skill", "You cannot use <green><var></green> while silenced.", Collections.singletonList(this.getName()));
                 return false;
             }
 
-            final RechargeManager rechargeManager = this.getInstanceByClass(Core.class).getManagerByClass(RechargeManager.class);
-
             if (this.hasRecharge(level)) {
-                if (rechargeManager.isCooling(player, skill.getName(), false)) {
+                if (this.rechargeManager.isCooling(player, skill.getName(), false)) {
                     return false;
                 }
             }
 
             if (this.hasEnergy(level)) {
-                if (!(this.getInstanceByClass(Core.class).getManagerByClass(EnergyManager.class).use(player, skill.getName(), this.getEnergy(level), true))) {
+                if (!(this.energyManager.use(player, skill.getName(), this.getEnergy(level), true))) {
                     return false;
                 }
             }
 
-            if (this.hasRecharge(level) && !(rechargeManager.add(player, skill.getName(), this.getRecharge(level), false))) {
+            if (this.hasRecharge(level) && !(this.rechargeManager.add(player, skill.getName(), this.getRecharge(level), false))) {
                 return false;
             }
         }

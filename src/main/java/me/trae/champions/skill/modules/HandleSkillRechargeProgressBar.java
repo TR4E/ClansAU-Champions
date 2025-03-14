@@ -6,12 +6,12 @@ import me.trae.champions.role.RoleManager;
 import me.trae.champions.skill.SkillManager;
 import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.ActiveSkill;
-import me.trae.core.Core;
 import me.trae.core.framework.types.frame.SpigotListener;
 import me.trae.core.recharge.Recharge;
 import me.trae.core.recharge.events.RechargeUpdaterEvent;
 import me.trae.core.utility.UtilAbility;
 import me.trae.core.utility.UtilJava;
+import me.trae.core.utility.injectors.annotations.Inject;
 import me.trae.core.weapon.Weapon;
 import me.trae.core.weapon.WeaponManager;
 import org.bukkit.entity.Player;
@@ -23,6 +23,12 @@ import java.util.Arrays;
 public class HandleSkillRechargeProgressBar extends SpigotListener<Champions, SkillManager> {
 
     private final int PRIORITY = 4;
+
+    @Inject
+    private WeaponManager weaponManager;
+
+    @Inject
+    private RoleManager roleManager;
 
     public HandleSkillRechargeProgressBar(final SkillManager manager) {
         super(manager);
@@ -56,13 +62,13 @@ public class HandleSkillRechargeProgressBar extends SpigotListener<Champions, Sk
             return;
         }
 
-        final Weapon<?, ?, ?> weapon = this.getInstanceByClass(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack);
+        final Weapon<?, ?, ?> weapon = this.weaponManager.getWeaponByItemStack(itemStack);
         if (weapon != null && !(weapon.isChampionsWeapon())) {
             UtilAbility.removeActionBar(player, this.PRIORITY);
             return;
         }
 
-        final Role playerRole = this.getInstance().getManagerByClass(RoleManager.class).getPlayerRole(player);
+        final Role playerRole = this.roleManager.getPlayerRole(player);
         if (playerRole == null) {
             UtilAbility.removeActionBar(player, this.PRIORITY);
             return;

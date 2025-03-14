@@ -7,9 +7,9 @@ import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.PassiveBowSkill;
 import me.trae.champions.skill.types.data.BowSkillData;
 import me.trae.champions.weapon.types.ChampionsPvPWeapon;
-import me.trae.core.Core;
 import me.trae.core.framework.types.frame.SpigotListener;
 import me.trae.core.utility.UtilJava;
+import me.trae.core.utility.injectors.annotations.Inject;
 import me.trae.core.weapon.WeaponManager;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -23,6 +23,9 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 
 public class HandlePassiveBowSkillActivation extends SpigotListener<Champions, SkillManager> {
+
+    @Inject
+    private WeaponManager weaponManager;
 
     public HandlePassiveBowSkillActivation(final SkillManager manager) {
         super(manager);
@@ -44,7 +47,7 @@ public class HandlePassiveBowSkillActivation extends SpigotListener<Champions, S
 
         final ItemStack itemStack = event.getBow();
 
-        if (!(this.getInstanceByClass(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof ChampionsPvPWeapon)) {
+        if (!(this.weaponManager.getWeaponByItemStack(itemStack) instanceof ChampionsPvPWeapon)) {
             return;
         }
 

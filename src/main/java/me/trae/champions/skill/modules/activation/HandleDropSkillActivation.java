@@ -13,12 +13,12 @@ import me.trae.champions.skill.types.ToggleUpdaterDropSkill;
 import me.trae.champions.skill.types.interfaces.IActiveSkill;
 import me.trae.champions.skill.types.models.ToggleSkill;
 import me.trae.champions.weapon.models.PassiveActivatorWeapon;
-import me.trae.core.Core;
 import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.types.frame.SpigotListener;
 import me.trae.core.recharge.RechargeManager;
 import me.trae.core.utility.*;
 import me.trae.core.utility.components.SelfManagedAbilityComponent;
+import me.trae.core.utility.injectors.annotations.Inject;
 import me.trae.core.weapon.WeaponManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,6 +27,15 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class HandleDropSkillActivation extends SpigotListener<Champions, SkillManager> {
+
+    @Inject
+    private WeaponManager weaponManager;
+
+    @Inject
+    private RechargeManager rechargeManager;
+
+    @Inject
+    private EnergyManager energyManager;
 
     public HandleDropSkillActivation(final SkillManager manager) {
         super(manager);
@@ -50,7 +59,7 @@ public class HandleDropSkillActivation extends SpigotListener<Champions, SkillMa
 
         final ItemStack itemStack = event.getItemDrop().getItemStack();
 
-        if (!(this.getInstanceByClass(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof PassiveActivatorWeapon)) {
+        if (!(this.weaponManager.getWeaponByItemStack(itemStack) instanceof PassiveActivatorWeapon)) {
             return;
         }
 
@@ -110,12 +119,10 @@ public class HandleDropSkillActivation extends SpigotListener<Champions, SkillMa
         }
 
         if (!(skill instanceof SelfManagedAbilityComponent)) {
-            final RechargeManager rechargeManager = this.getInstanceByClass(Core.class).getManagerByClass(RechargeManager.class);
-
             final RechargeSkillComponent rechargeSkillComponent = UtilJava.cast(RechargeSkillComponent.class, skill);
 
             if (rechargeSkillComponent.hasRecharge(level)) {
-                if (rechargeManager.isCooling(player, skill.getName(), true)) {
+                if (this.rechargeManager.isCooling(player, skill.getName(), true)) {
                     return false;
                 }
             }
@@ -127,16 +134,14 @@ public class HandleDropSkillActivation extends SpigotListener<Champions, SkillMa
             final EnergySkillComponent energySkillComponent = UtilJava.cast(EnergySkillComponent.class, skill);
 
             if (energySkillComponent.hasEnergy(level)) {
-                final EnergyManager energyManager = this.getInstanceByClass(Core.class).getManagerByClass(EnergyManager.class);
-
-                if (!(energyManager.use(player, skill.getName(), energySkillComponent.getEnergy(level), true))) {
+                if (!(this.energyManager.use(player, skill.getName(), energySkillComponent.getEnergy(level), true))) {
                     return false;
                 }
             }
 
             if (!(skill instanceof ToggleUpdaterDropSkill<?, ?>)) {
                 if (rechargeSkillComponent.hasRecharge(level)) {
-                    if (!(rechargeManager.add(player, skill.getName(), rechargeSkillComponent.getRecharge(level), true))) {
+                    if (!(this.rechargeManager.add(player, skill.getName(), rechargeSkillComponent.getRecharge(level), true))) {
                         return false;
                     }
                 }

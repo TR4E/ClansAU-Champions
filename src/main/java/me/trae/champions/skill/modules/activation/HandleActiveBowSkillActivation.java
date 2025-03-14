@@ -7,11 +7,11 @@ import me.trae.champions.skill.enums.SkillType;
 import me.trae.champions.skill.types.ActiveBowSkill;
 import me.trae.champions.skill.types.data.BowSkillData;
 import me.trae.champions.weapon.types.ChampionsPvPWeapon;
-import me.trae.core.Core;
 import me.trae.core.framework.types.frame.SpigotListener;
 import me.trae.core.utility.UtilJava;
 import me.trae.core.utility.UtilLogger;
 import me.trae.core.utility.UtilString;
+import me.trae.core.utility.injectors.annotations.Inject;
 import me.trae.core.weapon.WeaponManager;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -23,6 +23,9 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class HandleActiveBowSkillActivation extends SpigotListener<Champions, SkillManager> {
+
+    @Inject
+    private WeaponManager weaponManager;
 
     public HandleActiveBowSkillActivation(final SkillManager manager) {
         super(manager);
@@ -44,7 +47,7 @@ public class HandleActiveBowSkillActivation extends SpigotListener<Champions, Sk
 
         final ItemStack itemStack = event.getBow();
 
-        if (!(this.getInstanceByClass(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof ChampionsPvPWeapon)) {
+        if (!(this.weaponManager.getWeaponByItemStack(itemStack) instanceof ChampionsPvPWeapon)) {
             return;
         }
 

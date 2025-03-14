@@ -8,18 +8,30 @@ import me.trae.champions.skill.SkillManager;
 import me.trae.champions.skill.types.ToggleUpdaterDropSkill;
 import me.trae.champions.skill.types.models.ToggleSkill;
 import me.trae.champions.weapon.models.PassiveActivatorWeapon;
-import me.trae.core.Core;
 import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.types.frame.SpigotUpdater;
 import me.trae.core.recharge.RechargeManager;
 import me.trae.core.updater.annotations.Update;
 import me.trae.core.utility.UtilJava;
 import me.trae.core.utility.UtilServer;
+import me.trae.core.utility.injectors.annotations.Inject;
 import me.trae.core.weapon.WeaponManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class HandleToggleUpdaterDropSkillUsing extends SpigotUpdater<Champions, SkillManager> {
+
+    @Inject
+    private RoleManager roleManager;
+
+    @Inject
+    private WeaponManager weaponManager;
+
+    @Inject
+    private EnergyManager energyManager;
+
+    @Inject
+    private RechargeManager rechargeManager;
 
     public HandleToggleUpdaterDropSkillUsing(final SkillManager manager) {
         super(manager);
@@ -27,7 +39,7 @@ public class HandleToggleUpdaterDropSkillUsing extends SpigotUpdater<Champions, 
 
     @Update(delay = 50L)
     public void onUpdater() {
-        for (final Role role : this.getInstance().getManagerByClass(RoleManager.class).getModulesByClass(Role.class)) {
+        for (final Role role : this.roleManager.getModulesByClass(Role.class)) {
             for (final ToggleUpdaterDropSkill<?, ?> skill : role.getSkillsByClass(ToggleUpdaterDropSkill.class)) {
                 skill.getUsers().values().removeIf(data -> {
                     final Player player = Bukkit.getPlayer(data.getUUID());
@@ -51,7 +63,7 @@ public class HandleToggleUpdaterDropSkillUsing extends SpigotUpdater<Champions, 
     }
 
     private boolean canActivateSkill(final Player player, final ToggleUpdaterDropSkill<?, ?> skill) {
-        if (!(this.getInstanceByClass(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(player.getEquipment().getItemInHand()) instanceof PassiveActivatorWeapon)) {
+        if (!(this.weaponManager.getWeaponByItemStack(player.getEquipment().getItemInHand()) instanceof PassiveActivatorWeapon)) {
             return false;
         }
 
@@ -68,22 +80,18 @@ public class HandleToggleUpdaterDropSkillUsing extends SpigotUpdater<Champions, 
             return false;
         }
 
-        final EnergyManager energyManager = this.getInstanceByClass(Core.class).getManagerByClass(EnergyManager.class);
-
         if (!(skill.isUsingByPlayer(player))) {
             if (skill.hasEnergyNeeded(level)) {
-                if (energyManager.isExhausted(player, skill.getName(), skill.getEnergyNeeded(level), true)) {
+                if (this.energyManager.isExhausted(player, skill.getName(), skill.getEnergyNeeded(level), true)) {
                     return false;
                 }
             }
         }
 
         if (skill.hasEnergyUsing(level)) {
-            if (!(energyManager.use(player, skill.getName(), skill.getEnergyUsing(level), true))) {
+            if (!(this.energyManager.use(player, skill.getName(), skill.getEnergyUsing(level), true))) {
                 if (skill.hasRecharge(level)) {
-                    final RechargeManager rechargeManager = this.getInstanceByClass(Core.class).getManagerByClass(RechargeManager.class);
-
-                    if (!(rechargeManager.add(player, skill.getName(), skill.getRecharge(level), true))) {
+                    if (!(this.rechargeManager.add(player, skill.getName(), skill.getRecharge(level), true))) {
                         return false;
                     }
                 }

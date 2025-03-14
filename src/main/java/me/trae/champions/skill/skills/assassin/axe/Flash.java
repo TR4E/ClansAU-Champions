@@ -4,7 +4,6 @@ import me.trae.champions.role.types.Assassin;
 import me.trae.champions.skill.skills.assassin.axe.data.FlashData;
 import me.trae.champions.skill.types.ActiveSkill;
 import me.trae.champions.skill.types.enums.ActiveSkillType;
-import me.trae.core.Core;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.energy.EnergyManager;
 import me.trae.core.recharge.RechargeManager;
@@ -15,6 +14,7 @@ import me.trae.core.utility.UtilMessage;
 import me.trae.core.utility.UtilString;
 import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.components.SelfManagedAbilityComponent;
+import me.trae.core.utility.injectors.annotations.Inject;
 import me.trae.core.utility.objects.SoundCreator;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -24,6 +24,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManagedAbilityComponent, Updater {
+
+    @Inject
+    private RechargeManager rechargeManager;
+
+    @Inject
+    private EnergyManager energyManager;
 
     @ConfigInject(type = Float.class, path = "Energy", defaultValue = "17.0")
     private float energy;
@@ -83,15 +89,12 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
             return;
         }
 
-        final RechargeManager rechargeManager = this.getInstanceByClass(Core.class).getManagerByClass(RechargeManager.class);
-        final EnergyManager energyManager = this.getInstanceByClass(Core.class).getManagerByClass(EnergyManager.class);
-
         if (this.hasRecharge(level)) {
-            if (rechargeManager.isCooling(player, this.getName(), true)) {
+            if (this.rechargeManager.isCooling(player, this.getName(), true)) {
                 return;
             }
 
-            if (energyManager.isExhausted(player, this.getName(), this.getEnergy(level), true)) {
+            if (this.energyManager.isExhausted(player, this.getName(), this.getEnergy(level), true)) {
                 return;
             }
         }
@@ -134,12 +137,12 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
 
         this.displayCharges(player, data);
 
-        energyManager.use(player, this.getName(), this.getEnergy(level), true);
+        this.energyManager.use(player, this.getName(), this.getEnergy(level), true);
 
         data.updateLastUpdated();
 
         if (data.getCharges() == 0) {
-            rechargeManager.add(player, this.getName(), this.getRecharge(level), true);
+            this.rechargeManager.add(player, this.getName(), this.getRecharge(level), true);
         }
     }
 

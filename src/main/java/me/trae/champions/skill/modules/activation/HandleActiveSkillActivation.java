@@ -13,7 +13,6 @@ import me.trae.champions.skill.types.ChannelSkill;
 import me.trae.champions.skill.types.interfaces.IActiveSkill;
 import me.trae.champions.skill.types.models.ToggleSkill;
 import me.trae.champions.weapon.types.ChampionsPvPWeapon;
-import me.trae.core.Core;
 import me.trae.core.energy.EnergyManager;
 import me.trae.core.framework.types.frame.SpigotListener;
 import me.trae.core.recharge.RechargeManager;
@@ -22,6 +21,7 @@ import me.trae.core.utility.UtilLogger;
 import me.trae.core.utility.UtilServer;
 import me.trae.core.utility.UtilString;
 import me.trae.core.utility.components.SelfManagedAbilityComponent;
+import me.trae.core.utility.injectors.annotations.Inject;
 import me.trae.core.weapon.WeaponManager;
 import me.trae.core.world.events.PlayerItemInteractEvent;
 import org.bukkit.entity.Player;
@@ -30,6 +30,15 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.inventory.ItemStack;
 
 public class HandleActiveSkillActivation extends SpigotListener<Champions, SkillManager> {
+
+    @Inject
+    private WeaponManager weaponManager;
+
+    @Inject
+    private RechargeManager rechargeManager;
+
+    @Inject
+    private EnergyManager energyManager;
 
     public HandleActiveSkillActivation(final SkillManager manager) {
         super(manager);
@@ -43,7 +52,7 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
 
         final ItemStack itemStack = event.getItemStack();
 
-        if (!(this.getInstanceByClass(Core.class).getManagerByClass(WeaponManager.class).getWeaponByItemStack(itemStack) instanceof ChampionsPvPWeapon)) {
+        if (!(this.weaponManager.getWeaponByItemStack(itemStack) instanceof ChampionsPvPWeapon)) {
             return;
         }
 
@@ -109,12 +118,10 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
         }
 
         if (!(skill instanceof SelfManagedAbilityComponent)) {
-            final RechargeManager rechargeManager = this.getInstanceByClass(Core.class).getManagerByClass(RechargeManager.class);
-
             final RechargeSkillComponent rechargeSkillComponent = UtilJava.cast(RechargeSkillComponent.class, skill);
 
             if (rechargeSkillComponent.hasRecharge(level)) {
-                if (rechargeManager.isCooling(player, skill.getName(), true)) {
+                if (this.rechargeManager.isCooling(player, skill.getName(), true)) {
                     return false;
                 }
             }
@@ -126,16 +133,14 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
             final EnergySkillComponent energySkillComponent = UtilJava.cast(EnergySkillComponent.class, skill);
 
             if (energySkillComponent.hasEnergy(level)) {
-                final EnergyManager energyManager = this.getInstanceByClass(Core.class).getManagerByClass(EnergyManager.class);
-
-                if (!(energyManager.use(player, skill.getName(), energySkillComponent.getEnergy(level), true))) {
+                if (!(this.energyManager.use(player, skill.getName(), energySkillComponent.getEnergy(level), true))) {
                     return false;
                 }
             }
 
             if (!(skill instanceof ChannelSkill<?, ?>)) {
                 if (rechargeSkillComponent.hasRecharge(level)) {
-                    if (!(rechargeManager.add(player, skill.getName(), rechargeSkillComponent.getRecharge(level), true))) {
+                    if (!(this.rechargeManager.add(player, skill.getName(), rechargeSkillComponent.getRecharge(level), true))) {
                         return false;
                     }
                 }
