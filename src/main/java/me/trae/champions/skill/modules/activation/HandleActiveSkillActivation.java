@@ -92,7 +92,7 @@ public class HandleActiveSkillActivation extends SpigotListener<Champions, Skill
 
         skill.onActivate(player, level);
 
-        UtilLogger.log(Champions.class, "Skills", "Activations", UtilString.format("%s used %s", player.getName(), skill.getDisplayName(level)));
+        UtilLogger.log(Champions.class, "Skills", "Activations", skill.getModule().getName(), UtilString.format("%s used %s", player.getName(), skill.getDisplayName(level)));
     }
 
     private boolean canActivateSkill(final Player player, final ActiveSkill<?, ?> skill) {
