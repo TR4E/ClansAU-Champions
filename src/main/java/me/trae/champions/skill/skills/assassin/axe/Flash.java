@@ -4,6 +4,7 @@ import me.trae.champions.role.types.Assassin;
 import me.trae.champions.skill.skills.assassin.axe.data.FlashData;
 import me.trae.champions.skill.types.ActiveSkill;
 import me.trae.champions.skill.types.enums.ActiveSkillType;
+import me.trae.core.client.ClientManager;
 import me.trae.core.config.annotations.ConfigInject;
 import me.trae.core.energy.EnergyManager;
 import me.trae.core.recharge.RechargeManager;
@@ -16,12 +17,14 @@ import me.trae.core.utility.UtilTime;
 import me.trae.core.utility.components.SelfManagedAbilityComponent;
 import me.trae.core.utility.injectors.annotations.Inject;
 import me.trae.core.utility.objects.SoundCreator;
-import org.bukkit.Effect;
+import me.trae.core.utility.particle.ParticleEffect;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
+
+import java.util.Arrays;
 
 public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManagedAbilityComponent, Updater {
 
@@ -30,6 +33,9 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
 
     @Inject
     private EnergyManager energyManager;
+
+    @Inject
+    private ClientManager clientManager;
 
     @ConfigInject(type = Float.class, path = "Energy", defaultValue = "17.0")
     private float energy;
@@ -103,17 +109,19 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
 
         Location lastLocation = player.getLocation();
 
-        while (curRange <= this.getMaxRange(data.getLevel())) {
+        C: while (curRange <= this.getMaxRange(data.getLevel())) {
             final Location newTarget = player.getLocation().add(new Vector(0.0D, 0.2D, 0.0D)).add(player.getLocation().getDirection().multiply(curRange));
 
-            if (!(UtilBlock.airFoliage(newTarget.getBlock().getType()) || !(UtilBlock.airFoliage(newTarget.getBlock().getRelative(BlockFace.UP).getType())))) {
-                break;
+            for (final BlockFace blockFace : Arrays.asList(BlockFace.SELF, BlockFace.NORTH, BlockFace.EAST, BlockFace.WEST)) {
+                if (!(UtilBlock.airFoliage(newTarget.getBlock().getRelative(blockFace).getType()))) {
+                    break C;
+                }
             }
 
             curRange += 0.2D;
 
             if (!(lastLocation.equals(newTarget))) {
-                lastLocation.getWorld().playEffect(lastLocation, Effect.FIREWORKS_SPARK, 4);
+                ParticleEffect.FIREWORKS_SPARK.display(new Vector(0.0D, 0.0D, 0.0D), 1, newTarget.add(0.0D, 0.25D, 0.0D), 500);
             }
 
             lastLocation = newTarget;
@@ -173,7 +181,13 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
             }
 
             if (!(this.isUserByPlayer(player))) {
-                this.addUser(new FlashData(player, level));
+                final FlashData data = new FlashData(player, level);
+
+                if (this.clientManager.getClientByPlayer(player).isAdministrating()) {
+                    data.setCharges(this.maxCharges);
+                }
+
+                this.addUser(data);
             }
 
             final FlashData data = this.getUserByPlayer(player);
