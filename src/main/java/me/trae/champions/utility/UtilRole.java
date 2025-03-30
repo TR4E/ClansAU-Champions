@@ -11,9 +11,9 @@ public class UtilRole {
 
     public static void equipRoleEffect(final Role role, final Player player, final boolean updatedFromBuildMenu) {
         if (role == null) {
-            me.trae.api.champions.utility.UtilRole.playEffect(player, "None", false);
+            me.trae.api.champions.utility.UtilRole.playEffect(player, "None");
         } else {
-            me.trae.api.champions.utility.UtilRole.playEffect(player, role.getName(), true);
+            me.trae.api.champions.utility.UtilRole.playEffect(player, role.getName());
 
             final RoleBuild roleBuild = role.getRoleBuildByPlayer(player);
 
