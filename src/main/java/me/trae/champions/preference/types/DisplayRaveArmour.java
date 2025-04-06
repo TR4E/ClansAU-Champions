@@ -18,7 +18,7 @@ public class DisplayRaveArmour extends Preference<Champions, PreferenceManager, 
     @Override
     public String[] getDescription() {
         return new String[]{
-                "Toggles the visibility of the <gold>Rave Armour</gold> for Leather armour."
+                "Toggles the function of your <gold>Rave Armour</gold> for Leather armour."
         };
     }
 
