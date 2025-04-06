@@ -13,7 +13,7 @@ public class WolfsPounceData extends ChannelSkillData implements IWolfsPounceDat
     public WolfsPounceData(final Player player, final int level) {
         super(player, level);
 
-        this.lastUpdated = System.currentTimeMillis();
+        this.lastUpdated = 0L;
     }
 
     @Override

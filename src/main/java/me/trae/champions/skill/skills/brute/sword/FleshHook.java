@@ -43,6 +43,9 @@ public class FleshHook extends ChannelSkill<Brute, FleshHookData> implements Tog
     @ConfigInject(type = Integer.class, path = "Incremented-Charges", defaultValue = "25")
     private int incrementedCharges;
 
+    @ConfigInject(type = Long.class, path = "Per-Charge-Duration", defaultValue = "1_000")
+    private long perChargeDuration;
+
     @ConfigInject(type = String.class, path = "Material", defaultValue = "TRIPWIRE_HOOK")
     private String material;
 
@@ -84,7 +87,7 @@ public class FleshHook extends ChannelSkill<Brute, FleshHookData> implements Tog
         return new String[]{
                 "Hold Block with a Sword to Channel.",
                 "",
-                "Fire a hook at an opponent, pulling them towards you.",
+                "Fire a few hooks at opponents, pulling them towards you.",
                 "",
                 "Higher Chance Time = Faster Hook",
                 "",
@@ -96,6 +99,27 @@ public class FleshHook extends ChannelSkill<Brute, FleshHookData> implements Tog
     @Override
     public void onActivate(final Player player, final int level) {
         this.addUser(new FleshHookData(player, level));
+
+        UtilMessage.simpleMessage(player, this.getModule().getName(), "You are now preparing <green><var></green>.", Collections.singletonList(this.getDisplayName(level)));
+    }
+
+    @Override
+    public void onUsing(final Player player, final FleshHookData data) {
+        if (!(UtilTime.elapsed(data.getLastUpdated(), this.perChargeDuration))) {
+            return;
+        }
+
+        if (data.getCharges() >= this.maxCharges) {
+            return;
+        }
+
+        data.setCharges(data.getCharges() + this.incrementedCharges);
+
+        data.updateLastUpdated();
+
+        new SoundCreator(Sound.CLICK, 0.4F, 1.0F + (0.05F * data.getCharges())).play(player.getLocation());
+
+        UtilActionBar.sendActionBar(player, 4, UtilString.pair(UtilString.format("<green><bold>%s", this.getName()), UtilString.format("<yellow>+%s%", data.getCharges())));
     }
 
     @Override
@@ -124,32 +148,11 @@ public class FleshHook extends ChannelSkill<Brute, FleshHookData> implements Tog
             throwableManager.addThrowable(throwable);
         }
 
+        UtilActionBar.removeActionBar(player, 4);
+
         new SoundCreator(Sound.IRONGOLEM_THROW, 2.0F, 0.8F).play(player.getLocation());
 
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You used <green><var></green>.", Collections.singletonList(this.getDisplayName(data.getLevel())));
-    }
-
-    @Override
-    public void onUsing(final Player player, final FleshHookData data) {
-        if (!(UtilTime.elapsed(data.getDelay(), 250L))) {
-            return;
-        }
-
-        if (!(UtilTime.elapsed(data.getLastUpdated(), 400L))) {
-            return;
-        }
-
-        if (data.getCharges() >= this.maxCharges) {
-            return;
-        }
-
-        data.setCharges(data.getCharges() + this.incrementedCharges);
-
-        data.updateLastUpdated();
-
-        new SoundCreator(Sound.CLICK, 0.4F, 1.0F + (0.05F * data.getCharges())).play(player.getLocation());
-
-        UtilMessage.simpleMessage(player, this.getName(), UtilString.pair("Charges", UtilString.format("<yellow>+ %s", data.getCharges())));
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -208,12 +211,14 @@ public class FleshHook extends ChannelSkill<Brute, FleshHookData> implements Tog
             return;
         }
 
-        event.setCancelled(true);
+        event.setRemoveItem(true);
     }
 
     @Override
     public float getEnergy(final int level) {
-        return 0.0F;
+        final int value = (level - 1) * 2;
+
+        return this.energy - value;
     }
 
     @Override

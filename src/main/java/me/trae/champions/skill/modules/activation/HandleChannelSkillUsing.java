@@ -33,7 +33,7 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
         super(manager);
     }
 
-    @Update(delay = 50L)
+    @Update(delay = 25L)
     public void onUpdater() {
         for (final Role role : this.roleManager.getModulesByClass(Role.class)) {
             for (final ChannelSkill<?, ?> skill : role.getSkillsByClass(ChannelSkill.class)) {
@@ -44,10 +44,6 @@ public class HandleChannelSkillUsing extends SpigotUpdater<Champions, SkillManag
                     }
 
                     if (!(this.canActivateSkill(player, skill))) {
-                        if (!(player.isBlocking()) && skill instanceof ToggleSkill<?> && UtilJava.cast(ToggleSkill.class, skill).isActive(player, data)) {
-                            return false;
-                        }
-
                         skill.reset(player);
                         return true;
                     }

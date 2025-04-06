@@ -22,7 +22,7 @@ import java.util.Arrays;
 
 public class HandleSkillRechargeProgressBar extends SpigotListener<Champions, SkillManager> {
 
-    private final int PRIORITY = 4;
+    private final int PRIORITY = 5;
 
     @Inject
     private WeaponManager weaponManager;

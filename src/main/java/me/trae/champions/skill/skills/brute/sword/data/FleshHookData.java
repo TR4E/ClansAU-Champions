@@ -6,21 +6,13 @@ import org.bukkit.entity.Player;
 
 public class FleshHookData extends ChannelSkillData implements IFleshHookData {
 
-    private final long delay;
-
     private long lastUpdated;
     private int charges;
 
     public FleshHookData(final Player player, final int level) {
         super(player, level);
 
-        this.delay = System.currentTimeMillis();
-        this.lastUpdated = System.currentTimeMillis();
-    }
-
-    @Override
-    public long getDelay() {
-        return this.delay;
+        this.lastUpdated = 0L;
     }
 
     @Override
