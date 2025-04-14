@@ -6,6 +6,7 @@ import me.trae.core.utility.objects.EnumData;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,5 +32,10 @@ public class Gamer extends AbstractGamer<GamerProperty> {
     @Override
     public Object getValueByProperty(final GamerProperty property) {
         return null;
+    }
+
+    @Override
+    public LinkedHashMap<String, String> getInformation() {
+        return new LinkedHashMap<>();
     }
 }
