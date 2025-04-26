@@ -169,7 +169,7 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
     }
 
     private void displayCharges(final Player player, final FlashData data) {
-        UtilMessage.simpleMessage(player, this.getName(), UtilString.pair("Charges", UtilString.format("<yellow>%s", data.getCharges())));
+        UtilMessage.simpleMessage(player, this.getModule().getName(), UtilString.pair(UtilString.format("%s Charges", this.getName()), UtilString.format("<yellow>%s", data.getCharges())));
     }
 
     @Update(delay = 50L)

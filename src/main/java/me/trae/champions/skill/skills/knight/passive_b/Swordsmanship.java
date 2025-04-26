@@ -189,7 +189,7 @@ public class Swordsmanship extends PassiveSkill<Knight, SwordsmanshipData> imple
 
             data.setCharges(data.getCharges() + 1);
 
-            UtilMessage.simpleMessage(player, this.getName(), UtilString.pair("Charges", UtilString.format("<yellow>%s", data.getCharges())));
+            UtilMessage.simpleMessage(player, this.getModule().getName(), UtilString.pair(UtilString.format("%s Charges", this.getName()), UtilString.format("<yellow>%s", data.getCharges())));
         }
     }
 }
