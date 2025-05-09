@@ -25,7 +25,15 @@ public enum SkillType implements ISkillType {
     }
 
     public static SkillType getByMaterial(final Material material) {
-        return Arrays.stream(values()).filter(skillType -> skillType.getMaterials().contains(material)).findFirst().orElse(null);
+        for (final SkillType skillType : values()) {
+            if (!(skillType.getMaterials().contains(material))) {
+                continue;
+            }
+
+            return skillType;
+        }
+
+        return null;
     }
 
     @Override

@@ -133,7 +133,7 @@ public class WolfsPounce extends ChannelSkill<Ranger, WolfsPounceData> implement
             }
         });
 
-        UtilActionBar.removeActionBar(player, 4, "<green>Pounced!");
+        UtilActionBar.removeActionBar(player, 4);
 
         UtilMessage.simpleMessage(player, this.getModule().getName(), "You used <green><var></green>.", Collections.singletonList(this.getDisplayName(data.getLevel())));
     }
