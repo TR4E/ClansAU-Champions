@@ -65,6 +65,11 @@ public class HandleSkillRechargeProgressBar extends SpigotUpdater<Champions, Ski
                 continue;
             }
 
+            if (!(skillType.isItemStack(itemStack))) {
+                UtilActionBar.removeActionBar(player, this.PRIORITY);
+                continue;
+            }
+
             final RoleSkill roleSkill = roleBuild.getRoleSkillByType(skillType);
             if (roleSkill == null) {
                 UtilActionBar.removeActionBar(player, this.PRIORITY);
