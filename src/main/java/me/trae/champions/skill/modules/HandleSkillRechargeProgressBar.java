@@ -41,11 +41,6 @@ public class HandleSkillRechargeProgressBar extends SpigotUpdater<Champions, Ski
     @Update(delay = 100L)
     public void onUpdater() {
         for (final Player player : UtilServer.getOnlinePlayers()) {
-            if (UtilServer.getEvent(new RechargeProgressBarCheckEvent(player)).isCancelled()) {
-                UtilActionBar.removeActionBar(player, this.PRIORITY);
-                continue;
-            }
-
             final ItemStack itemStack = player.getEquipment().getItemInHand();
             if (itemStack == null) {
                 UtilActionBar.removeActionBar(player, this.PRIORITY);
@@ -90,6 +85,11 @@ public class HandleSkillRechargeProgressBar extends SpigotUpdater<Champions, Ski
             }
 
             if (!(skill.hasRecharge(level))) {
+                UtilActionBar.removeActionBar(player, this.PRIORITY);
+                continue;
+            }
+
+            if (UtilServer.getEvent(new RechargeProgressBarCheckEvent(player)).isCancelled()) {
                 UtilActionBar.removeActionBar(player, this.PRIORITY);
                 continue;
             }

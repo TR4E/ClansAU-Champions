@@ -109,7 +109,8 @@ public class Flash extends ActiveSkill<Assassin, FlashData> implements SelfManag
 
         Location lastLocation = player.getLocation();
 
-        C: while (curRange <= this.getMaxRange(data.getLevel())) {
+        C:
+        while (curRange <= this.getMaxRange(data.getLevel())) {
             final Location newTarget = player.getLocation().add(new Vector(0.0D, 0.2D, 0.0D)).add(player.getLocation().getDirection().multiply(curRange));
 
             for (final BlockFace blockFace : Arrays.asList(BlockFace.SELF, BlockFace.NORTH, BlockFace.EAST, BlockFace.WEST)) {

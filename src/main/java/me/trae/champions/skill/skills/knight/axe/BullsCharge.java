@@ -194,7 +194,7 @@ public class BullsCharge extends ActiveSkill<Knight, SkillData> implements Liste
 
     @Override
     public long getRecharge(final int level) {
-        final int value = level - 1;
+        final int value = (level - 1) * 2;
 
         return this.recharge - (value * 1000L);
     }
